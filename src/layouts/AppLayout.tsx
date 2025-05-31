@@ -17,9 +17,10 @@ import { AuthPage } from '@/pages/AuthPage';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { LogIn } from 'lucide-react';
-import { LandingPresentation } from '@/components/LandingPresentation';
+import LandingPresentation from '@/components/LandingPresentation';
+import CourseView from '@/components/courses/CourseView';
 
-type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog';
+type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog' | 'courses';
 
 export default function AppLayout() {
   const [currentView, setCurrentView] = useState<ViewType>('blog');
@@ -56,6 +57,8 @@ export default function AppLayout() {
         return <ChatInterface />;
       case 'blog':
         return <MiniBlog />;
+      case 'courses':
+        return <CourseView />;
       default:
         return <MiniBlog />;
     }

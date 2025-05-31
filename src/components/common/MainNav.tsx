@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
 import { Link } from '@/components/ui/link';
-import { Calendar, FileText, BookOpen, Sparkles, Palette, Image, MessageSquare } from 'lucide-react';
+import { Calendar, FileText, BookOpen, Sparkles, Palette, Image, MessageSquare, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog';
+type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog' | 'courses';
 
 interface MainNavProps {
   currentView: ViewType;
@@ -142,6 +142,22 @@ export function MainNav({ currentView, onNavigate, onShowPricing }: MainNavProps
         >
           <BookOpen className="h-4 w-4" />
           <span className="hidden md:inline">Blog</span>
+        </Link>
+        <Link
+          href="#"
+          className={cn(
+            'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 px-2 py-1.5 rounded-md',
+            currentView === 'courses'
+              ? 'text-primary bg-muted'
+              : 'text-muted-foreground'
+          )}
+          onClick={(e) => {
+            e.preventDefault();
+            onNavigate('courses');
+          }}
+        >
+          <GraduationCap className="h-4 w-4" />
+          <span className="hidden md:inline">Cursos</span>
         </Link>
         <Button 
           variant="default" 

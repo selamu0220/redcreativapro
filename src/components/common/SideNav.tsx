@@ -15,11 +15,12 @@ import {
   CalendarClock,
   CalendarCheck,
   Image,
-  MessageSquare
+  MessageSquare,
+  GraduationCap
 } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog';
+type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog' | 'courses';
 
 interface SideNavProps {
   currentView: ViewType;
@@ -116,6 +117,12 @@ export function SideNav({ currentView, onNavigate, className }: SideNavProps) {
       icon: <BookOpen className="h-5 w-5" />,
       view: 'blog',
       variant: currentView === 'blog' ? 'default' : 'ghost',
+    },
+    {
+      title: 'Cursos',
+      icon: <GraduationCap className="h-5 w-5" />,
+      view: 'courses',
+      variant: currentView === 'courses' ? 'default' : 'ghost',
     },
   ];
 
