@@ -1,0 +1,46 @@
+{
+  "name": "Red Creativa - Plataforma para Creadores",
+  "short_name": "Red Creativa",
+  "description": "Plataforma todo en uno para creadores de contenido digital",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["productivity", "creativity", "content creation"],
+  "screenshots": [
+    {
+      "src": "/screenshots/recursos.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "/screenshots/calendario.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Recursos",
+      "url": "/recursos",
+      "description": "Gestiona tus recursos creativos"
+    },
+    {
+      "name": "Calendario",
+      "url": "/calendario",
+      "description": "Planifica tu contenido"
+    }
+  ]
+}

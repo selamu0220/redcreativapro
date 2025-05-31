@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Allow crawling of all content
+Disallow:
+
+# Block specific paths
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://redcreativa.pro/sitemap.xml
