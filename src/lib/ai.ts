@@ -1,4 +1,4 @@
-import { AIProvider, GeminiModel } from '@/types/ai';
+import { AIProvider, AIModel, AISettings } from '@/types/ai';
 
 // Function to check and increment AI usage
 function checkAndIncrementAIUsage(): void {
@@ -26,7 +26,7 @@ function checkAndIncrementAIUsage(): void {
     const used = user.dailyUsage.aiRequests;
     
     if (used >= limit) {
-      throw new Error(`Has alcanzado tu límite diario de ${limit} consultas de IA. Actualiza a Pro para uso ilimitado o espera hasta mañana.`);
+      throw new Error(`Has alcanzado tu límite diario de ${limit} consultas de IA. ¡Vuelve mañana para más consultas gratis o actualiza a Pro para uso ilimitado!`);
     }
   }
   
@@ -40,22 +40,32 @@ function checkAndIncrementAIUsage(): void {
 
 export async function generateScriptWithAI(
   prompt: string, 
-  provider: AIProvider = 'gemini', 
+  provider?: AIProvider, 
   apiKey?: string,
-  model?: GeminiModel
+  model?: AIModel,
+  temperature?: number,
+  maxTokens?: number,
+  baseUrl?: string
 ): Promise<string> {
   // Check usage limits before making API call
   checkAndIncrementAIUsage();
   
   // Get stored AI settings if not provided
-  if (!apiKey) {
+  if (!apiKey || !provider) {
     const storedSettings = localStorage.getItem('aiSettings');
     if (storedSettings) {
-      const settings = JSON.parse(storedSettings);
-      provider = settings.provider;
-      apiKey = settings.apiKey;
-      model = settings.model;
+      const settings: AISettings = JSON.parse(storedSettings);
+      provider = provider || settings.provider;
+      apiKey = apiKey || settings.apiKey;
+      model = model || settings.model;
+      temperature = temperature ?? settings.temperature;
+      maxTokens = maxTokens ?? settings.maxTokens;
+      baseUrl = baseUrl || settings.baseUrl;
     }
+  }
+
+  if (!provider) {
+    throw new Error('Se requiere seleccionar un proveedor de IA. Por favor configura tus ajustes de IA en el menú de usuario.');
   }
 
   if (!apiKey) {
@@ -91,7 +101,11 @@ export async function generateScriptWithAI(
                   }
                 ]
               }
-            ]
+            ],
+            generationConfig: {
+              temperature: temperature || 0.7,
+              maxOutputTokens: maxTokens || 2048
+            }
           })
         });
         
@@ -112,6 +126,7 @@ export async function generateScriptWithAI(
       }
 
       case 'openai': {
+        const selectedModel = model || 'gpt-4o';
         const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -119,11 +134,10 @@ export async function generateScriptWithAI(
             'Authorization': `Bearer ${apiKey}`
           },
           body: JSON.stringify({
-            model: 'gpt-4-turbo-preview',
+            model: selectedModel,
             messages: [{ role: 'user', content: prompt }],
-            temperature: 0.7,
-            max_tokens: 2048,
-            response_format: { type: "text" }
+            temperature: temperature || 0.7,
+            max_tokens: maxTokens || 2048
           })
         });
         
@@ -141,6 +155,7 @@ export async function generateScriptWithAI(
       }
 
       case 'anthropic': {
+        const selectedModel = model || 'claude-3-5-sonnet-20241022';
         const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
           method: 'POST',
           headers: {
@@ -149,10 +164,10 @@ export async function generateScriptWithAI(
             'anthropic-version': '2023-06-01'
           },
           body: JSON.stringify({
-            model: 'claude-3-opus-20240229',
+            model: selectedModel,
             messages: [{ role: 'user', content: prompt }],
-            max_tokens: 2048,
-            temperature: 0.7
+            max_tokens: maxTokens || 2048,
+            temperature: temperature || 0.7
           })
         });
         
@@ -167,6 +182,68 @@ export async function generateScriptWithAI(
         
         const anthropicData = await anthropicResponse.json();
         return anthropicData.content[0].text;
+      }
+
+      case 'cohere': {
+        const selectedModel = model || 'command-r-plus';
+        const apiUrl = baseUrl || 'https://api.cohere.ai/v1/generate';
+        
+        const cohereResponse = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: selectedModel,
+            prompt: prompt,
+            max_tokens: maxTokens || 2048,
+            temperature: temperature || 0.7
+          })
+        });
+        
+        if (!cohereResponse.ok) {
+          const error = await cohereResponse.json().catch(() => ({ message: 'Error desconocido' }));
+          if (cohereResponse.status === 401) {
+            localStorage.removeItem('aiSettings');
+            throw new Error('API key inválida. Por favor verifica tu API key de Cohere en los ajustes de usuario.');
+          }
+          throw new Error(`Error de Cohere: ${error.message || 'No se pudo generar el contenido'}`);
+        }
+        
+        const cohereData = await cohereResponse.json();
+        return cohereData.generations[0].text;
+      }
+
+      case 'mistral': {
+        const selectedModel = model || 'mistral-large-latest';
+        const apiUrl = baseUrl || 'https://api.mistral.ai/v1/chat/completions';
+        
+        const mistralResponse = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: selectedModel,
+            messages: [{ role: 'user', content: prompt }],
+            max_tokens: maxTokens || 2048,
+            temperature: temperature || 0.7
+          })
+        });
+        
+        if (!mistralResponse.ok) {
+          const error = await mistralResponse.json().catch(() => ({ error: { message: 'Error desconocido' } }));
+          if (mistralResponse.status === 401) {
+            localStorage.removeItem('aiSettings');
+            throw new Error('API key inválida. Por favor verifica tu API key de Mistral en los ajustes de usuario.');
+          }
+          throw new Error(`Error de Mistral: ${error.error?.message || 'No se pudo generar el contenido'}`);
+        }
+        
+        const mistralData = await mistralResponse.json();
+        return mistralData.choices[0].message.content;
       }
 
       default:

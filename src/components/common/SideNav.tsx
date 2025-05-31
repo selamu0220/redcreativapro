@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link } from '@/components/ui/link';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
@@ -8,88 +8,50 @@ import {
   Calendar,
   FileText,
   BookOpen,
-  Share2,
   Sparkles,
-  Gauge,
-  CalendarDays,
-  CalendarClock,
-  CalendarCheck,
   Image,
   MessageSquare,
-  GraduationCap
+  GraduationCap,
+  BarChart3,
+  FolderOpen,
+  FileImage
 } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
-
-type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog' | 'learning';
 
 interface SideNavProps {
-  currentView: ViewType;
-  onNavigate: (view: ViewType) => void;
-  className?: string;
+  currentView: string;
+  onShowLanding: () => void;
 }
 
 interface NavItem {
   title: string;
   icon: React.ReactNode;
-  view: ViewType;
+  view: string;
   variant: 'default' | 'ghost';
 }
 
-interface SubNavItem {
-  title: string;
-  icon: React.ReactNode;
-  href: string;
-}
-
-export function SideNav({ currentView, onNavigate, className }: SideNavProps) {
-  const [subNavItems, setSubNavItems] = useState<SubNavItem[]>([]);
-
-  useEffect(() => {
-    switch (currentView) {
-      case 'calendar':
-        setSubNavItems([
-          {
-            title: 'Dashboard',
-            icon: <Gauge className="h-4 w-4" />,
-            href: '#calendar-dashboard',
-          },
-          {
-            title: 'Month View',
-            icon: <CalendarDays className="h-4 w-4" />,
-            href: '#calendar-month',
-          },
-          {
-            title: 'Week View',
-            icon: <CalendarClock className="h-4 w-4" />,
-            href: '#calendar-week',
-          },
-          {
-            title: 'Day View',
-            icon: <CalendarCheck className="h-4 w-4" />,
-            href: '#calendar-day',
-          },
-        ]);
-        break;
-      default:
-        setSubNavItems([]);
-    }
-  }, [currentView]);
+export function SideNav({ currentView, onShowLanding }: SideNavProps) {
 
   const navItems: NavItem[] = [
     {
-      title: 'Resources',
+      title: 'Blog',
+      icon: <BookOpen className="h-5 w-5" />,
+      view: 'blog',
+      variant: currentView === 'blog' ? 'default' : 'ghost',
+    },
+    {
+      title: 'Recursos',
       icon: <Palette className="h-5 w-5" />,
-      view: 'resources',
-      variant: currentView === 'resources' ? 'default' : 'ghost',
+      view: 'recursos',
+      variant: currentView === 'recursos' ? 'default' : 'ghost',
     },
     {
-      title: 'Calendar',
+      title: 'Calendario',
       icon: <Calendar className="h-5 w-5" />,
-      view: 'calendar',
-      variant: currentView === 'calendar' ? 'default' : 'ghost',
+      view: 'calendario',
+      variant: currentView === 'calendario' ? 'default' : 'ghost',
     },
     {
-      title: 'Scripts',
+      title: 'Guiones',
       icon: <FileText className="h-5 w-5" />,
       view: 'scripts',
       variant: currentView === 'scripts' ? 'default' : 'ghost',
@@ -101,10 +63,16 @@ export function SideNav({ currentView, onNavigate, className }: SideNavProps) {
       variant: currentView === 'prompts' ? 'default' : 'ghost',
     },
     {
-      title: 'Thumbnails',
+      title: 'Miniaturas',
       icon: <Image className="h-5 w-5" />,
       view: 'thumbnails',
       variant: currentView === 'thumbnails' ? 'default' : 'ghost',
+    },
+    {
+      title: 'Infografías',
+      icon: <BarChart3 className="h-5 w-5" />,
+      view: 'infografias',
+      variant: currentView === 'infografias' ? 'default' : 'ghost',
     },
     {
       title: 'Chat',
@@ -113,70 +81,70 @@ export function SideNav({ currentView, onNavigate, className }: SideNavProps) {
       variant: currentView === 'chat' ? 'default' : 'ghost',
     },
     {
-      title: 'Blog',
-      icon: <BookOpen className="h-5 w-5" />,
-      view: 'blog',
-      variant: currentView === 'blog' ? 'default' : 'ghost',
-    },
-    {
       title: 'Aprendizaje',
       icon: <GraduationCap className="h-5 w-5" />,
-      view: 'learning',
-      variant: currentView === 'learning' ? 'default' : 'ghost',
+      view: 'aprendizaje',
+      variant: currentView === 'aprendizaje' ? 'default' : 'ghost',
+    },
+    {
+      title: 'Proyectos',
+      icon: <FolderOpen className="h-5 w-5" />,
+      view: 'proyectos',
+      variant: currentView === 'proyectos' ? 'default' : 'ghost',
+    },
+    {
+      title: 'SVG Viewer',
+      icon: <FileImage className="h-5 w-5" />,
+      view: 'svg',
+      variant: currentView === 'svg' ? 'default' : 'ghost',
     },
   ];
 
   return (
-    <div
-      className={cn(
-        'pb-12 hidden md:block border-r w-[240px] shrink-0',
-        className
-      )}
-    >
-      <div className="space-y-4 py-4">
-        <div className="px-4 py-2">
-          <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
-            Main Navigation
-          </h2>
-          <div className="space-y-1">
-            {navItems.map((item) => (
-              <Button
-                key={item.view}
-                variant={item.variant}
-                size="sm"
-                className="w-full justify-start"
-                onClick={() => onNavigate(item.view)}
-              >
-                {item.icon}
-                <span className="ml-2">{item.title}</span>
-              </Button>
-            ))}
-          </div>
+    <div className="space-y-4">
+      <div className="px-2">
+        <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+          Navegación Principal
+        </h2>
+        <div className="space-y-1">
+          {navItems.map((item) => (
+            <Link
+              key={item.view}
+              to={`/${item.view}`}
+              className={cn(
+                'flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-all hover:text-accent-foreground',
+                item.variant === 'default'
+                  ? 'bg-accent text-accent-foreground'
+                  : 'text-muted-foreground hover:bg-accent'
+              )}
+            >
+              {item.icon}
+              <span>{item.title}</span>
+            </Link>
+          ))}
         </div>
-        {subNavItems.length > 0 && (
-          <>
-            <Separator />
-            <div className="px-4 py-2">
-              <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
-                {currentView.charAt(0).toUpperCase() + currentView.slice(1)}
-              </h2>
-              <ScrollArea className="h-[300px]">
-                <div className="space-y-1 px-2">
-                  {subNavItems.map((item, index) => (
-                    <Link
-                      key={index}
-                      href={item.href}
-                      className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-accent transition-colors"
-                    >
-                      {item.icon}
-                      <span>{item.title}</span>
-                    </Link>
-                  ))}
-                </div>
-              </ScrollArea>
-            </div>
-          </>
-        )}
+        
+        <Separator />
+        
+        <div className="px-2 space-y-2">
+          <Link to="/precios">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full justify-start"
+            >
+              💎 Plan Pro
+            </Button>
+          </Link>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="w-full justify-start"
+            onClick={onShowLanding}
+          >
+            🎯 Presentación
+          </Button>
+        </div>
       </div>
     </div>
   );

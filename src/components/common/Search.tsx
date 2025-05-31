@@ -10,7 +10,7 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from '@/hooks/use-navigate';
+import { useNavigate } from 'react-router-dom';
 import { SearchResult, searchContent } from '@/lib/search';
 import { mockPosts } from '@/data/mockPosts';
 import { mockEvents } from '@/data/mockEvents';
@@ -29,6 +29,7 @@ export function Search() {
   const [loading, setLoading] = useState(false);
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSearch = useCallback(async (searchQuery: string) => {
     if (!searchQuery.trim()) {
@@ -80,7 +81,7 @@ export function Search() {
 
     setOpen(false);
     if (result.url) {
-      window.location.href = result.url;
+      navigate(result.url);
     }
   };
 

@@ -27,11 +27,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CreditCard, LogOut, Settings, User } from 'lucide-react';
+import { CreditCard, LogOut, Settings, User, Crown } from 'lucide-react';
 import { AIProvider, AIModel, GeminiModel, OpenAIModel, AnthropicModel, CohereModel, MistralModel } from '@/types/ai';
 
 export function UserNav() {
-  const { user, logout } = useAuth();
+  const { user, logout, hasActiveSubscription } = useAuth();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [aiProvider, setAIProvider] = useState<AIProvider>('gemini');
   const [selectedModel, setSelectedModel] = useState<AIModel>('gemini-pro');
@@ -322,12 +322,25 @@ export function UserNav() {
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">
-                  {user?.name || 'John Doe'}
-                </p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-medium leading-none">
+                    {user?.name || 'John Doe'}
+                  </p>
+                  {hasActiveSubscription() && (
+                    <div className="flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-semibold rounded-full">
+                      <Crown className="h-3 w-3" />
+                      <span>PRO</span>
+                    </div>
+                  )}
+                </div>
                 <p className="text-xs leading-none text-muted-foreground">
                   {user?.email || 'john@example.com'}
                 </p>
+                {hasActiveSubscription() && (
+                  <p className="text-xs leading-none text-green-600 font-medium">
+                    Plan Pro Activo
+                  </p>
+                )}
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />

@@ -7,7 +7,7 @@ export async function redirectToCheckout(productKey: keyof typeof stripeConfig) 
   }
 
   try {
-    const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/stripe-checkout`, {
+    const response = await fetch(`https://nuemiypjlizdfaeebrbm.supabase.co/functions/v1/stripe-checkout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

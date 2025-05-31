@@ -93,6 +93,11 @@ const UsageLimits: React.FC = () => {
                 value={percentage} 
                 className="h-2"
               />
+              {remaining <= 2 && remaining > 0 && (
+                <p className="text-xs text-yellow-600">
+                  ⚠️ Te quedan {remaining} usos
+                </p>
+              )}
               {remaining === 0 && (
                 <p className="text-xs text-red-500">
                   Límite alcanzado. Se reinicia mañana.

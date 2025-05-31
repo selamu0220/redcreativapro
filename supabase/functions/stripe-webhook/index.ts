@@ -2,7 +2,7 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import Stripe from 'npm:stripe@17.7.0';
 import { createClient } from 'npm:@supabase/supabase-js@2.49.1';
 
-const stripeSecret = Deno.env.get('STRIPE_SECRET_KEY')!;
+const stripeSecret = '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';
 const stripeWebhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET')!;
 const stripe = new Stripe(stripeSecret, {
   appInfo: {
@@ -183,9 +183,69 @@ async function syncCustomerFromStripe(customerId: string) {
       console.error('Error syncing subscription:', subError);
       throw new Error('Failed to sync subscription in database');
     }
+    
+    // Update user subscription status in users table
+    await updateUserSubscriptionStatus(customerId, subscription);
+    
     console.info(`Successfully synced subscription for customer: ${customerId}`);
   } catch (error) {
     console.error(`Failed to sync subscription for customer ${customerId}:`, error);
     throw error;
+  }
+}
+
+async function updateUserSubscriptionStatus(customerId: string, subscription: Stripe.Subscription) {
+  try {
+    // Determine subscription type based on price_id
+    const priceId = subscription.items.data[0].price.id;
+    let subscriptionType = 'free';
+    
+    // Map price IDs to subscription types
+    if (priceId === 'price_1OyKLGHYNXVrZvHHFPVFGgWq') {
+      subscriptionType = 'monthly';
+    } else if (priceId === 'price_1OyKLGHYNXVrZvHHmQxhWqL9') {
+      subscriptionType = 'annual';
+    }
+    
+    // Calculate subscription end date
+    const subscriptionEndDate = new Date(subscription.current_period_end * 1000);
+    
+    // Update user subscription in users table
+    const { error: userError } = await supabase
+      .from('users')
+      .update({
+        subscription_type: subscriptionType,
+        subscription_end_date: subscriptionEndDate.toISOString(),
+        stripe_customer_id: customerId,
+        updated_at: new Date().toISOString()
+      })
+      .eq('stripe_customer_id', customerId);
+    
+    if (userError) {
+      console.error('Error updating user subscription:', userError);
+      // Try to find user by email if customer_id lookup fails
+      const customer = await stripe.customers.retrieve(customerId);
+      if (customer && !customer.deleted && customer.email) {
+        const { error: emailError } = await supabase
+          .from('users')
+          .update({
+            subscription_type: subscriptionType,
+            subscription_end_date: subscriptionEndDate.toISOString(),
+            stripe_customer_id: customerId,
+            updated_at: new Date().toISOString()
+          })
+          .eq('email', customer.email);
+        
+        if (emailError) {
+          console.error('Error updating user by email:', emailError);
+        } else {
+          console.info(`Successfully updated user subscription by email: ${customer.email}`);
+        }
+      }
+    } else {
+      console.info(`Successfully updated user subscription for customer: ${customerId}`);
+    }
+  } catch (error) {
+    console.error('Error in updateUserSubscriptionStatus:', error);
   }
 }

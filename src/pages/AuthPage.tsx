@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { AuthForm } from '@/components/auth/AuthForm';
+import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner';
 
 interface AuthPageProps {
   onClose?: () => void;
@@ -24,6 +25,7 @@ export function AuthPage({ onClose }: AuthPageProps) {
             Gestiona tu contenido creativo en un solo lugar
           </p>
         </div>
+        <EmailVerificationBanner />
         <AuthForm />
       </div>
     </div>

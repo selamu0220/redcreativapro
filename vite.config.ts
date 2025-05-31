@@ -9,7 +9,19 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html')
+      }
+    }
+  },
   optimizeDeps: {
+    include: ['react', 'react-dom'],
     exclude: ['lucide-react'],
   },
+  server: {
+    host: true,
+    port: 5173
+  }
 });

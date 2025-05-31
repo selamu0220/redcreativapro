@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Plus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { slugify } from '@/lib/utils';
 
 export function BlogView() {
@@ -16,10 +17,12 @@ export function BlogView() {
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Handle URL-based navigation
   useEffect(() => {
-    const path = window.location.pathname;
+    const path = location.pathname;
     const match = path.match(/\/blog\/(.+)-([a-zA-Z0-9]+)$/);
     
     if (match) {
@@ -29,7 +32,7 @@ export function BlogView() {
         setSelectedPost(post);
       }
     }
-  }, [posts]);
+  }, [posts, location.pathname]);
 
   const handleSavePost = (post: Post) => {
     if (editingPost) {
@@ -62,15 +65,15 @@ export function BlogView() {
 
   const handlePostSelect = (post: Post) => {
     setSelectedPost(post);
-    // Update URL without page reload
+    // Update URL with React Router
     const url = `/blog/${slugify(post.title)}-${post.id}`;
-    window.history.pushState({}, '', url);
+    navigate(url, { replace: true });
   };
 
   const handleBack = () => {
     setSelectedPost(null);
-    // Update URL without page reload
-    window.history.pushState({}, '', '/blog');
+    // Update URL with React Router
+    navigate('/blog', { replace: true });
   };
 
   return (

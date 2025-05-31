@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Post } from '@/types/blog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -9,6 +9,7 @@ import { formatDate } from '@/lib/dateUtils';
 import { PlusCircle, ArrowRight, Edit2, Trash2, Link as LinkIcon } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { mockResources } from '@/data/mockResources';
 import { BlogEditor } from './BlogEditor';
 import { slugify } from '@/lib/utils';
@@ -116,9 +117,11 @@ export function MiniBlog() {
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const path = window.location.pathname;
+    const path = location.pathname;
     const match = path.match(/\/blog\/(.+)$/);
     
     if (match) {
@@ -128,7 +131,7 @@ export function MiniBlog() {
         setSelectedPost(post);
       }
     }
-  }, [posts]);
+  }, [posts, location.pathname]);
 
   const recommendedResources = mockResources
     .filter(resource => 
@@ -164,7 +167,7 @@ export function MiniBlog() {
     setPosts(posts.filter(p => p.id !== postId));
     setSelectedPost(null);
     if (selectedPost?.id === postId) {
-      window.history.pushState({}, '', '/blog');
+      navigate('/blog', { replace: true });
     }
     toast({
       title: "Artículo eliminado",
@@ -193,17 +196,17 @@ export function MiniBlog() {
   const handlePostClick = (post: Post) => {
     setSelectedPost(post);
     const slug = `${slugify(post.title)}-${post.id}`;
-    window.history.pushState({}, '', `/blog/${slug}`);
+    navigate(`/blog/${slug}`, { replace: true });
   };
 
   const handleClosePost = () => {
     setSelectedPost(null);
-    window.history.pushState({}, '', '/blog');
+    navigate('/blog', { replace: true });
   };
 
   const handleCopyLink = (post: Post) => {
     const slug = `${slugify(post.title)}-${post.id}`;
-    const url = `${window.location.origin}/blog/${slug}`;
+    const url = `${location.protocol}//${location.host}/blog/${slug}`;
     navigator.clipboard.writeText(url);
     toast({
       title: "Enlace copiado",
