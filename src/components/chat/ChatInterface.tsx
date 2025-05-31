@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +14,7 @@ import { AIProviderDialog } from './AIProviderDialog';
 import { mockPrompts } from '@/data/mockPrompts';
 import { Prompt } from '@/types/prompts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import UsageLimits from '@/components/common/UsageLimits';
 
 interface Message {
   id: string;
@@ -527,6 +528,11 @@ export function ChatInterface() {
         onOpenChange={setIsAIDialogOpen}
         onContinue={handleSend}
       />
+      
+      {/* Usage Limits for Free Users */}
+      <div className="mt-4">
+        <UsageLimits />
+      </div>
     </div>
   );
 }

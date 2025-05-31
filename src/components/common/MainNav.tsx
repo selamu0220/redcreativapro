@@ -165,7 +165,7 @@ export function MainNav({ currentView, onNavigate, onShowPricing }: MainNavProps
           className="ml-2 font-semibold"
           onClick={onShowPricing}
         >
-          Prueba Gratis
+          Plan Pro
         </Button>
       </nav>
     </div>

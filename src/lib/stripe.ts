@@ -1,7 +1,7 @@
-import { products } from '@/stripe-config';
+import { stripeConfig } from '@/stripe-config';
 
-export async function redirectToCheckout(productKey: keyof typeof products) {
-  const product = products[productKey];
+export async function redirectToCheckout(productKey: keyof typeof stripeConfig) {
+  const product = stripeConfig[productKey];
   if (!product) {
     throw new Error('Plan no válido');
   }
@@ -18,7 +18,6 @@ export async function redirectToCheckout(productKey: keyof typeof products) {
         success_url: `${window.location.origin}/success`,
         cancel_url: `${window.location.origin}/pricing`,
         mode: product.mode,
-        trial_period_days: product.trialDays,
       }),
     });
 

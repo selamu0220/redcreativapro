@@ -28,14 +28,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CreditCard, LogOut, Settings, User } from 'lucide-react';
-import { AIProvider, GeminiModel } from '@/types/ai';
+import { AIProvider, AIModel, GeminiModel, OpenAIModel, AnthropicModel, CohereModel, MistralModel } from '@/types/ai';
 
 export function UserNav() {
   const { user, logout } = useAuth();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [aiProvider, setAIProvider] = useState<AIProvider>('gemini');
-  const [geminiModel, setGeminiModel] = useState<GeminiModel>('gemini-pro');
+  const [selectedModel, setSelectedModel] = useState<AIModel>('gemini-pro');
   const [apiKey, setApiKey] = useState('');
+  const [baseUrl, setBaseUrl] = useState('');
+  const [temperature, setTemperature] = useState(0.7);
+  const [maxTokens, setMaxTokens] = useState(2048);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -44,8 +47,11 @@ export function UserNav() {
       if (storedSettings) {
         const settings = JSON.parse(storedSettings);
         setAIProvider(settings.provider || 'gemini');
-        setGeminiModel(settings.model || 'gemini-pro');
+        setSelectedModel(settings.model || 'gemini-pro');
         setApiKey(settings.apiKey || '');
+        setBaseUrl(settings.baseUrl || '');
+        setTemperature(settings.temperature || 0.7);
+        setMaxTokens(settings.maxTokens || 2048);
       }
     }
   }, [isSettingsOpen]);
@@ -93,9 +99,73 @@ export function UserNav() {
           return false;
         }
         break;
+      case 'cohere':
+        if (trimmedKey.length < 20) {
+          toast({
+            title: "API Key inválida",
+            description: "La API key de Cohere debe tener al menos 20 caracteres",
+            variant: "destructive"
+          });
+          return false;
+        }
+        break;
+      case 'mistral':
+        if (trimmedKey.length < 20) {
+          toast({
+            title: "API Key inválida",
+            description: "La API key de Mistral debe tener al menos 20 caracteres",
+            variant: "destructive"
+          });
+          return false;
+        }
+        break;
+      default:
+        break;
     }
 
     return true;
+  };
+
+  const getAvailableModels = () => {
+    switch (aiProvider) {
+      case 'gemini':
+        return [
+          { value: 'gemini-pro', label: 'Gemini Pro' },
+          { value: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro' },
+          { value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash' },
+          { value: 'gemini-2.0-flash', label: 'Gemini 2.0 Flash' }
+        ];
+      case 'openai':
+        return [
+          { value: 'gpt-4', label: 'GPT-4' },
+          { value: 'gpt-4-turbo', label: 'GPT-4 Turbo' },
+          { value: 'gpt-4o', label: 'GPT-4o' },
+          { value: 'gpt-4o-mini', label: 'GPT-4o Mini' },
+          { value: 'gpt-3.5-turbo', label: 'GPT-3.5 Turbo' }
+        ];
+      case 'anthropic':
+        return [
+          { value: 'claude-3-opus', label: 'Claude 3 Opus' },
+          { value: 'claude-3-sonnet', label: 'Claude 3 Sonnet' },
+          { value: 'claude-3-haiku', label: 'Claude 3 Haiku' },
+          { value: 'claude-3-5-sonnet', label: 'Claude 3.5 Sonnet' }
+        ];
+      case 'cohere':
+        return [
+          { value: 'command-r', label: 'Command R' },
+          { value: 'command-r-plus', label: 'Command R Plus' },
+          { value: 'command-light', label: 'Command Light' }
+        ];
+      case 'mistral':
+        return [
+          { value: 'mistral-large', label: 'Mistral Large' },
+          { value: 'mistral-medium', label: 'Mistral Medium' },
+          { value: 'mistral-small', label: 'Mistral Small' },
+          { value: 'codestral', label: 'Codestral' }
+        ];
+      default:
+        return [];
+    }
   };
 
   const handleSaveSettings = () => {
@@ -103,11 +173,16 @@ export function UserNav() {
       return;
     }
 
-    localStorage.setItem('aiSettings', JSON.stringify({
+    const settings = {
       provider: aiProvider,
-      model: geminiModel,
-      apiKey: apiKey.trim()
-    }));
+      model: selectedModel,
+      apiKey: apiKey.trim(),
+      temperature,
+      maxTokens,
+      ...(baseUrl && { baseUrl: baseUrl.trim() })
+    };
+
+    localStorage.setItem('aiSettings', JSON.stringify(settings));
 
     toast({
       title: "Configuración guardada",
@@ -133,8 +208,9 @@ export function UserNav() {
               Modelos disponibles:
             </p>
             <ul className="list-disc list-inside text-sm space-y-1">
-              <li>Gemini Pro: Modelo más reciente y potente</li>
-              <li>Gemini 1.5 Pro: Próximamente disponible</li>
+              <li>Gemini Pro: Modelo estable</li>
+              <li>Gemini 1.5 Pro: Modelo avanzado</li>
+              <li>Gemini 2.0 Flash: Modelo más reciente y rápido</li>
             </ul>
           </div>
         );
@@ -148,8 +224,14 @@ export function UserNav() {
               <li>La key debe comenzar con 'sk-'</li>
             </ol>
             <p className="text-sm text-muted-foreground mt-2">
-              Modelo utilizado: GPT-4 Turbo
+              Modelos disponibles:
             </p>
+            <ul className="list-disc list-inside text-sm space-y-1">
+              <li>GPT-4: Modelo estable</li>
+              <li>GPT-4 Turbo: Modelo mejorado</li>
+              <li>GPT-4o: Modelo más reciente y potente</li>
+              <li>GPT-3.5 Turbo: Modelo más económico</li>
+            </ul>
           </div>
         );
       case 'anthropic':
@@ -157,13 +239,62 @@ export function UserNav() {
           <div className="space-y-2">
             <p>Obtén tu API key del panel de Anthropic:</p>
             <ol className="list-decimal list-inside space-y-1 text-sm">
-              <li>Ve a <a href="https://console.anthropic.com/account/keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Anthropic Console</a></li>
+              <li>Ve a <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Anthropic Console</a></li>
               <li>Crea una nueva API key</li>
               <li>La key debe comenzar con 'sk-ant-'</li>
             </ol>
             <p className="text-sm text-muted-foreground mt-2">
-              Modelo utilizado: Claude 3 Opus
+              Modelos disponibles:
             </p>
+            <ul className="list-disc list-inside text-sm space-y-1">
+              <li>Claude 3 Opus: Modelo más potente</li>
+              <li>Claude 3 Sonnet: Equilibrio entre rendimiento y velocidad</li>
+              <li>Claude 3 Haiku: Modelo más rápido</li>
+              <li>Claude 3.5 Sonnet: Modelo más reciente</li>
+            </ul>
+          </div>
+        );
+      case 'cohere':
+        return (
+          <div className="space-y-2">
+            <p>Obtén tu API key del panel de Cohere:</p>
+            <ol className="list-decimal list-inside space-y-1 text-sm">
+              <li>Ve a <a href="https://dashboard.cohere.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Cohere Dashboard</a></li>
+              <li>Crea una nueva API key</li>
+            </ol>
+            <p className="text-sm text-muted-foreground mt-2">
+              Modelos disponibles:
+            </p>
+            <ul className="list-disc list-inside text-sm space-y-1">
+              <li>Command R: Modelo estándar</li>
+              <li>Command R Plus: Modelo avanzado</li>
+              <li>Command Light: Modelo ligero y rápido</li>
+            </ul>
+          </div>
+        );
+      case 'mistral':
+        return (
+          <div className="space-y-2">
+            <p>Obtén tu API key del panel de Mistral:</p>
+            <ol className="list-decimal list-inside space-y-1 text-sm">
+              <li>Ve a <a href="https://console.mistral.ai/api-keys/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Mistral Console</a></li>
+              <li>Crea una nueva API key</li>
+            </ol>
+            <p className="text-sm text-muted-foreground mt-2">
+              Modelos disponibles:
+            </p>
+            <ul className="list-disc list-inside text-sm space-y-1">
+              <li>Mistral Large: Modelo más potente</li>
+              <li>Mistral Medium: Equilibrio entre rendimiento y velocidad</li>
+              <li>Mistral Small: Modelo más económico</li>
+              <li>Codestral: Especializado en código</li>
+            </ul>
+          </div>
+        );
+      default:
+        return (
+          <div className="space-y-2">
+            <p>Selecciona un proveedor de IA para ver las instrucciones.</p>
           </div>
         );
     }
@@ -240,27 +371,30 @@ export function UserNav() {
                   <SelectItem value="gemini">Google Gemini</SelectItem>
                   <SelectItem value="openai">OpenAI</SelectItem>
                   <SelectItem value="anthropic">Anthropic/Claude</SelectItem>
+                  <SelectItem value="cohere">Cohere</SelectItem>
+                  <SelectItem value="mistral">Mistral AI</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            {aiProvider === 'gemini' && (
-              <div className="grid gap-2">
-                <Label>Modelo</Label>
-                <Select
-                  value={geminiModel}
-                  onValueChange={(value: GeminiModel) => setGeminiModel(value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona un modelo" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="gemini-pro">Gemini Pro</SelectItem>
-                    <SelectItem value="gemini-1.5-pro">Gemini 1.5 Pro (Próximamente)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
+            <div className="grid gap-2">
+              <Label>Modelo</Label>
+              <Select
+                value={selectedModel}
+                onValueChange={(value: AIModel) => setSelectedModel(value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona un modelo" />
+                </SelectTrigger>
+                <SelectContent>
+                  {getAvailableModels().map((model) => (
+                    <SelectItem key={model.value} value={model.value}>
+                      {model.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
             <div className="grid gap-2">
               <Label>API Key</Label>
@@ -272,6 +406,51 @@ export function UserNav() {
               />
               <div className="text-sm text-muted-foreground">
                 {getProviderInstructions()}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="grid gap-2">
+                <Label>Temperatura</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  max="2"
+                  step="0.1"
+                  value={temperature}
+                  onChange={(e) => setTemperature(parseFloat(e.target.value))}
+                  placeholder="0.7"
+                />
+                <div className="text-xs text-muted-foreground">
+                  Controla la creatividad (0-2)
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <Label>Tokens Máximos</Label>
+                <Input
+                  type="number"
+                  min="1"
+                  max="8192"
+                  value={maxTokens}
+                  onChange={(e) => setMaxTokens(parseInt(e.target.value))}
+                  placeholder="2048"
+                />
+                <div className="text-xs text-muted-foreground">
+                  Longitud máxima de respuesta
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-2">
+              <Label>URL Base (Opcional)</Label>
+              <Input
+                type="url"
+                value={baseUrl}
+                onChange={(e) => setBaseUrl(e.target.value)}
+                placeholder="https://api.ejemplo.com/v1"
+              />
+              <div className="text-xs text-muted-foreground">
+                Para proveedores personalizados o proxies
               </div>
             </div>
 

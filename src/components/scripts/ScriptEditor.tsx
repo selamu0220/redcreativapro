@@ -25,6 +25,8 @@ import { v4 } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Sparkles } from 'lucide-react';
 import { generateScriptWithAI } from '@/lib/ai';
+import UsageLimits from '@/components/common/UsageLimits';
+import { AIProviderDialog } from '@/components/chat/AIProviderDialog';
 
 const formSchema = z.object({
   title: z.string().min(1, 'El título es requerido'),
@@ -44,6 +46,7 @@ interface ScriptEditorProps {
 export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
   const { toast } = useToast();
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isAIDialogOpen, setIsAIDialogOpen] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -86,20 +89,28 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
       return;
     }
 
+    // Check if AI settings are configured
+    const aiSettings = localStorage.getItem('aiSettings');
+    if (!aiSettings) {
+      setIsAIDialogOpen(true);
+      return;
+    }
+
     setIsGenerating(true);
 
     try {
-      const content = await generateScriptWithAI(title, category, description);
+      const prompt = `Genera un guion detallado para ${category} con el título "${title}"${description ? ` y la siguiente descripción: ${description}` : ''}. El guion debe ser profesional, creativo y estar bien estructurado.`;
+      const content = await generateScriptWithAI(prompt);
       form.setValue('content', content);
       
       toast({
         title: "Guion generado",
         description: "Se ha generado un nuevo guion con IA"
       });
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Error",
-        description: "No se pudo generar el guion. Por favor, verifica tu API key de Gemini.",
+        description: error.message || "No se pudo generar el guion. Por favor, verifica tu configuración de IA.",
         variant: "destructive"
       });
     } finally {
@@ -299,6 +310,17 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
           </Button>
         </form>
       </Form>
+      
+      {/* Usage Limits for Free Users */}
+      <div className="mt-6">
+        <UsageLimits />
+      </div>
+      
+      <AIProviderDialog
+        open={isAIDialogOpen}
+        onOpenChange={setIsAIDialogOpen}
+        onContinue={generateWithAI}
+      />
     </div>
   );
 }

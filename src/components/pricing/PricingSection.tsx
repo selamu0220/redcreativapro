@@ -8,75 +8,75 @@ import { useAuth } from '@/contexts/AuthContext';
 
 const plans = [
   {
-    name: 'Prueba Gratuita',
-    description: 'Prueba Red Creativa Pro durante 14 días sin compromiso',
+    name: 'Red Creativa (Gratuito)',
+    description: 'Perfecto para empezar - Todas las funciones con límites diarios',
     price: '0.00',
-    interval: '14 días',
+    interval: 'siempre',
     features: [
+      '10 consultas de IA por día',
+      '20 prompts por día',
+      '5 scripts generados por día',
       'Acceso a todos los recursos',
-      'Plantillas exclusivas',
-      'Herramientas premium',
+      'Plantillas básicas',
       'Calendario completo',
       'Sin tarjeta de crédito',
-      'Cancela cuando quieras',
+      'Límites se reinician diariamente',
     ],
-    productKey: 'redCreativaPro' as const,
-    highlight: true,
-    isTrial: true,
+    highlight: false,
+    isFree: true,
   },
   {
     name: 'Red Creativa Pro (Mensual)',
-    description: 'Acceso completo con todas las actualizaciones mensuales',
+    description: 'Uso ilimitado + funciones premium para profesionales',
     price: '5.00',
     interval: 'mes',
     features: [
-      'Acceso a todos los recursos',
-      'Plantillas exclusivas',
-      'Herramientas premium',
-      'Calendario completo',
+      'Consultas de IA ILIMITADAS',
+      'Prompts ILIMITADOS',
+      'Scripts ILIMITADOS',
+      'Plantillas premium exclusivas',
+      'Herramientas avanzadas de IA',
       'Soporte prioritario',
       'Actualizaciones mensuales',
+      'Exportación sin marca de agua',
     ],
     stripeLink: 'https://buy.stripe.com/9B69ASdqb6NLgfgce88og02',
-    buttonText: 'Suscribirse Ahora',
+    buttonText: 'Upgrade a Pro',
+    highlight: true,
   },
   {
     name: 'Red Creativa Pro (Anual)',
-    description: 'Acceso completo con descuento anual',
+    description: 'Uso ilimitado + descuento anual del 50%',
     price: '29.00',
     interval: 'año',
     features: [
-      'Todo lo incluido en el plan mensual',
-      'Ahorra 2 meses gratis',
+      'Todo ILIMITADO como el plan mensual',
+      'Ahorra $31 al año (50% descuento)',
       'Soporte prioritario',
       'Acceso anticipado a nuevas funciones',
       'Workshops exclusivos',
       'Descuentos en servicios adicionales',
     ],
     stripeLink: 'https://buy.stripe.com/7sY28q2Lxfkh1kmba48og03',
-    buttonText: 'Suscribirse Anualmente',
+    buttonText: 'Upgrade Anual',
   },
 ];
 
 export function PricingSection() {
   const [loading, setLoading] = useState<string | null>(null);
   const { toast } = useToast();
-  const { user, getRemainingTrialDays } = useAuth();
+  const { user } = useAuth();
 
   const handleSubscribe = (stripeLink: string) => {
     window.location.href = stripeLink;
   };
-
-  const remainingDays = getRemainingTrialDays();
 
   return (
     <div className="py-12">
       <div className="text-center mb-10">
         <h2 className="text-3xl font-bold tracking-tight">Planes y Precios</h2>
         <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-          {user?.isTrialActive 
-            ? `Tu prueba gratuita está activa. Te quedan ${remainingDays} días.`
-            : 'Comienza con una prueba gratuita de 14 días sin tarjeta de crédito. Accede a todas las funciones premium y decide si Red Creativa es para ti.'}
+          Red Creativa es completamente gratuito para usar. Upgrade a Pro para acceder a funciones premium y herramientas avanzadas de IA.
         </p>
       </div>
 
@@ -91,7 +91,7 @@ export function PricingSection() {
           >
             {plan.highlight && (
               <div className="absolute top-0 right-0 bg-primary text-primary-foreground px-3 py-1 text-sm font-medium rounded-bl">
-                {user?.isTrialActive ? `${remainingDays} días restantes` : 'Recomendado'}
+                Recomendado
               </div>
             )}
             <CardHeader>
@@ -113,7 +113,16 @@ export function PricingSection() {
               </ul>
             </CardContent>
             <CardFooter>
-              {!plan.isTrial && plan.stripeLink && (
+              {plan.isFree ? (
+                <Button 
+                  className="w-full" 
+                  variant="outline"
+                  size="lg"
+                  disabled
+                >
+                  Plan Actual
+                </Button>
+              ) : plan.stripeLink && (
                 <Button 
                   className="w-full" 
                   onClick={() => handleSubscribe(plan.stripeLink!)}
@@ -122,16 +131,6 @@ export function PricingSection() {
                   disabled={loading === plan.name}
                 >
                   {loading === plan.name ? 'Procesando...' : plan.buttonText}
-                </Button>
-              )}
-              {plan.isTrial && user?.isTrialActive && (
-                <Button 
-                  className="w-full" 
-                  variant="outline"
-                  size="lg"
-                  disabled
-                >
-                  Prueba Activa
                 </Button>
               )}
             </CardFooter>
