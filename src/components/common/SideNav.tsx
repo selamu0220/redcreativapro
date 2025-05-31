@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog' | 'courses';
+type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog' | 'learning';
 
 interface SideNavProps {
   currentView: ViewType;
@@ -119,10 +119,10 @@ export function SideNav({ currentView, onNavigate, className }: SideNavProps) {
       variant: currentView === 'blog' ? 'default' : 'ghost',
     },
     {
-      title: 'Cursos',
+      title: 'Aprendizaje',
       icon: <GraduationCap className="h-5 w-5" />,
-      view: 'courses',
-      variant: currentView === 'courses' ? 'default' : 'ghost',
+      view: 'learning',
+      variant: currentView === 'learning' ? 'default' : 'ghost',
     },
   ];
 

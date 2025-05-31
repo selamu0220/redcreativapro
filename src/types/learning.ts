@@ -12,7 +12,7 @@ export interface Task {
   isCompleted: boolean;
 }
 
-export interface CourseSection {
+export interface LearningSection {
   id: string;
   title: string;
   videos: Video[];
@@ -29,13 +29,13 @@ export interface Review {
   createdAt: string; // ISO date string
 }
 
-export interface Course {
+export interface Learning {
   id: string;
   title: string;
   description: string;
   instructor: string;
   thumbnailUrl?: string; // URL for the course thumbnail
-  sections: CourseSection[];
+  sections: LearningSection[];
   overallRating: number; // Average rating
   reviews: Review[];
   tags?: string[]; // e.g., ['React', 'TypeScript', 'Web Development']

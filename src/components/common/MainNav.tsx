@@ -3,7 +3,7 @@ import { Link } from '@/components/ui/link';
 import { Calendar, FileText, BookOpen, Sparkles, Palette, Image, MessageSquare, GraduationCap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog' | 'courses';
+type ViewType = 'resources' | 'calendar' | 'scripts' | 'prompts' | 'thumbnails' | 'chat' | 'blog' | 'learning';
 
 interface MainNavProps {
   currentView: ViewType;
@@ -147,17 +147,17 @@ export function MainNav({ currentView, onNavigate, onShowPricing }: MainNavProps
           href="#"
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 px-2 py-1.5 rounded-md',
-            currentView === 'courses'
+            currentView === 'learning'
               ? 'text-primary bg-muted'
               : 'text-muted-foreground'
           )}
           onClick={(e) => {
             e.preventDefault();
-            onNavigate('courses');
+            onNavigate('learning');
           }}
         >
           <GraduationCap className="h-4 w-4" />
-          <span className="hidden md:inline">Cursos</span>
+          <span className="hidden md:inline">Aprendizaje</span>
         </Link>
         <Button 
           variant="default" 

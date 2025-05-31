@@ -8,13 +8,22 @@ import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import { ThumbnailSettings, ThumbnailImage } from '@/types/thumbnails';
+import { ThumbnailSettings, ThumbnailImage, ThumbnailTemplate } from '@/types/thumbnails';
 import { ThumbnailTemplateSelector } from './ThumbnailTemplateSelector';
 import { v4, cn } from '@/lib/utils';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { 
   Image, Type, Palette, Settings, Sparkles, Download, Plus, X, 
-  FileImage, Upload, FolderUp, Maximize2, Minimize2, LayoutTemplate
+  FileImage, Upload, FolderUp, Maximize2, Minimize2, LayoutTemplate, Save
 } from 'lucide-react';
+
+const formatPresets = {
+  youtube: { width: 1280, height: 720, name: 'YouTube (16:9)' },
+  tiktok: { width: 1080, height: 1920, name: 'TikTok/Instagram Stories (9:16)' },
+  instagram: { width: 1080, height: 1080, name: 'Instagram Post (1:1)' },
+  twitter: { width: 1200, height: 675, name: 'Twitter (16:9)' },
+  facebook: { width: 1200, height: 630, name: 'Facebook (1.91:1)' }
+};
 
 const defaultSettings: ThumbnailSettings = {
   title: 'Mi Título',
@@ -44,6 +53,11 @@ export function ThumbnailCreator() {
   const [activeTab, setActiveTab] = useState('text');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isTemplateSelectorOpen, setIsTemplateSelectorOpen] = useState(false);
+  const [isSaveTemplateOpen, setIsSaveTemplateOpen] = useState(false);
+  const [templateName, setTemplateName] = useState('');
+  const [templateDescription, setTemplateDescription] = useState('');
+  const [templateCategory, setTemplateCategory] = useState<'gaming' | 'tech' | 'lifestyle' | 'education' | 'business'>('tech');
+  const [selectedFormat, setSelectedFormat] = useState<keyof typeof formatPresets>('youtube');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
@@ -163,10 +177,85 @@ export function ThumbnailCreator() {
 
   const handleTemplateSelect = (template: ThumbnailTemplate) => {
     setSettings(template.settings);
+    // Actualizar el formato seleccionado basado en las dimensiones de la plantilla
+    const templateFormat = Object.entries(formatPresets).find(
+      ([_, preset]) => preset.width === template.settings.width && preset.height === template.settings.height
+    );
+    if (templateFormat) {
+      setSelectedFormat(templateFormat[0] as keyof typeof formatPresets);
+    }
     toast({
       title: 'Plantilla cargada',
       description: `Se ha cargado la plantilla "${template.name}"`
     });
+  };
+
+  const handleFormatChange = (format: keyof typeof formatPresets) => {
+    const preset = formatPresets[format];
+    setSelectedFormat(format);
+    
+    // Ajustar tamaños de fuente basados en el formato
+    let titleFontSize = 72;
+    let subtitleFontSize = 36;
+    
+    if (format === 'tiktok') {
+      // Para formato vertical, usar fuentes más grandes
+      titleFontSize = 96;
+      subtitleFontSize = 48;
+    } else if (format === 'instagram') {
+      // Para formato cuadrado, usar fuentes medianas
+      titleFontSize = 80;
+      subtitleFontSize = 40;
+    }
+    
+    setSettings({
+      ...settings,
+      width: preset.width,
+      height: preset.height,
+      titleFontSize,
+      subtitleFontSize
+    });
+    
+    toast({
+      title: 'Formato cambiado',
+      description: `Cambiado a ${preset.name}`
+    });
+  };
+
+  const handleSaveTemplate = () => {
+    if (!templateName.trim()) {
+      toast({
+        title: 'Error',
+        description: 'El nombre de la plantilla es requerido',
+        variant: 'destructive'
+      });
+      return;
+    }
+
+    const newTemplate: ThumbnailTemplate = {
+      id: v4(),
+      name: templateName,
+      description: templateDescription || 'Plantilla personalizada',
+      preview: '', // Se podría generar una imagen preview del canvas
+      category: templateCategory,
+      settings: { ...settings }
+    };
+
+    // Aquí se guardaría en localStorage o base de datos
+    const savedTemplates = JSON.parse(localStorage.getItem('customThumbnailTemplates') || '[]');
+    savedTemplates.push(newTemplate);
+    localStorage.setItem('customThumbnailTemplates', JSON.stringify(savedTemplates));
+
+    toast({
+      title: 'Plantilla guardada',
+      description: `La plantilla "${templateName}" se ha guardado correctamente`
+    });
+
+    // Limpiar formulario
+    setTemplateName('');
+    setTemplateDescription('');
+    setTemplateCategory('tech');
+    setIsSaveTemplateOpen(false);
   };
 
   return (
@@ -182,6 +271,10 @@ export function ThumbnailCreator() {
           <Button onClick={() => setIsTemplateSelectorOpen(true)}>
             <LayoutTemplate className="mr-2 h-4 w-4" />
             Plantillas
+          </Button>
+          <Button onClick={() => setIsSaveTemplateOpen(true)} variant="outline">
+            <Save className="mr-2 h-4 w-4" />
+            Guardar Plantilla
           </Button>
           <Button onClick={handleDownload}>
             <Download className="mr-2 h-4 w-4" />
@@ -438,6 +531,44 @@ export function ThumbnailCreator() {
                     onChange={(e) => setSettings({ ...settings, textColor: e.target.value })}
                   />
                 </div>
+
+                <div className="space-y-2">
+                  <Label>Formato de Miniatura</Label>
+                  <Select
+                    value={selectedFormat}
+                    onValueChange={(value: keyof typeof formatPresets) => handleFormatChange(value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(formatPresets).map(([key, preset]) => (
+                        <SelectItem key={key} value={key}>
+                          {preset.name} ({preset.width}x{preset.height})
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="space-y-2">
+                    <Label>Ancho personalizado</Label>
+                    <Input
+                      type="number"
+                      value={settings.width}
+                      onChange={(e) => setSettings({ ...settings, width: Number(e.target.value) })}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label>Alto personalizado</Label>
+                    <Input
+                      type="number"
+                      value={settings.height}
+                      onChange={(e) => setSettings({ ...settings, height: Number(e.target.value) })}
+                    />
+                  </div>
+                </div>
               </div>
             )}
 
@@ -529,6 +660,65 @@ export function ThumbnailCreator() {
         onOpenChange={setIsTemplateSelectorOpen}
         onSelectTemplate={handleTemplateSelect}
       />
+
+      <Dialog open={isSaveTemplateOpen} onOpenChange={setIsSaveTemplateOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Guardar como plantilla</DialogTitle>
+            <DialogDescription>
+              Guarda la configuración actual como una plantilla personalizada para usar en el futuro.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="template-name">Nombre de la plantilla *</Label>
+              <Input
+                id="template-name"
+                value={templateName}
+                onChange={(e) => setTemplateName(e.target.value)}
+                placeholder="Ej: Mi plantilla profesional"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="template-description">Descripción</Label>
+              <Input
+                id="template-description"
+                value={templateDescription}
+                onChange={(e) => setTemplateDescription(e.target.value)}
+                placeholder="Ej: Plantilla con fondo degradado y texto moderno"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="template-category">Categoría</Label>
+              <Select 
+                value={templateCategory} 
+                onValueChange={(value: 'gaming' | 'tech' | 'lifestyle' | 'education' | 'business') => 
+                  setTemplateCategory(value)
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona una categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="gaming">Gaming</SelectItem>
+                  <SelectItem value="tech">Tecnología</SelectItem>
+                  <SelectItem value="lifestyle">Estilo de vida</SelectItem>
+                  <SelectItem value="education">Educación</SelectItem>
+                  <SelectItem value="business">Negocios</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsSaveTemplateOpen(false)}>Cancelar</Button>
+            <Button onClick={handleSaveTemplate}>Guardar plantilla</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

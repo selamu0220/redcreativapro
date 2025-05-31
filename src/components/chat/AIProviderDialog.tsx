@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { AIProvider } from '@/types/ai';
+import { AIProvider, GeminiModel } from '@/types/ai';
 import { useToast } from '@/hooks/use-toast';
 
 interface AIProviderDialogProps {
@@ -16,6 +16,7 @@ interface AIProviderDialogProps {
 export function AIProviderDialog({ open, onOpenChange, onContinue }: AIProviderDialogProps) {
   const [provider, setProvider] = useState<AIProvider>('gemini');
   const [apiKey, setApiKey] = useState('');
+  const [geminiModel, setGeminiModel] = useState<GeminiModel>('gemini-2.0-flash');
   const { toast } = useToast();
 
   const validateApiKey = (key: string, selectedProvider: AIProvider): boolean => {
@@ -66,23 +67,88 @@ export function AIProviderDialog({ open, onOpenChange, onContinue }: AIProviderD
     return true;
   };
 
-  const handleSave = () => {
-    if (!validateApiKey(apiKey, provider)) {
+  const handleSave = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    
+    console.log('=== INICIO handleSave ===');
+    console.log('Provider:', provider);
+    console.log('API Key:', apiKey ? `${apiKey.substring(0, 5)}...` : 'vacía');
+    console.log('API Key length:', apiKey.length);
+    
+    // Validación básica
+    if (!apiKey || apiKey.trim().length === 0) {
+      console.log('ERROR: API key vacía');
+      toast({
+        title: "Error",
+        description: "Por favor ingresa una API key",
+        variant: "destructive"
+      });
       return;
     }
-
-    localStorage.setItem('aiSettings', JSON.stringify({
-      provider,
-      apiKey: apiKey.trim()
-    }));
-
-    toast({
-      title: "Configuración guardada",
-      description: "La configuración de IA ha sido guardada correctamente"
-    });
-
-    onContinue();
-    onOpenChange(false);
+    
+    const trimmedKey = apiKey.trim();
+    
+    // Validación específica por proveedor
+    let isValid = false;
+    switch (provider) {
+      case 'gemini':
+        isValid = trimmedKey.startsWith('AI') && trimmedKey.length >= 30;
+        break;
+      case 'openai':
+        isValid = trimmedKey.startsWith('sk-') && trimmedKey.length >= 40;
+        break;
+      case 'anthropic':
+        isValid = trimmedKey.startsWith('sk-ant-') && trimmedKey.length >= 40;
+        break;
+    }
+    
+    if (!isValid) {
+      console.log('ERROR: API key inválida para', provider);
+      toast({
+        title: "API Key inválida",
+        description: `La API key de ${provider} no tiene el formato correcto`,
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    console.log('Validación exitosa');
+    
+    try {
+      const settings = {
+        provider,
+        apiKey: trimmedKey,
+        model: provider === 'gemini' ? geminiModel : undefined
+      };
+      
+      console.log('Guardando configuración:', settings);
+      localStorage.setItem('aiSettings', JSON.stringify(settings));
+      
+      console.log('Configuración guardada exitosamente');
+      
+      toast({
+        title: "¡Configuración guardada!",
+        description: "Ya puedes usar el chat de IA"
+      });
+      
+      // Pequeño delay para asegurar que el toast se muestre
+      setTimeout(() => {
+        console.log('Cerrando diálogo...');
+        onContinue();
+        onOpenChange(false);
+      }, 500);
+      
+    } catch (error) {
+      console.error('Error guardando configuración:', error);
+      toast({
+        title: "Error",
+        description: "No se pudo guardar la configuración",
+        variant: "destructive"
+      });
+    }
+    
+    console.log('=== FIN handleSave ===');
   };
 
   const getProviderInstructions = () => {
@@ -148,6 +214,26 @@ export function AIProviderDialog({ open, onOpenChange, onContinue }: AIProviderD
             </Select>
           </div>
 
+          {provider === 'gemini' && (
+            <div className="grid gap-2">
+              <Label>Modelo de Gemini</Label>
+              <Select
+                value={geminiModel}
+                onValueChange={(value: GeminiModel) => setGeminiModel(value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Selecciona un modelo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="gemini-2.0-flash">Gemini 2.0 Flash (Recomendado)</SelectItem>
+                  <SelectItem value="gemini-1.5-pro">Gemini 1.5 Pro</SelectItem>
+                  <SelectItem value="gemini-1.5-flash">Gemini 1.5 Flash</SelectItem>
+                  <SelectItem value="gemini-pro">Gemini Pro</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
           <div className="grid gap-2">
             <Label>API Key</Label>
             <Input
@@ -161,9 +247,13 @@ export function AIProviderDialog({ open, onOpenChange, onContinue }: AIProviderD
             </div>
           </div>
 
-          <Button onClick={handleSave} className="w-full">
-            Guardar y Continuar
-          </Button>
+          <Button 
+              onClick={handleSave} 
+              className="w-full"
+              type="button"
+            >
+              Guardar y Continuar
+            </Button>
         </div>
       </DialogContent>
     </Dialog>

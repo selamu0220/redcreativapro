@@ -1,6 +1,122 @@
 import { ThumbnailTemplate } from '@/types/thumbnails';
 
 export const thumbnailTemplates: ThumbnailTemplate[] = [
+  // Plantillas para TikTok (Formato Vertical 9:16)
+  {
+    id: 'tiktok-modern',
+    name: 'TikTok Moderno',
+    description: 'Diseño vertical moderno para TikTok e Instagram Stories',
+    preview: 'https://images.pexels.com/photos/3617500/pexels-photo-3617500.jpeg',
+    category: 'tech',
+    settings: {
+      title: 'TÍTULO VIRAL',
+      subtitle: 'Contenido Impactante',
+      bgColor: '#000000',
+      textColor: '#ffffff',
+      fontFamily: 'Impact',
+      width: 1080,
+      height: 1920,
+      titleFontSize: 120,
+      subtitleFontSize: 60,
+      titlePosition: 25,
+      subtitlePosition: 35,
+      textShadow: true,
+      bgImageOpacity: 100,
+      bgType: 'linear-gradient',
+      gradientAngle: 180,
+      gradientStops: [
+        { color: '#667eea', position: 0 },
+        { color: '#764ba2', position: 100 }
+      ]
+    }
+  },
+  {
+    id: 'tiktok-neon',
+    name: 'TikTok Neón',
+    description: 'Estilo neón vibrante para contenido de gaming y tech',
+    preview: 'https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg',
+    category: 'gaming',
+    settings: {
+      title: 'GAMING TIPS',
+      subtitle: 'Pro Level',
+      bgColor: '#0a0a0a',
+      textColor: '#00ff88',
+      fontFamily: 'Arial',
+      width: 1080,
+      height: 1920,
+      titleFontSize: 110,
+      subtitleFontSize: 55,
+      titlePosition: 20,
+      subtitlePosition: 30,
+      textShadow: true,
+      bgImageOpacity: 100,
+      bgType: 'radial-gradient',
+      gradientAngle: 0,
+      gradientStops: [
+        { color: '#1a1a2e', position: 0 },
+        { color: '#16213e', position: 50 },
+        { color: '#0f3460', position: 100 }
+      ]
+    }
+  },
+  {
+    id: 'tiktok-education',
+    name: 'TikTok Educativo',
+    description: 'Diseño limpio y profesional para contenido educativo',
+    preview: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg',
+    category: 'education',
+    settings: {
+      title: 'APRENDE RÁPIDO',
+      subtitle: 'Tips Diarios',
+      bgColor: '#ffffff',
+      textColor: '#2c3e50',
+      fontFamily: 'Arial',
+      width: 1080,
+      height: 1920,
+      titleFontSize: 100,
+      subtitleFontSize: 50,
+      titlePosition: 25,
+      subtitlePosition: 35,
+      textShadow: false,
+      bgImageOpacity: 100,
+      bgType: 'linear-gradient',
+      gradientAngle: 135,
+      gradientStops: [
+        { color: '#74b9ff', position: 0 },
+        { color: '#0984e3', position: 100 }
+      ]
+    }
+  },
+  {
+    id: 'tiktok-lifestyle',
+    name: 'TikTok Lifestyle',
+    description: 'Estilo cálido y acogedor para contenido de estilo de vida',
+    preview: 'https://images.pexels.com/photos/1591447/pexels-photo-1591447.jpeg',
+    category: 'lifestyle',
+    settings: {
+      title: 'VIDA SALUDABLE',
+      subtitle: 'Consejos Diarios',
+      bgColor: '#ffeaa7',
+      textColor: '#2d3436',
+      fontFamily: 'Georgia',
+      width: 1080,
+      height: 1920,
+      titleFontSize: 95,
+      subtitleFontSize: 48,
+      titlePosition: 30,
+      subtitlePosition: 40,
+      textShadow: false,
+      bgImageOpacity: 100,
+      bgType: 'linear-gradient',
+      gradientAngle: 45,
+      gradientStops: [
+        { color: '#ffecd2', position: 0 },
+        { color: '#fcb69f', position: 100 }
+      ]
+    }
+  },
+  
+  // Plantillas para YouTube (Formato Horizontal 16:9)
   {
     id: 'modern-gradient',
     name: 'Gradiente Moderno',
