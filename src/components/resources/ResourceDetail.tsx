@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { v4 as uuidv4 } from '@/lib/utils';
+import { v4 } from '@/lib/utils';
 
 interface ResourceDetailProps {
   resource: Resource;
@@ -26,7 +26,7 @@ export function ResourceDetail({ resource, onAddComment }: ResourceDetailProps) 
     if (!newComment.trim() || !user) return;
 
     const comment: ResourceComment = {
-      id: uuidv4(),
+      id: v4(),
       resourceId: resource.id,
       userId: user.id,
       userName: user.name,

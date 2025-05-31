@@ -24,7 +24,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
-import { v4 as uuidv4 } from '@/lib/utils';
+import { v4 } from '@/lib/utils';
 import { Upload, Link as LinkIcon, FolderUp, X, Plus } from 'lucide-react';
 
 const formSchema = z.object({
@@ -99,7 +99,7 @@ export function ResourceUploader({ onAddResource }: ResourceUploaderProps) {
     // Procesar archivos
     selectedFiles.forEach(file => {
       const resource: Resource = {
-        id: uuidv4(),
+        id: v4(),
         title: file.name,
         description: values.description,
         type: file.type.startsWith('image/') ? 'image' : 'document',
@@ -115,7 +115,7 @@ export function ResourceUploader({ onAddResource }: ResourceUploaderProps) {
     // Procesar enlaces
     links.forEach(link => {
       const resource: Resource = {
-        id: uuidv4(),
+        id: v4(),
         title: values.title || link,
         description: values.description,
         type: values.type,

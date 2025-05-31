@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { v4 as uuidv4 } from '@/lib/utils';
+import { v4 } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Sparkles } from 'lucide-react';
 import { generateScriptWithAI } from '@/lib/ai';
@@ -109,7 +109,7 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const newScript: Script = {
-      id: script?.id || uuidv4(),
+      id: script?.id || v4(),
       title: values.title,
       content: values.content,
       status: values.status as ScriptStatus,
@@ -125,7 +125,7 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
       updatedAt: new Date().toISOString(),
       versions: [
         {
-          id: uuidv4(),
+          id: v4(),
           content: values.content,
           createdAt: new Date().toISOString(),
           createdBy: {

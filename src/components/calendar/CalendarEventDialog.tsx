@@ -40,7 +40,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { v4 as uuidv4 } from '@/lib/utils';
+import { v4 } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { generateScriptWithAI } from '@/lib/ai';
 
@@ -186,7 +186,7 @@ export function CalendarEventDialog({
     }
     
     const newEvent: EventType = {
-      id: event?.id || uuidv4(),
+      id: event?.id || v4(),
       title: rest.title,
       description: rest.description,
       start: startDate.toISOString(),

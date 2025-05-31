@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/form';
 import { Badge } from '@/components/ui/badge';
 import { Plus, X } from 'lucide-react';
-import { v4 as uuidv4 } from '@/lib/utils';
+import { v4 } from '@/lib/utils';
 
 const formSchema = z.object({
   title: z.string().min(1, 'El título es requerido'),
@@ -59,7 +59,7 @@ export function BlogEditor({ onSave, post }: BlogEditorProps) {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const newPost: Post = {
-      id: post?.id || uuidv4(),
+      id: post?.id || v4(),
       title: values.title,
       content: values.content,
       excerpt: values.excerpt,

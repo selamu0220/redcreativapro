@@ -39,7 +39,7 @@ import {
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
-import { v4 as uuidv4, cn } from '@/lib/utils';
+import { v4, cn } from '@/lib/utils';
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -108,7 +108,7 @@ export function TaskDialog({
     if (newSubtask.trim()) {
       setSubtasks([
         ...subtasks,
-        { id: uuidv4(), title: newSubtask, completed: false },
+        { id: v4(), title: newSubtask, completed: false },
       ]);
       setNewSubtask('');
     }
@@ -141,7 +141,7 @@ export function TaskDialog({
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const newTask: TaskType = {
-      id: task?.id || uuidv4(),
+      id: task?.id || v4(),
       title: values.title,
       description: values.description,
       status: values.status,

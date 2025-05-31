@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Plus, X } from 'lucide-react';
-import { v4 as uuidv4 } from '@/lib/utils';
+import { v4 } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 
 const formSchema = z.object({
@@ -84,7 +84,7 @@ export function PromptEditor({ onSave, prompt }: PromptEditorProps) {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const newPrompt: Prompt = {
-      id: prompt?.id || uuidv4(),
+      id: prompt?.id || v4(),
       title: values.title,
       content: values.content,
       category: values.category as PromptCategory,

@@ -10,7 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { ThumbnailSettings, ThumbnailImage } from '@/types/thumbnails';
 import { ThumbnailTemplateSelector } from './ThumbnailTemplateSelector';
-import { v4 as uuidv4, cn } from '@/lib/utils';
+import { v4, cn } from '@/lib/utils';
 import { 
   Image, Type, Palette, Settings, Sparkles, Download, Plus, X, 
   FileImage, Upload, FolderUp, Maximize2, Minimize2, LayoutTemplate
@@ -138,7 +138,7 @@ export function ThumbnailCreator() {
           const newHeight = newWidth / aspectRatio;
           
           setImages(prev => [...prev, {
-            id: uuidv4(),
+            id: v4(),
             url: event.target?.result as string,
             x: (settings.width - newWidth) / 2,
             y: (settings.height - newHeight) / 2,
