@@ -278,15 +278,6 @@ export function ChatInterface() {
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
-    if (!isAuthenticated) {
-      toast({
-        title: "Acceso restringido",
-        description: "Regístrate o inicia sesión para usar el chat de IA",
-        variant: "destructive"
-      });
-      return;
-    }
-
     const userMessage: Message = {
       id: crypto.randomUUID(),
       role: 'user',
@@ -371,14 +362,7 @@ export function ChatInterface() {
   const handleUsePrompt = async () => {
     if (!selectedPrompt || !input.trim()) return;
     
-    if (!isAuthenticated) {
-      toast({
-        title: "Acceso restringido",
-        description: "Regístrate o inicia sesión para usar los prompts",
-        variant: "destructive"
-      });
-      return;
-    }
+
 
     // Check if AI settings are configured
     const aiSettings = localStorage.getItem('aiSettings');
@@ -455,14 +439,7 @@ export function ChatInterface() {
         </Tabs>
       </div>
 
-      {!isAuthenticated && (
-        <Alert className="mb-4">
-          <AlertDescription className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            Inicia sesión para usar el chat de IA y acceder a todas las funcionalidades
-          </AlertDescription>
-        </Alert>
-      )}
+
 
       <div className="flex-1 border rounded-lg p-4 mb-4 relative">
         {mode === 'chat' ? (

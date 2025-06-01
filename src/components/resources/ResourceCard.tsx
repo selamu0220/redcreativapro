@@ -26,24 +26,13 @@ interface ResourceCardProps {
 export function ResourceCard({ resource }: ResourceCardProps) {
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const ResourceIcon = getResourceIcon(resource.type);
-  const { isAuthenticated, hasActiveSubscription } = useAuth();
   const { toast } = useToast();
 
   const handleClick = () => {
-    if (!isAuthenticated || !hasActiveSubscription()) {
-      toast({
-        title: "Acceso restringido",
-        description: isAuthenticated 
-          ? "Tu período de prueba o suscripción ha expirado. Por favor, renueva tu suscripción para acceder a este recurso."
-          : "Regístrate o inicia sesión para acceder a este recurso",
-        variant: "destructive"
-      });
-      return;
-    }
     setIsDetailOpen(true);
   };
 
-  const isAccessible = isAuthenticated && hasActiveSubscription();
+  const isAccessible = true;
 
   return (
     <>

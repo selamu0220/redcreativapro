@@ -21,68 +21,28 @@ export function CalendarView() {
   const { toast } = useToast();
 
   const handleAddEvent = (event: EventType) => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Acceso restringido",
-        description: "Regístrate o inicia sesión para crear eventos",
-        variant: "destructive"
-      });
-      return;
-    }
     setEvents([...events, event]);
     setIsEventDialogOpen(false);
   };
 
   const handleEditEvent = (updatedEvent: EventType) => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Acceso restringido",
-        description: "Regístrate o inicia sesión para editar eventos",
-        variant: "destructive"
-      });
-      return;
-    }
     setEvents(events.map(e => e.id === updatedEvent.id ? updatedEvent : e));
     setIsEventDialogOpen(false);
     setSelectedEvent(null);
   };
 
   const handleDeleteEvent = (eventId: string) => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Acceso restringido",
-        description: "Regístrate o inicia sesión para eliminar eventos",
-        variant: "destructive"
-      });
-      return;
-    }
     setEvents(events.filter(e => e.id !== eventId));
     setIsEventDialogOpen(false);
     setSelectedEvent(null);
   };
 
   const openNewEventDialog = (date?: Date) => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Acceso restringido",
-        description: "Regístrate o inicia sesión para crear eventos",
-        variant: "destructive"
-      });
-      return;
-    }
     setSelectedEvent(null);
     setIsEventDialogOpen(true);
   };
 
   const openEditEventDialog = (event: EventType) => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Acceso restringido",
-        description: "Regístrate o inicia sesión para editar eventos",
-        variant: "destructive"
-      });
-      return;
-    }
     setSelectedEvent(event);
     setIsEventDialogOpen(true);
   };
