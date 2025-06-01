@@ -1,13 +1,54 @@
+# Robots.txt para Red Creativa Pro
+# Optimizado para SEO y crawling eficiente
+
 User-agent: *
 Allow: /
 
-# Allow crawling of all content
-Disallow:
-
-# Block specific paths
+# Bloquear directorios administrativos y de API
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
+Disallow: /_next/
+Disallow: /node_modules/
 
-# Sitemap location
+# Bloquear archivos temporales y de configuración
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*.txt$
+Disallow: /.*
+
+# Permitir archivos importantes para SEO
+Allow: /sitemap.xml
+Allow: /robots.txt
+Allow: /favicon.ico
+
+# Optimización para bots específicos
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+# Bloquear bots maliciosos comunes
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Ubicación del sitemap
 Sitemap: https://redcreativa.pro/sitemap.xml
+
+# Host preferido (para evitar contenido duplicado)
+Host: redcreativa.pro

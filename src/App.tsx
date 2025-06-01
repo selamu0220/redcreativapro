@@ -8,7 +8,7 @@ import { ResourcesView } from '@/components/resources/ResourcesView';
 import { CalendarView } from '@/components/calendar/CalendarView';
 import { ScriptLibrary } from '@/components/scripts/ScriptLibrary';
 import { MiniBlog } from '@/components/blog/MiniBlog';
-import TestBlog from '@/components/blog/TestBlog';
+import { BlogView } from '@/components/blog/BlogView';
 import { PromptLibrary } from '@/components/prompts/PromptLibrary';
 import { ThumbnailCreator } from '@/components/thumbnails/ThumbnailCreator';
 import { InfographicCreator } from '@/components/thumbnails/InfographicCreator';
@@ -45,7 +45,8 @@ function App() {
             
             {/* Rutas principales con layout */}
             <Route element={<AppLayout />}>
-              <Route path="/blog" element={<TestBlog />} />
+              <Route path="/blog" element={<BlogView />} />
+              <Route path="/blog/*" element={<BlogView />} />
               <Route path="/recursos" element={<ResourcesView />} />
               <Route path="/calendario" element={<CalendarView />} />
               <Route path="/scripts" element={<ScriptLibrary />} />

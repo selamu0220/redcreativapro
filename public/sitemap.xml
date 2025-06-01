@@ -1,45 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Página principal -->
   <url>
     <loc>https://redcreativa.pro/</loc>
-    <lastmod>2025-05-22</lastmod>
-    <changefreq>daily</changefreq>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  
+  <!-- Páginas principales de la aplicación -->
   <url>
     <loc>https://redcreativa.pro/recursos</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://redcreativa.pro/calendario</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://redcreativa.pro/guiones</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://redcreativa.pro/miniaturas</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://redcreativa.pro/chat</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
+  
+  <!-- Blog y contenido -->
   <url>
     <loc>https://redcreativa.pro/blog</loc>
-    <lastmod>2025-05-22</lastmod>
+    <lastmod>2025-01-15</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Posts específicos del blog -->
+  <url>
+    <loc>https://redcreativa.pro/blog/getting-started-with-content-creation-1</loc>
+    <lastmod>2025-01-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://redcreativa.pro/blog/social-media-marketing-tips-for-2025-2</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://redcreativa.pro/blog/como-organizar-tus-recursos-creativos-de-forma-eficiente-3</loc>
+    <lastmod>2025-01-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://redcreativa.pro/blog/prompts-de-ia-guia-completa-para-crear-contenido-efectivo-4</loc>
+    <lastmod>2025-01-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://redcreativa.pro/blog/planificacion-editorial-como-crear-un-calendario-de-contenido-exitoso-5</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Páginas de herramientas específicas -->
+  <url>
+    <loc>https://redcreativa.pro/miniaturas/infografias</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://redcreativa.pro/prompts</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Páginas de autenticación y cuenta -->
+  <url>
+    <loc>https://redcreativa.pro/auth</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Páginas de aprendizaje -->
+  <url>
+    <loc>https://redcreativa.pro/aprender</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

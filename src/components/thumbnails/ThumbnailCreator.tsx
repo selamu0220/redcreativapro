@@ -16,6 +16,7 @@ import {
   Image, Type, Palette, Settings, Sparkles, Download, Plus, X, 
   FileImage, Upload, FolderUp, Maximize2, Minimize2, LayoutTemplate, Save
 } from 'lucide-react';
+import { useThumbnailsSEO } from '@/hooks/useSEO';
 
 const formatPresets = {
   youtube: { width: 1280, height: 720, name: 'YouTube (16:9)' },
@@ -61,6 +62,9 @@ export function ThumbnailCreator() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  // Aplicar SEO específico para la página de miniaturas
+  useThumbnailsSEO();
 
   useEffect(() => {
     renderThumbnail();

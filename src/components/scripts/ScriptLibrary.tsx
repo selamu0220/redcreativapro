@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Script, ScriptStatus } from '@/types/scripts';
 import { mockScripts } from '@/data/mockScripts';
 import { ScriptList } from './ScriptList';
@@ -9,6 +9,7 @@ import { PlusCircle } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { ScriptEditor } from './ScriptEditor';
 import { useToast } from '@/hooks/use-toast';
+import { useScriptsSEO } from '@/hooks/useSEO';
 
 export function ScriptLibrary() {
   const [scripts, setScripts] = useState<Script[]>(mockScripts);
@@ -16,6 +17,9 @@ export function ScriptLibrary() {
   const [selectedScript, setSelectedScript] = useState<Script | null>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const { toast } = useToast();
+
+  // Aplicar SEO específico para la página de guiones
+  useScriptsSEO();
 
   const handleFilter = (filtered: Script[]) => {
     setFilteredScripts(filtered);

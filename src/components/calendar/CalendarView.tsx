@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { CalendarHeader } from './CalendarHeader';
 import { MonthView } from './MonthView';
 import { WeekView } from './WeekView';
@@ -8,6 +8,7 @@ import { EventType } from '@/types/calendar';
 import { mockEvents } from '@/data/mockEvents';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { useCalendarSEO } from '@/hooks/useSEO';
 
 type CalendarViewType = 'month' | 'week' | 'day';
 
@@ -19,6 +20,9 @@ export function CalendarView() {
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
+
+  // Aplicar SEO específico para la página del calendario
+  useCalendarSEO();
 
   const handleAddEvent = (event: EventType) => {
     setEvents([...events, event]);

@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useQuickRefresh } from '@/hooks/useQuickRefresh';
 import { mockResources } from '@/data/mockResources';
 import { Resource, ResourceComment } from '@/types/resources';
+import { useResourceSEO } from '@/hooks/useSEO';
 
 export function ResourcesView() {
   const [resources, setResources] = useState<Resource[]>(mockResources);
@@ -16,6 +17,9 @@ export function ResourcesView() {
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [isUploaderOpen, setIsUploaderOpen] = useState(false);
   const { toast } = useToast();
+
+  // Aplicar SEO específico para la página de recursos
+  useResourceSEO();
 
   // Hook para refrescado rápido
   const { isRefreshing } = useQuickRefresh({

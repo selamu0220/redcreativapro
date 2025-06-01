@@ -11,6 +11,8 @@ import { useToast } from '@/hooks/use-toast';
 import { useQuickRefresh } from '@/hooks/useQuickRefresh';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { slugify } from '@/lib/utils';
+import { useSEO, useBlogSEO } from '@/hooks/useSEO';
+import { BlogArticleStructuredData } from '@/components/SEO/StructuredData';
 
 export function BlogView() {
   const [posts, setPosts] = useState<Post[]>(mockPosts);
@@ -34,6 +36,31 @@ export function BlogView() {
     }
   });
 
+  // SEO para la página principal del blog
+  useSEO({
+    title: selectedPost ? undefined : 'Blog | Red Creativa - Contenido sobre Marketing Digital y Creatividad',
+    description: selectedPost ? undefined : 'Descubre las últimas tendencias en marketing digital, consejos de productividad y estrategias creativas. Artículos especializados para creadores de contenido.',
+    keywords: selectedPost ? undefined : ['blog marketing digital', 'contenido creativo', 'estrategias marketing', 'productividad', 'redes sociales', 'SEO', 'creadores contenido'],
+    canonical: selectedPost ? undefined : 'https://redcreativa.pro/blog'
+  });
+
+  // SEO dinámico para posts individuales
+  useEffect(() => {
+    if (selectedPost) {
+      // Crear slug para el post
+      const slug = slugify(selectedPost.title);
+      
+      // Aplicar SEO específico del post
+      const postWithSlug = {
+        ...selectedPost,
+        slug: slug
+      };
+      
+      // El hook useBlogSEO se encargará del SEO
+      // Se ejecutará automáticamente cuando selectedPost cambie
+    }
+  }, [selectedPost]);
+
   // Handle URL-based navigation
   useEffect(() => {
     const path = location.pathname;
@@ -47,6 +74,16 @@ export function BlogView() {
       }
     }
   }, [posts, location.pathname]);
+
+  // Aplicar SEO específico cuando hay un post seleccionado
+  if (selectedPost) {
+    const slug = slugify(selectedPost.title);
+    const postWithSlug = {
+      ...selectedPost,
+      slug: slug
+    };
+    useBlogSEO(postWithSlug);
+  }
 
   const handleSavePost = (post: Post) => {
     if (editingPost) {
@@ -92,6 +129,20 @@ export function BlogView() {
 
   return (
     <div className="space-y-6">
+      {/* Datos estructurados para artículos específicos */}
+      {selectedPost && (
+        <BlogArticleStructuredData
+          title={selectedPost.title}
+          description={selectedPost.excerpt}
+          author={selectedPost.author.name}
+          publishedDate={selectedPost.createdAt}
+          modifiedDate={selectedPost.updatedAt}
+          imageUrl={selectedPost.imageUrl}
+          articleUrl={`https://redcreativa.pro/blog/${slugify(selectedPost.title)}-${selectedPost.id}`}
+          keywords={selectedPost.tags}
+        />
+      )}
+      
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Blog</h1>
