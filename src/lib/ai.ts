@@ -1,42 +1,6 @@
 import { AIProvider, AIModel, AISettings } from '@/types/ai';
 
-// Function to check and increment AI usage
-function checkAndIncrementAIUsage(): void {
-  const userStr = localStorage.getItem('user');
-  if (!userStr) {
-    throw new Error('Usuario no autenticado');
-  }
 
-  const user = JSON.parse(userStr);
-  const today = new Date().toISOString().split('T')[0];
-  
-  // Reset usage if it's a new day
-  if (user.dailyUsage.date !== today) {
-    user.dailyUsage = {
-      date: today,
-      aiRequests: 0,
-      promptsUsed: 0,
-      scriptsGenerated: 0
-    };
-  }
-  
-  // Check if user can use AI feature
-  if (user.subscriptionType === 'free') {
-    const limit = user.dailyLimits.aiRequests;
-    const used = user.dailyUsage.aiRequests;
-    
-    if (used >= limit) {
-      throw new Error(`Has alcanzado tu límite diario de ${limit} consultas de IA. ¡Vuelve mañana para más consultas gratis o actualiza a Pro para uso ilimitado!`);
-    }
-  }
-  
-  // Increment usage
-  user.dailyUsage.aiRequests += 1;
-  localStorage.setItem('user', JSON.stringify(user));
-  
-  // Trigger a custom event to update the UI
-  window.dispatchEvent(new CustomEvent('userUsageUpdated', { detail: user }));
-}
 
 export async function generateScriptWithAI(
   prompt: string, 
@@ -47,8 +11,6 @@ export async function generateScriptWithAI(
   maxTokens?: number,
   baseUrl?: string
 ): Promise<string> {
-  // Check usage limits before making API call
-  checkAndIncrementAIUsage();
   
   // Get stored AI settings if not provided
   if (!apiKey || !provider) {

@@ -8,21 +8,11 @@ interface User {
   name: string;
   subscriptionType: 'free' | 'monthly' | 'annual';
   subscriptionEndDate: Date | null;
-  dailyUsage: {
-    date: string;
-    aiRequests: number;
-    promptsUsed: number;
-    scriptsGenerated: number;
-  };
-  dailyLimits: {
-    aiRequests: number;
-    promptsUsed: number;
-    scriptsGenerated: number;
-  };
 }
 
 interface AuthContextType {
   user: User | null;
+  loading: boolean;
   isAuthenticated: boolean;
   needsEmailVerification: boolean;
   pendingVerificationEmail: string | null;
@@ -31,11 +21,6 @@ interface AuthContextType {
   signup: (email: string, password: string, name: string) => Promise<void>;
   hasActiveSubscription: () => boolean;
   getRemainingSubscriptionDays: () => number;
-  canUseFeature: (feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => boolean;
-  incrementUsage: (feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => void;
-  getRemainingUsage: (feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => number;
-  resetDailyUsage: () => void;
-  forceUpdateLimits: () => void;
   updateSubscriptionStatus: (subscriptionType: 'free' | 'monthly' | 'annual', endDate?: Date) => void;
   clearEmailVerification: () => void;
 }
@@ -44,8 +29,11 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   const [needsEmailVerification, setNeedsEmailVerification] = useState(false);
   const [pendingVerificationEmail, setPendingVerificationEmail] = useState<string | null>(null);
+  
+  console.log('AuthProvider: Rendering with loading:', loading, 'user:', user ? 'exists' : 'null');
 
   // Load user profile from Supabase or create if doesn't exist
   const loadUserProfile = useCallback(async (supabaseUser: SupabaseUser) => {
@@ -89,35 +77,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         userProfile = profile;
       }
 
-      // Load daily usage from localStorage
-      const today = new Date().toISOString().split('T')[0];
-      const savedUsage = localStorage.getItem(`usage_${userProfile.id}`);
-      let dailyUsage = {
-        date: today,
-        aiRequests: 0,
-        promptsUsed: 0,
-        scriptsGenerated: 0
-      };
-
-      if (savedUsage) {
-        const parsed = JSON.parse(savedUsage);
-        if (parsed.date === today) {
-          dailyUsage = parsed;
-        }
-      }
-
       const userData: User = {
         id: userProfile.id,
         email: userProfile.email,
         name: userProfile.full_name,
         subscriptionType: userProfile.subscription_tier,
-        subscriptionEndDate: userProfile.subscription_end_date ? new Date(userProfile.subscription_end_date) : null,
-        dailyUsage,
-        dailyLimits: {
-          aiRequests: userProfile.subscription_tier === 'free' ? 100 : -1,
-          promptsUsed: userProfile.subscription_tier === 'free' ? 20 : -1,
-          scriptsGenerated: userProfile.subscription_tier === 'free' ? 5 : -1
-        }
+        subscriptionEndDate: userProfile.subscription_end_date ? new Date(userProfile.subscription_end_date) : null
       };
 
       setUser(userData);
@@ -128,44 +93,57 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Auth state listener
   useEffect(() => {
-    // Verificar si estamos en modo demo
-    const demoAuth = localStorage.getItem('demo_auth');
-    const demoUser = localStorage.getItem('demo_user');
-    
-    if (demoAuth === 'true' && demoUser) {
+    const initializeAuth = async () => {
       try {
-        const parsedUser = JSON.parse(demoUser);
-        setUser(parsedUser);
-        setLoading(false);
-        return;
+        // Verificar si estamos en modo demo
+        const demoAuth = localStorage.getItem('demo_auth');
+        const demoUser = localStorage.getItem('demo_user');
+        
+        if (demoAuth === 'true' && demoUser) {
+           try {
+             const parsedUser = JSON.parse(demoUser);
+             setUser(parsedUser);
+             return; // Salir temprano para modo demo
+           } catch (error) {
+             console.error('Error parsing demo user:', error);
+             localStorage.removeItem('demo_auth');
+             localStorage.removeItem('demo_user');
+           }
+         }
+        
+        // Get initial session
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          try {
+            await loadUserProfile(session.user);
+          } catch (error) {
+            console.error('Error loading user profile on session check:', error);
+          }
+        }
       } catch (error) {
-        console.error('Error parsing demo user:', error);
-        localStorage.removeItem('demo_auth');
-        localStorage.removeItem('demo_user');
-      }
-    }
-    
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        loadUserProfile(session.user);
-      } else {
+        console.error('Error initializing auth:', error);
+      } finally {
         setLoading(false);
       }
-    });
+    };
+    
+    initializeAuth();
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN' && session?.user) {
-        await loadUserProfile(session.user);
-        // Limpiar estado de verificación cuando el usuario se loguea exitosamente
-        setNeedsEmailVerification(false);
-        setPendingVerificationEmail(null);
+        try {
+          await loadUserProfile(session.user);
+          // Limpiar estado de verificación cuando el usuario se loguea exitosamente
+          setNeedsEmailVerification(false);
+          setPendingVerificationEmail(null);
+        } catch (error) {
+          console.error('Error loading user profile on auth change:', error);
+        }
       } else if (event === 'SIGNED_OUT') {
         setUser(null);
         setNeedsEmailVerification(false);
         setPendingVerificationEmail(null);
-        setLoading(false);
       }
     });
 
@@ -176,7 +154,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const hasActiveSubscription = useCallback(() => {
     if (!user) return false;
-    if (user.subscriptionType === 'free') return false;
+    // Permitir acceso a usuarios gratuitos también
+    if (user.subscriptionType === 'free') return true;
     if (!user.subscriptionEndDate) return true;
     return new Date() < user.subscriptionEndDate;
   }, [user]);
@@ -190,83 +169,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return Math.max(0, diffDays);
   }, [user]);
 
-  const canUseFeature = useCallback((feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => {
-    if (!user) return false;
-    
-    // Pro users have unlimited usage
-    if (user.subscriptionType === 'monthly' || user.subscriptionType === 'annual') {
-      return true;
-    }
-    
-    const today = new Date().toISOString().split('T')[0];
-    const limit = user.dailyLimits[feature];
-    const used = user.dailyUsage.date === today ? user.dailyUsage[feature] : 0;
-    
-    return used < limit;
-  }, [user]);
 
-  const incrementUsage = useCallback((feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => {
-    if (!user) return;
-    
-    const today = new Date().toISOString().split('T')[0];
-    
-    setUser(prevUser => {
-      if (!prevUser) return null;
-      
-      const updatedUser = {
-        ...prevUser,
-        dailyUsage: {
-          ...prevUser.dailyUsage,
-          date: today,
-          [feature]: prevUser.dailyUsage.date === today 
-            ? prevUser.dailyUsage[feature] + 1 
-            : 1
-        }
-      };
-      
-      // Save usage to localStorage with user ID
-      localStorage.setItem(`usage_${prevUser.id}`, JSON.stringify(updatedUser.dailyUsage));
-      return updatedUser;
-    });
-  }, [user]);
-
-  const getRemainingUsage = useCallback((feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => {
-    if (!user) return 0;
-    
-    // Pro users have unlimited usage
-    if (user.subscriptionType === 'monthly' || user.subscriptionType === 'annual') {
-      return -1; // Unlimited
-    }
-    
-    const today = new Date().toISOString().split('T')[0];
-    const limit = user.dailyLimits[feature];
-    const used = user.dailyUsage.date === today ? user.dailyUsage[feature] : 0;
-    
-    return Math.max(0, limit - used);
-  }, [user]);
-
-  const resetDailyUsage = useCallback(() => {
-    if (!user) return;
-    
-    const today = new Date().toISOString().split('T')[0];
-    
-    setUser(prevUser => {
-      if (!prevUser) return null;
-      
-      const updatedUser = {
-        ...prevUser,
-        dailyUsage: {
-          date: today,
-          aiRequests: 0,
-          promptsUsed: 0,
-          scriptsGenerated: 0
-        }
-      };
-      
-      localStorage.setItem(`usage_${prevUser.id}`, JSON.stringify(updatedUser.dailyUsage));
-      return updatedUser;
-    });
-  }, [user]);
 
   const login = useCallback(
     async (email: string, password: string) => {
@@ -276,9 +179,23 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           password
         });
 
-        if (error) throw error;
+        if (error) {
+          // Proporcionar errores más específicos
+          if (error.message.includes('Email not confirmed')) {
+            setNeedsEmailVerification(true);
+            setPendingVerificationEmail(email);
+            throw new Error('Email not confirmed');
+          }
+          if (error.message.includes('Invalid login credentials')) {
+            throw new Error('Invalid login credentials');
+          }
+          throw error;
+        }
         
         if (data.user) {
+          // Limpiar estados de verificación al hacer login exitoso
+          setNeedsEmailVerification(false);
+          setPendingVerificationEmail(null);
           await loadUserProfile(data.user);
         }
       } catch (error: any) {
@@ -347,24 +264,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     [loadUserProfile]
   );
 
-  const forceUpdateLimits = useCallback(() => {
-    if (!user) return;
-    
-    setUser(prevUser => {
-      if (!prevUser) return null;
-      
-      const updatedUser = {
-        ...prevUser,
-        dailyLimits: {
-          aiRequests: prevUser.subscriptionType === 'free' ? 100 : -1,
-          promptsUsed: prevUser.subscriptionType === 'free' ? 20 : -1,
-          scriptsGenerated: prevUser.subscriptionType === 'free' ? 5 : -1
-        }
-      };
-      
-      return updatedUser;
-    });
-  }, [user]);
+
 
   const updateSubscriptionStatus = useCallback((subscriptionType: 'free' | 'monthly' | 'annual', endDate?: Date) => {
     if (!user) return;
@@ -375,12 +275,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       const updatedUser = {
         ...prevUser,
         subscriptionType,
-        subscriptionEndDate: endDate || null,
-        dailyLimits: {
-          aiRequests: subscriptionType === 'free' ? 100 : -1,
-          promptsUsed: subscriptionType === 'free' ? 20 : -1,
-          scriptsGenerated: subscriptionType === 'free' ? 5 : -1
-        }
+        subscriptionEndDate: endDate || null
       };
       
       // Update user profile in Supabase
@@ -411,6 +306,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const value = {
     user,
+    loading,
     isAuthenticated: !!user,
     needsEmailVerification,
     pendingVerificationEmail,
@@ -419,11 +315,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     signup,
     hasActiveSubscription,
     getRemainingSubscriptionDays,
-    canUseFeature,
-    incrementUsage,
-    getRemainingUsage,
-    resetDailyUsage,
-    forceUpdateLimits,
     updateSubscriptionStatus,
     clearEmailVerification,
   };

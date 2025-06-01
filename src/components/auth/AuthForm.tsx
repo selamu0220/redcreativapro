@@ -28,6 +28,44 @@ export function AuthForm() {
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  const handleDemoMode = async (values: z.infer<typeof formSchema>) => {
+    console.log('Activating demo mode');
+    toast({
+      title: '🎭 Modo Demo Activado',
+      description: 'Accediendo en modo demostración. Docker/Supabase no disponible.',
+    });
+    
+    // Simular delay de autenticación
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Crear usuario demo en localStorage
+    const demoUser = {
+      id: 'demo-user',
+      email: values.email,
+      name: values.email.split('@')[0],
+      subscriptionType: 'free',
+      subscriptionEndDate: null,
+      dailyUsage: {
+        date: new Date().toISOString().split('T')[0],
+        aiRequests: 0,
+        promptsUsed: 0,
+        scriptsGenerated: 0
+      },
+      dailyLimits: {
+        aiRequests: 100,
+        promptsUsed: 20,
+        scriptsGenerated: 5
+      }
+    };
+    
+    localStorage.setItem('demo_user', JSON.stringify(demoUser));
+    localStorage.setItem('demo_auth', 'true');
+    
+    setTimeout(() => {
+      navigate('/blog');
+    }, 1000);
+  };
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,68 +78,34 @@ export function AuthForm() {
     console.log('Form submitted with values:', values);
     setIsLoading(true);
     
-    // Verificar que las funciones de auth estén disponibles
-    if (!login || !signup) {
-      console.error('Auth functions not available');
-      toast({
-        variant: 'destructive',
-        title: 'Error del sistema',
-        description: 'Las funciones de autenticación no están disponibles. Recarga la página.',
-      });
-      setIsLoading(false);
-      return;
-    }
-    
     try {
-      console.log('Attempting login...');
-      
       // Verificar si las claves de Supabase están configuradas correctamente
       const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
       const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
       
+      // Si Supabase no está configurado o hay problemas de conexión, usar modo demo
       if (!supabaseUrl || !supabaseKey || supabaseKey.includes('example')) {
         console.log('Supabase not configured, using demo mode');
-        // Modo demo - simular autenticación exitosa
-        toast({
-          title: '🎭 Modo Demo Activado',
-          description: 'Accediendo en modo demostración. Configura Supabase para autenticación real.',
-        });
-        
-        // Simular delay de autenticación
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // Crear usuario demo en localStorage
-        const demoUser = {
-          id: 'demo-user',
-          email: values.email,
-          name: values.email.split('@')[0],
-          subscriptionType: 'free',
-          subscriptionEndDate: null,
-          dailyUsage: {
-            date: new Date().toISOString().split('T')[0],
-            aiRequests: 0,
-            promptsUsed: 0,
-            scriptsGenerated: 0
-          },
-          dailyLimits: {
-            aiRequests: 100,
-            promptsUsed: 20,
-            scriptsGenerated: 5
-          }
-        };
-        
-        localStorage.setItem('demo_user', JSON.stringify(demoUser));
-        localStorage.setItem('demo_auth', 'true');
-        
-        setTimeout(() => {
-          navigate('/blog');
-        }, 1000);
+        await handleDemoMode(values);
         return;
       }
       
-      // Intentar iniciar sesión primero
+      // Verificar que las funciones de auth estén disponibles
+      if (!login || !signup) {
+        console.error('Auth functions not available, falling back to demo mode');
+        await handleDemoMode(values);
+        return;
+      }
+      
+      // Intentar autenticación real con timeout
       try {
-        await login(values.email, values.password);
+        console.log('Attempting real authentication...');
+        await Promise.race([
+          login(values.email, values.password),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Login timeout')), 10000)
+          )
+        ]);
         console.log('Login successful');
         toast({
           title: '¡Bienvenido de vuelta!',
@@ -112,15 +116,48 @@ export function AuthForm() {
         }, 1000);
         return;
       } catch (loginError: any) {
-        console.log('Login failed, attempting signup:', loginError.message);
-        // Si el login falla por credenciales incorrectas, intentamos registrar
-        if (loginError.message?.includes('Invalid login credentials') || 
-            loginError.message?.includes('Email not confirmed') ||
-            loginError.message?.includes('Invalid') ||
-            loginError.message?.includes('not found')) {
+        console.log('Login failed:', loginError.message);
+        
+        // Caso 1: Email no verificado - usuario existe pero no ha confirmado email
+        if (loginError.message?.includes('Email not confirmed')) {
+          toast({
+            title: '📧 Email no verificado',
+            description: 'Tu cuenta existe pero necesitas verificar tu email. Revisa tu bandeja de entrada y haz clic en el enlace de verificación.',
+            duration: 8000,
+          });
+          
+          setTimeout(() => {
+            toast({
+              title: '💡 ¿No encuentras el email?',
+              description: 'Revisa spam o solicita un nuevo enlace desde tu proveedor de email.',
+              duration: 6000,
+            });
+          }, 3000);
+          return;
+        }
+        
+        // Caso 2: Credenciales incorrectas - usuario existe pero contraseña incorrecta
+        if (loginError.message?.includes('Invalid login credentials')) {
+          toast({
+            variant: 'destructive',
+            title: '❌ Credenciales incorrectas',
+            description: 'El email o la contraseña son incorrectos. Verifica tus datos e inténtalo de nuevo.',
+          });
+          return;
+        }
+        
+        // Caso 3: Usuario no existe - intentar registro
+        if (loginError.message?.includes('Invalid') ||
+            loginError.message?.includes('not found') ||
+            loginError.message?.includes('User not found')) {
           try {
-            console.log('Attempting signup...');
-            await signup(values.email, values.password, values.email.split('@')[0]);
+            console.log('User not found, attempting signup...');
+            await Promise.race([
+              signup(values.email, values.password, values.email.split('@')[0]),
+              new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('Signup timeout')), 10000)
+              )
+            ]);
             console.log('Signup successful');
             toast({
               title: '📧 ¡Cuenta creada! Verifica tu email',
@@ -128,7 +165,6 @@ export function AuthForm() {
               duration: 8000,
             });
             
-            // Mostrar mensaje adicional después de 3 segundos
             setTimeout(() => {
               toast({
                 title: '📬 ¿No ves el email?',
@@ -136,24 +172,37 @@ export function AuthForm() {
                 duration: 6000,
               });
             }, 3000);
-            
             return;
           } catch (signupError: any) {
             console.error('Signup failed:', signupError);
             throw signupError;
           }
-        } else {
+        }
+        
+        // Caso 4: Timeout u otros errores
+        if (loginError.message?.includes('timeout')) {
           throw loginError;
         }
+        
+        // Otros errores
+        throw loginError;
       }
     } catch (error: any) {
       console.error('Auth error:', error);
+      
+      // Si hay errores de conexión o timeout, usar modo demo
+      if (error.message?.includes('timeout') || 
+          error.message?.includes('fetch') ||
+          error.message?.includes('network') ||
+          !navigator.onLine) {
+        console.log('Connection issues detected, falling back to demo mode');
+        await handleDemoMode(values);
+        return;
+      }
+      
       let errorMessage = 'Ha ocurrido un error. Por favor, inténtalo de nuevo.';
       
-      // Verificar si es un error de conexión
-      if (!navigator.onLine) {
-        errorMessage = 'No hay conexión a internet. Verifica tu conexión.';
-      } else if (error.message?.includes('User already registered')) {
+      if (error.message?.includes('User already registered')) {
         errorMessage = 'Este email ya está registrado. Verifica tu contraseña.';
       } else if (error.message?.includes('Invalid login credentials')) {
         errorMessage = 'Email o contraseña incorrectos.';
@@ -169,7 +218,9 @@ export function AuthForm() {
           });
         }, 2000);
       } else if (error.message?.includes('Missing Supabase environment variables')) {
-        errorMessage = 'Error de configuración del servidor. Contacta al administrador.';
+        errorMessage = 'Error de configuración del servidor. Usando modo demo.';
+        await handleDemoMode(values);
+        return;
       } else if (error.message) {
         errorMessage = error.message;
       }

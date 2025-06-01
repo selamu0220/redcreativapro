@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 // Generic hook for CRUD operations
 export function useSupabaseTable<T>(tableName: string) {
   const [data, setData] = useState<T[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
 

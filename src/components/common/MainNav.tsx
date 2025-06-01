@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Calendar, FileText, BookOpen, Sparkles, Palette, Image, MessageSquare, GraduationCap, BarChart3, FolderOpen, FileImage, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,16 +11,27 @@ interface MainNavProps {
 
 export function MainNav({ currentView }: MainNavProps) {
   const { hasActiveSubscription } = useAuth();
+  const navigate = useNavigate();
   
   const handleNavigation = useCallback((path: string) => {
-    // Force navigation using window.location to bypass any React Router issues
-    window.location.href = path;
-  }, []);
+    const targetView = path.replace('/', '');
+    // Si ya estamos en la misma página, hacer refresh
+    if (currentView === targetView) {
+      window.location.reload();
+    } else {
+      // Navegar a la nueva página y hacer refresh inmediato
+      navigate(path);
+      // Pequeño delay para asegurar que la navegación se complete antes del refresh
+      setTimeout(() => {
+        window.location.reload();
+      }, 50);
+    }
+  }, [currentView, navigate]);
   
   return (
     <div className="flex items-center gap-6">
-      <Link
-        to="/blog"
+      <button
+        onClick={() => handleNavigation('/blog')}
         className="flex items-center space-x-2"
       >
         <div className="w-8 h-8">
@@ -38,7 +49,7 @@ export function MainNav({ currentView }: MainNavProps) {
             </div>
           )}
         </div>
-      </Link>
+      </button>
       <nav className="flex items-center gap-1">
         <button
           onClick={() => handleNavigation('/recursos')}
@@ -64,8 +75,8 @@ export function MainNav({ currentView }: MainNavProps) {
             <Calendar className="h-4 w-4" />
             Calendario
           </button>
-        <Link
-          to="/scripts"
+        <button
+          onClick={() => handleNavigation('/scripts')}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 px-2 py-1.5 rounded-md',
             currentView === 'scripts'
@@ -75,9 +86,9 @@ export function MainNav({ currentView }: MainNavProps) {
         >
           <FileText className="h-4 w-4" />
           <span className="hidden md:inline">Guiones</span>
-        </Link>
-        <Link
-          to="/prompts"
+        </button>
+        <button
+          onClick={() => handleNavigation('/prompts')}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 px-2 py-1.5 rounded-md',
             currentView === 'prompts'
@@ -87,9 +98,9 @@ export function MainNav({ currentView }: MainNavProps) {
         >
           <Sparkles className="h-4 w-4" />
           <span className="hidden md:inline">Prompts</span>
-        </Link>
-        <Link
-          to="/thumbnails"
+        </button>
+        <button
+          onClick={() => handleNavigation('/thumbnails')}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 px-2 py-1.5 rounded-md',
             currentView === 'thumbnails'
@@ -99,9 +110,9 @@ export function MainNav({ currentView }: MainNavProps) {
         >
           <Image className="h-4 w-4" />
           <span className="hidden md:inline">Miniaturas</span>
-        </Link>
-        <Link
-          to="/infografias"
+        </button>
+        <button
+          onClick={() => handleNavigation('/infografias')}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 px-2 py-1.5 rounded-md',
             currentView === 'infografias'
@@ -111,7 +122,7 @@ export function MainNav({ currentView }: MainNavProps) {
         >
           <BarChart3 className="h-4 w-4" />
           <span className="hidden md:inline">Infografías</span>
-        </Link>
+        </button>
         <button
            onClick={() => handleNavigation('/chat')}
            className={cn(
@@ -136,8 +147,8 @@ export function MainNav({ currentView }: MainNavProps) {
             <BookOpen className="h-4 w-4" />
             Blog
           </button>
-        <Link
-          to="/aprendizaje"
+        <button
+          onClick={() => handleNavigation('/aprendizaje')}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 px-2 py-1.5 rounded-md',
             currentView === 'aprendizaje'
@@ -147,9 +158,9 @@ export function MainNav({ currentView }: MainNavProps) {
         >
           <GraduationCap className="h-4 w-4" />
           <span className="hidden md:inline">Aprendizaje</span>
-        </Link>
-        <Link
-          to="/proyectos"
+        </button>
+        <button
+          onClick={() => handleNavigation('/proyectos')}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 px-2 py-1.5 rounded-md',
             currentView === 'proyectos'
@@ -159,9 +170,9 @@ export function MainNav({ currentView }: MainNavProps) {
         >
           <FolderOpen className="h-4 w-4" />
           <span className="hidden md:inline">Proyectos</span>
-        </Link>
-        <Link
-          to="/svg"
+        </button>
+        <button
+          onClick={() => handleNavigation('/svg')}
           className={cn(
             'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 px-2 py-1.5 rounded-md',
             currentView === 'svg'
@@ -171,9 +182,9 @@ export function MainNav({ currentView }: MainNavProps) {
         >
           <FileImage className="h-4 w-4" />
           <span className="hidden md:inline">SVG Viewer</span>
-        </Link>
-        <Link
-          to="/precios"
+        </button>
+        <button
+          onClick={() => handleNavigation('/precios')}
           className="ml-2"
         >
           <Button 
@@ -183,7 +194,7 @@ export function MainNav({ currentView }: MainNavProps) {
           >
             Plan Pro
           </Button>
-        </Link>
+        </button>
       </nav>
     </div>
   );

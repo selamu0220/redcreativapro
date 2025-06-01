@@ -8,6 +8,7 @@ import { ResourcesView } from '@/components/resources/ResourcesView';
 import { CalendarView } from '@/components/calendar/CalendarView';
 import { ScriptLibrary } from '@/components/scripts/ScriptLibrary';
 import { MiniBlog } from '@/components/blog/MiniBlog';
+import TestBlog from '@/components/blog/TestBlog';
 import { PromptLibrary } from '@/components/prompts/PromptLibrary';
 import { ThumbnailCreator } from '@/components/thumbnails/ThumbnailCreator';
 import { InfographicCreator } from '@/components/thumbnails/InfographicCreator';
@@ -17,6 +18,7 @@ import ProjectsPage from '@/pages/ProjectsPage';
 import SvgViewerPage from '@/pages/SvgViewerPage';
 import LearningView from '@/components/learning/LearningView';
 import LandingPresentation from '@/components/LandingPresentation';
+
 import './App.css';
 
 // Wrapper components to use React Router navigation
@@ -31,6 +33,8 @@ function LandingPresentationWrapper() {
 }
 
 function App() {
+  console.log('App.tsx: App component is rendering');
+  
   return (
     <ThemeProvider defaultTheme="light">
       <AuthProvider>
@@ -41,7 +45,7 @@ function App() {
             
             {/* Rutas principales con layout */}
             <Route element={<AppLayout />}>
-              <Route path="/blog" element={<MiniBlog />} />
+              <Route path="/blog" element={<TestBlog />} />
               <Route path="/recursos" element={<ResourcesView />} />
               <Route path="/calendario" element={<CalendarView />} />
               <Route path="/scripts" element={<ScriptLibrary />} />
@@ -52,6 +56,7 @@ function App() {
               <Route path="/aprendizaje" element={<LearningView />} />
               <Route path="/proyectos" element={<ProjectsPage />} />
               <Route path="/svg" element={<SvgViewerPage />} />
+
               <Route path="/precios" element={<PricingSection />} />
             </Route>
             

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Post } from '@/types/blog';
 import { BlogList } from './BlogList';
 import { BlogPost } from './BlogPost';
@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Plus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useQuickRefresh } from '@/hooks/useQuickRefresh';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { slugify } from '@/lib/utils';
 
@@ -19,6 +20,19 @@ export function BlogView() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Hook para refrescado rápido
+  const { isRefreshing } = useQuickRefresh({
+    onRefresh: async () => {
+      // Actualizar posts
+      setPosts([...mockPosts]);
+      
+      toast({
+        title: '✅ Blog actualizado',
+        description: 'Los posts se han actualizado correctamente',
+      });
+    }
+  });
 
   // Handle URL-based navigation
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ResourceHeader } from './ResourceHeader';
 import { ResourceGrid } from './ResourceGrid';
 import { ResourceFilters } from './ResourceFilters';
@@ -6,6 +6,7 @@ import { ResourceUploader } from './ResourceUploader';
 import { ResourceDetail } from './ResourceDetail';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
+import { useQuickRefresh } from '@/hooks/useQuickRefresh';
 import { mockResources } from '@/data/mockResources';
 import { Resource, ResourceComment } from '@/types/resources';
 
@@ -15,6 +16,20 @@ export function ResourcesView() {
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [isUploaderOpen, setIsUploaderOpen] = useState(false);
   const { toast } = useToast();
+
+  // Hook para refrescado rápido
+  const { isRefreshing } = useQuickRefresh({
+    onRefresh: async () => {
+      // Actualizar recursos sin cambiar referencias innecesariamente
+      setResources([...mockResources]);
+      setFilteredResources([...mockResources]);
+      
+      toast({
+        title: '✅ Recursos actualizados',
+        description: 'Los recursos se han actualizado correctamente',
+      });
+    }
+  });
   
   const handleAddResource = (resource: Resource) => {
     setResources([...resources, resource]);

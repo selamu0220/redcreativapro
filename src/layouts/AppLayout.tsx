@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { MainNav } from '@/components/common/MainNav';
 import { SideNav } from '@/components/common/SideNav';
@@ -7,14 +7,18 @@ import { UserNav } from '@/components/common/UserNav';
 import { Search } from '@/components/common/Search';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAuth } from '@/contexts/AuthContext';
+import { useQuickRefresh } from '@/hooks/useQuickRefresh';
 import { Button } from '@/components/ui/button';
-import { LogIn } from 'lucide-react';
+import { LogIn, RefreshCw } from 'lucide-react';
 import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner';
 
 const AppLayout = () => {
-  const location = useLocation();
+  console.log('AppLayout: Component is rendering');
+  const { user, logout } = useAuth();
+  console.log('AppLayout: useAuth returned, user:', user ? 'exists' : 'null');
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const location = useLocation();
+  const { isRefreshing, refresh: handleQuickRefresh } = useQuickRefresh();
 
   // Extraer la vista actual de la URL
   const getCurrentView = () => {
@@ -29,6 +33,8 @@ const AppLayout = () => {
   const handleShowPresentation = () => {
     navigate('/presentacion');
   };
+
+  // handleQuickRefresh viene del hook useQuickRefresh
 
   const currentView = getCurrentView();
 
@@ -55,6 +61,15 @@ const AppLayout = () => {
               <Search />
             </div>
             <div className="flex items-center space-x-4 flex-shrink-0">
+              <Button 
+                onClick={handleQuickRefresh} 
+                variant="ghost" 
+                size="sm"
+                disabled={isRefreshing}
+                className="transition-all duration-200"
+              >
+                <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+              </Button>
               <ModeToggle />
               {user ? (
                 <UserNav />

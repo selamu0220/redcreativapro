@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import { useQuickRefresh } from '@/hooks/useQuickRefresh';
 import { useNavigate } from 'react-router-dom';
 import { generateScriptWithAI } from '@/lib/ai';
 import { Send, Bot, Loader2, Settings, Sparkles, Save, Copy, FileText, Star, Calendar, Image, FolderOpen, BarChart3 } from 'lucide-react';
@@ -91,6 +92,19 @@ export function ChatInterface() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
+  // Hook para refrescado rápido
+  const { isRefreshing } = useQuickRefresh({
+    onRefresh: async () => {
+      // Solo limpiar el input, mantener mensajes
+      setInput('');
+      
+      toast({
+        title: '✅ Chat actualizado',
+        description: 'El chat se ha refrescado correctamente',
+      });
+    }
+  });
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -145,9 +159,9 @@ export function ChatInterface() {
       const thumbnailData = input.replace('/crear-miniatura', '').trim();
       const thumbnailInfo = parseThumbnailCommand(thumbnailData);
       if (thumbnailInfo) {
-        return `He preparado la configuración para tu miniatura:\n\n🎨 **Título:** ${thumbnailInfo.title}\n📝 **Subtítulo:** ${thumbnailInfo.subtitle}\n📐 **Formato:** ${thumbnailInfo.format}\n\n*Ve a la sección de Miniaturas para crear y personalizar tu diseño.*`;
+        return `He preparado la configuración para tu miniatura:\n\n🎨 **Título:** ${thumbnailInfo.title}\n📐 **Formato:** ${thumbnailInfo.format}\n\n*Ve a la sección de Miniaturas para crear y personalizar tu diseño.*`;
       }
-      return 'Por favor, proporciona los datos en el formato: Título: [título] Subtítulo: [subtítulo] Formato: [formato]';
+      return 'Por favor, proporciona los datos en el formato: Título: [título] Formato: [formato]';
     }
 
     // Comando para analizar recursos
@@ -198,13 +212,11 @@ export function ChatInterface() {
 
   const parseThumbnailCommand = (data: string) => {
     const titleMatch = data.match(/Título:\s*([^\n]+)/);
-    const subtitleMatch = data.match(/Subtítulo:\s*([^\n]+)/);
     const formatMatch = data.match(/Formato:\s*([^\n]+)/);
 
     if (titleMatch) {
       return {
         title: titleMatch[1],
-        subtitle: subtitleMatch?.[1] || '',
         format: formatMatch?.[1] || 'youtube'
       };
     }
@@ -761,11 +773,11 @@ export function ChatInterface() {
                   handleSend();
                 }
               }}
-              disabled={isLoading || !isAuthenticated}
+              disabled={isLoading}
             />
             <Button 
               onClick={handleSend} 
-              disabled={isLoading || !input.trim() || !isAuthenticated}
+              disabled={isLoading || !input.trim()}
             >
               {isLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -781,12 +793,12 @@ export function ChatInterface() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               className="min-h-[100px] font-mono flex-1"
-              disabled={!isAuthenticated}
+              disabled={false}
             />
             <div className="flex flex-col gap-2">
               <Button 
                 onClick={handleUsePrompt} 
-                disabled={isLoading || !input.trim() || !isAuthenticated}
+                disabled={isLoading || !input.trim()}
                 className="flex items-center gap-2"
               >
                 {isLoading ? (

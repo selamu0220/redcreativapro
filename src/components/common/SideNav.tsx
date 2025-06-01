@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
@@ -30,6 +30,22 @@ interface NavItem {
 }
 
 export function SideNav({ currentView, onShowLanding }: SideNavProps) {
+  const navigate = useNavigate();
+
+  // Función para navegación con refresh rápido
+  const handleNavigation = (path: string) => {
+    // Si ya estamos en la misma página, hacer refresh
+    if (currentView === path) {
+      window.location.reload();
+    } else {
+      // Navegar a la nueva página y hacer refresh inmediato
+      navigate(`/${path}`);
+      // Pequeño delay para asegurar que la navegación se complete antes del refresh
+      setTimeout(() => {
+        window.location.reload();
+      }, 50);
+    }
+  };
 
   const navItems: NavItem[] = [
     {
@@ -98,6 +114,7 @@ export function SideNav({ currentView, onShowLanding }: SideNavProps) {
       view: 'svg',
       variant: currentView === 'svg' ? 'default' : 'ghost',
     },
+
   ];
 
   return (
@@ -108,11 +125,11 @@ export function SideNav({ currentView, onShowLanding }: SideNavProps) {
         </h2>
         <div className="space-y-1">
           {navItems.map((item) => (
-            <Link
+            <button
               key={item.view}
-              to={`/${item.view}`}
+              onClick={() => handleNavigation(item.view)}
               className={cn(
-                'flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-all hover:text-accent-foreground',
+                'flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-all hover:text-accent-foreground w-full text-left',
                 item.variant === 'default'
                   ? 'bg-accent text-accent-foreground'
                   : 'text-muted-foreground hover:bg-accent'
@@ -120,7 +137,7 @@ export function SideNav({ currentView, onShowLanding }: SideNavProps) {
             >
               {item.icon}
               <span>{item.title}</span>
-            </Link>
+            </button>
           ))}
         </div>
         
