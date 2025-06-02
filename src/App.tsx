@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import AppLayout from '@/layouts/AppLayout';
@@ -38,7 +38,7 @@ function App() {
   return (
     <ThemeProvider defaultTheme="light">
       <AuthProvider>
-        <Router>
+        <BrowserRouter>
           <Routes>
             {/* Ruta principal - redirige al blog */}
             <Route path="/" element={<Navigate to="/blog" replace />} />
@@ -68,7 +68,7 @@ function App() {
             {/* Ruta 404 - redirige al blog */}
             <Route path="*" element={<Navigate to="/blog" replace />} />
           </Routes>
-        </Router>
+        </BrowserRouter>
         <Toaster position="top-right" />
       </AuthProvider>
     </ThemeProvider>
