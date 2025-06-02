@@ -6,29 +6,28 @@ import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import { AuthPage } from '@/pages/AuthPage';
 
 function MainContent() {
-  const { isAuthenticated, user, loading } = useAuth();
-  console.log('App.tsx: MainContent rendering. Auth state:', { isAuthenticated, userName: user?.name, loading });
+  // const { isAuthenticated, user, loading } = useAuth(); // Temporalmente comentado
+  console.log('App.tsx: MainContent rendering. SIMPLIFICADO');
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>Cargando autenticación...</p>
-      </div>
-    );
-  }
+  // if (loading) { // Temporalmente comentado
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <p>Cargando autenticación...</p>
+  //     </div>
+  //   );
+  // }
 
-  if (!isAuthenticated) {
-    // Si no está autenticado, y no está cargando, mostrar AuthPage
-    // Esto asume que AuthPage manejará su propio estado de carga si es necesario para el formulario en sí
-    return <AuthPage onClose={() => console.log("AuthPage closed after auth")} />;
-  }
+  // if (!isAuthenticated) { // Temporalmente comentado
+  //   // Si no está autenticado, y no está cargando, mostrar AuthPage
+  //   // Esto asume que AuthPage manejará su propio estado de carga si es necesario para el formulario en sí
+  //   return <AuthPage onClose={() => console.log("AuthPage closed after auth")} />;
+  // }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex items-center justify-center">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-center mb-8">¡Bienvenido, {user?.name || 'Usuario'}!</h1>
-        <p className="text-lg text-center">Has iniciado sesión correctamente.</p>
-        {/* Aquí podrías añadir más contenido de tu aplicación principal */}
+        <h1 className="text-4xl font-bold text-center mb-8">TEST MAINCONTENT SIMPLIFICADO</h1>
+        <p className="text-lg text-center">Si ves esto, MainContent (simplificado) dentro de App.tsx se está renderizando.</p>
       </div>
     </div>
   );
