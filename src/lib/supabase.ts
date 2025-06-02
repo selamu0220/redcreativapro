@@ -5,14 +5,14 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 // Check if environment variables are defined
 if (!supabaseUrl || !supabaseAnonKey) {
-  // Instead of throwing an error immediately, provide fallback values for development
-  console.warn('Supabase environment variables are missing. Using demo mode.');
+  // Throw an error if Supabase environment variables are missing
+  throw new Error('Supabase environment variables VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are missing. Please check your .env file or environment configuration.');
 }
 
-// Create the Supabase client with actual values or empty strings as fallback
+// Create the Supabase client
 export const supabase = createClient(
-  supabaseUrl || '',
-  supabaseAnonKey || ''
+  supabaseUrl,
+  supabaseAnonKey
 );
 
 // Database table helpers
