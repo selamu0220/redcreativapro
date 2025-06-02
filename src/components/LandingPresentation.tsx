@@ -110,7 +110,7 @@ export default function LandingPresentation({ onComplete }: LandingPresentationP
   return (
     <div className={`min-h-screen bg-gradient-to-br ${currentSlideData.gradient} flex items-center justify-center relative overflow-hidden`}>
       {/* Partículas flotantes */}
-      <FloatingParticles count={currentSlideData.particles} gradient={currentSlideData.gradient} />
+      {/* <FloatingParticles count={currentSlideData.particles} gradient={currentSlideData.gradient} /> */}
       
       {/* Efectos de fondo */}
       <div className="absolute inset-0 bg-black/20" />
