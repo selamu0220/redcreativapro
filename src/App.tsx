@@ -1,31 +1,33 @@
 import React from 'react';
 import './App.css';
-import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from '@/components/ui/sonner';
-import { AuthProvider } from '@/contexts/AuthContext';
-import LandingPresentation from '@/components/LandingPresentation';
-
-
+// import { ThemeProvider } from '@/components/theme-provider';
+// import { Toaster } from '@/components/ui/sonner';
+// import { AuthProvider } from '@/contexts/AuthContext';
+// import LandingPresentation from '@/components/LandingPresentation';
 
 function App() {
-  console.log('App.tsx: App component is rendering');
+  console.log('App.tsx: App component is rendering (simplified version)');
   
   return (
-    <ThemeProvider defaultTheme="light">
-      <AuthProvider>
-        <div className="min-h-screen bg-background">
-          <div className="container mx-auto px-4 py-8">
-            <h1 className="text-4xl font-bold text-center mb-8">Red Creativa Pro</h1>
-            <div className="text-center">
-              <p className="text-lg mb-4">¡Aplicación funcionando correctamente!</p>
-              <p className="text-muted-foreground">Esta es una versión simplificada para verificar el deploy.</p>
-            </div>
-            <LandingPresentation onComplete={() => console.log('Presentation completed')} />
-          </div>
-        </div>
-        <Toaster />
-      </AuthProvider>
-    </ThemeProvider>
+    <div>
+      <h1>Página de prueba</h1>
+      <p>Si ves esto, la aplicación base está funcionando.</p>
+    </div>
+    // <ThemeProvider defaultTheme="light">
+    //   <AuthProvider>
+    //     <div className="min-h-screen bg-background">
+    //       <div className="container mx-auto px-4 py-8">
+    //         <h1 className="text-4xl font-bold text-center mb-8">Red Creativa Pro</h1>
+    //         <div className="text-center">
+    //           <p className="text-lg mb-4">¡Aplicación funcionando correctamente!</p>
+    //           <p className="text-muted-foreground">Esta es una versión simplificada para verificar el deploy.</p>
+    //         </div>
+    //         <LandingPresentation onComplete={() => console.log('Presentation completed')} />
+    //       </div>
+    //     </div>
+    //     <Toaster />
+    //   </AuthProvider>
+    // </ThemeProvider>
   );
 }
 
