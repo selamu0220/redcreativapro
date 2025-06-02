@@ -128,11 +128,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         const demoAuth = localStorage.getItem('demo_auth');
         const demoUser = localStorage.getItem('demo_user');
         
+        // Descomentado: Lógica para modo demo
         if (demoAuth === 'true' && demoUser) {
           try {
             const parsedUser = JSON.parse(demoUser);
             setUser(parsedUser);
             setLoading(false); // Asegurar setLoading false en modo demo
+            console.log('AuthProvider: Demo mode initialized with user:', parsedUser);
             return; // Salir temprano para modo demo
           } catch (error) {
             console.error('Error parsing demo user:', error);
