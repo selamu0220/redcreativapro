@@ -39,7 +39,7 @@ const AppLayout = () => {
   const currentView = getCurrentView();
 
   return (
-    <div className="flex h-screen w-screen max-w-full max-h-full bg-background relative">
+    <div className="flex h-screen w-full bg-background">
       {/* Sidebar */}
       <div className="w-64 min-w-64 border-r bg-card flex-shrink-0">
         <div className="p-4 h-full overflow-y-auto">
@@ -84,9 +84,9 @@ const AppLayout = () => {
         </header>
 
         {/* Content Area */}
-        <main className="flex-1 relative">
+        <main className="flex-1 overflow-hidden">
           <ScrollArea className="h-full w-full">
-            <div className="p-6 min-h-full">
+            <div className="p-6">
               <EmailVerificationBanner />
               <Outlet />
             </div>

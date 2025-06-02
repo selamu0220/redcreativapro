@@ -19,7 +19,7 @@ import SvgViewerPage from '@/pages/SvgViewerPage';
 import LearningView from '@/components/learning/LearningView';
 import LandingPresentation from '@/components/LandingPresentation';
 
-import './App.css';
+
 
 // Wrapper components to use React Router navigation
 function AuthPageWrapper() {
