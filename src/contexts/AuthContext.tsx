@@ -8,6 +8,17 @@ interface User {
   name: string;
   subscriptionType: 'free' | 'monthly' | 'annual';
   subscriptionEndDate: Date | null;
+  dailyUsage: {
+    date: string;
+    aiRequests: number;
+    promptsUsed: number;
+    scriptsGenerated: number;
+  };
+  dailyLimits: {
+    aiRequests: number;
+    promptsUsed: number;
+    scriptsGenerated: number;
+  };
 }
 
 interface AuthContextType {
@@ -23,6 +34,9 @@ interface AuthContextType {
   getRemainingSubscriptionDays: () => number;
   updateSubscriptionStatus: (subscriptionType: 'free' | 'monthly' | 'annual', endDate?: Date) => void;
   clearEmailVerification: () => void;
+  getRemainingUsage: (feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => number;
+  incrementUsage: (feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => void;
+  canUseFeature: (feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -83,7 +97,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         email: userProfile.email,
         name: userProfile.full_name,
         subscriptionType: userProfile.subscription_tier,
-        subscriptionEndDate: userProfile.subscription_end_date ? new Date(userProfile.subscription_end_date) : null
+        subscriptionEndDate: userProfile.subscription_end_date ? new Date(userProfile.subscription_end_date) : null,
+        dailyUsage: {
+          date: new Date().toISOString().split('T')[0],
+          aiRequests: 0,
+          promptsUsed: 0,
+          scriptsGenerated: 0
+        },
+        dailyLimits: {
+          aiRequests: 100,
+          promptsUsed: 20,
+          scriptsGenerated: 5
+        }
       };
 
       setUser(userData);
@@ -99,22 +124,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        // // Verificar si estamos en modo demo (TEMPORALMENTE DESHABILITADO PARA DEPURACIÓN)
-        // const demoAuth = localStorage.getItem('demo_auth');
-        // const demoUser = localStorage.getItem('demo_user');
-        // 
-        // if (demoAuth === 'true' && demoUser) {
-        //    try {
-        //      const parsedUser = JSON.parse(demoUser);
-        //      setUser(parsedUser);
-        //      setLoading(false); // Asegurar setLoading false en modo demo
-        //      return; // Salir temprano para modo demo
-        //    } catch (error) {
-        //      console.error('Error parsing demo user:', error);
-        //      localStorage.removeItem('demo_auth');
-        //      localStorage.removeItem('demo_user');
-        //    }
-        //  }
+        // Verificar si estamos en modo demo
+        const demoAuth = localStorage.getItem('demo_auth');
+        const demoUser = localStorage.getItem('demo_user');
+        
+        if (demoAuth === 'true' && demoUser) {
+          try {
+            const parsedUser = JSON.parse(demoUser);
+            setUser(parsedUser);
+            setLoading(false); // Asegurar setLoading false en modo demo
+            return; // Salir temprano para modo demo
+          } catch (error) {
+            console.error('Error parsing demo user:', error);
+            localStorage.removeItem('demo_auth');
+            localStorage.removeItem('demo_user');
+          }
+        }
         
         // Get initial session
         const { data: { session } } = await supabase.auth.getSession();
@@ -155,8 +180,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     return () => subscription.unsubscribe();
   }, [loadUserProfile]);
 
-
-
   const hasActiveSubscription = useCallback(() => {
     if (!user) return false;
     // Permitir acceso a usuarios gratuitos también
@@ -173,8 +196,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return Math.max(0, diffDays);
   }, [user]);
-
-
 
   const login = useCallback(
     async (email: string, password: string) => {
@@ -269,8 +290,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     [loadUserProfile]
   );
 
-
-
   const updateSubscriptionStatus = useCallback((subscriptionType: 'free' | 'monthly' | 'annual', endDate?: Date) => {
     if (!user) return;
     
@@ -309,6 +328,82 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setPendingVerificationEmail(null);
   }, []);
 
+  // Usage tracking functions
+  const getRemainingUsage = useCallback((feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => {
+    if (!user) return 0;
+    
+    // Check if we need to reset daily usage (new day)
+    const today = new Date().toISOString().split('T')[0];
+    if (user.dailyUsage.date !== today) {
+      // Reset usage for new day
+      setUser(prevUser => {
+        if (!prevUser) return null;
+        return {
+          ...prevUser,
+          dailyUsage: {
+            date: today,
+            aiRequests: 0,
+            promptsUsed: 0,
+            scriptsGenerated: 0
+          }
+        };
+      });
+      return user.dailyLimits[feature]; // Return full limit for new day
+    }
+    
+    // Return remaining usage
+    return Math.max(0, user.dailyLimits[feature] - user.dailyUsage[feature]);
+  }, [user]);
+
+  const incrementUsage = useCallback((feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => {
+    if (!user) return;
+    
+    // Check if we need to reset daily usage (new day)
+    const today = new Date().toISOString().split('T')[0];
+    
+    setUser(prevUser => {
+      if (!prevUser) return null;
+      
+      // If it's a new day, reset usage
+      if (prevUser.dailyUsage.date !== today) {
+        return {
+          ...prevUser,
+          dailyUsage: {
+            date: today,
+            aiRequests: feature === 'aiRequests' ? 1 : 0,
+            promptsUsed: feature === 'promptsUsed' ? 1 : 0,
+            scriptsGenerated: feature === 'scriptsGenerated' ? 1 : 0
+          }
+        };
+      }
+      
+      // Otherwise increment the specific feature
+      return {
+        ...prevUser,
+        dailyUsage: {
+          ...prevUser.dailyUsage,
+          [feature]: prevUser.dailyUsage[feature] + 1
+        }
+      };
+    });
+  }, [user]);
+
+  const canUseFeature = useCallback((feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => {
+    if (!user) return false;
+    
+    // Pro users have unlimited usage
+    if (user.subscriptionType !== 'free') return true;
+    
+    // Check if we need to reset daily usage (new day)
+    const today = new Date().toISOString().split('T')[0];
+    if (user.dailyUsage.date !== today) {
+      return true; // New day, can use feature
+    }
+    
+    // Check if user has reached their limit
+    return user.dailyUsage[feature] < user.dailyLimits[feature];
+  }, [user]);
+
   const value = {
     user,
     loading,
@@ -322,6 +417,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     getRemainingSubscriptionDays,
     updateSubscriptionStatus,
     clearEmailVerification,
+    getRemainingUsage,
+    incrementUsage,
+    canUseFeature
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
