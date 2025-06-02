@@ -2,32 +2,25 @@ import React from 'react';
 import './App.css';
 import { ThemeProvider } from '@/components/theme-provider';
 // import { Toaster } from '@/components/ui/sonner';
-// import { AuthProvider } from '@/contexts/AuthContext';
+import { AuthProvider } from '@/contexts/AuthContext';
 // import LandingPresentation from '@/components/LandingPresentation';
 
 function App() {
-  console.log('App.tsx: App component is rendering (ThemeProvider restored)');
+  console.log('App.tsx: App component is rendering (AuthProvider and main div restored)');
   
   return (
     <ThemeProvider defaultTheme="light">
-      <div>
-        <h1>Página de prueba con ThemeProvider</h1>
-        <p>Si ves esto, ThemeProvider funciona.</p>
-      </div>
+      <AuthProvider>
+        <div className="min-h-screen bg-background">
+          <div className="container mx-auto px-4 py-8">
+            <h1 className="text-4xl font-bold text-center mb-8">Página de prueba con AuthProvider</h1>
+            <p className="text-lg text-center">Si ves esto, AuthProvider y la estructura principal funcionan.</p>
+          </div>
+        </div>
+        {/* <Toaster /> */}
+        {/* <LandingPresentation onComplete={() => console.log('Presentation completed')} /> */}
+      </AuthProvider>
     </ThemeProvider>
-    // <AuthProvider>
-    //   <div className="min-h-screen bg-background">
-    //     <div className="container mx-auto px-4 py-8">
-    //       <h1 className="text-4xl font-bold text-center mb-8">Red Creativa Pro</h1>
-    //       <div className="text-center">
-    //         <p className="text-lg mb-4">¡Aplicación funcionando correctamente!</p>
-    //         <p className="text-muted-foreground">Esta es una versión simplificada para verificar el deploy.</p>
-    //       </div>
-    //       <LandingPresentation onComplete={() => console.log('Presentation completed')} />
-    //     </div>
-    //   </div>
-    //   <Toaster />
-    // </AuthProvider>
   );
 }
 
