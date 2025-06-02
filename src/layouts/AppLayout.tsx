@@ -39,7 +39,7 @@ const AppLayout = () => {
   const currentView = getCurrentView();
 
   return (
-    <div className="flex h-screen w-full bg-background overflow-hidden">
+    <div className="flex h-screen w-full bg-background">
       {/* Sidebar */}
       <div className="w-64 min-w-64 border-r bg-card flex-shrink-0">
         <div className="p-4 h-full overflow-y-auto">
