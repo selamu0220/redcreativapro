@@ -1,5 +1,4 @@
 import React from 'react';
-import React from 'react';
 import './App.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
