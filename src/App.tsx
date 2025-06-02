@@ -1,7 +1,5 @@
 import React from 'react';
 import './App.css';
-import React from 'react';
-import './App.css';
 import { ThemeProvider } from '@/components/theme-provider';
 // import { Toaster } from '@/components/ui/sonner'; // Mantener Toaster comentado por ahora
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
