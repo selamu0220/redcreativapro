@@ -38,6 +38,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Load user profile from Supabase or create if doesn't exist
   const loadUserProfile = useCallback(async (supabaseUser: SupabaseUser) => {
     try {
+      setLoading(true); // Asegurar que estamos en loading al cargar perfil
       // Try to get existing profile
       const { data: profile, error } = await supabase
         .from('users')
@@ -88,6 +89,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setUser(userData);
     } catch (error) {
       console.error('Error in loadUserProfile:', error);
+      setUser(null); // Limpiar usuario en caso de error
+    } finally {
+      setLoading(false); // Asegurar que loading se desactiva
     }
   }, []);
 
@@ -95,21 +99,22 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        // Verificar si estamos en modo demo
-        const demoAuth = localStorage.getItem('demo_auth');
-        const demoUser = localStorage.getItem('demo_user');
-        
-        if (demoAuth === 'true' && demoUser) {
-           try {
-             const parsedUser = JSON.parse(demoUser);
-             setUser(parsedUser);
-             return; // Salir temprano para modo demo
-           } catch (error) {
-             console.error('Error parsing demo user:', error);
-             localStorage.removeItem('demo_auth');
-             localStorage.removeItem('demo_user');
-           }
-         }
+        // // Verificar si estamos en modo demo (TEMPORALMENTE DESHABILITADO PARA DEPURACIÓN)
+        // const demoAuth = localStorage.getItem('demo_auth');
+        // const demoUser = localStorage.getItem('demo_user');
+        // 
+        // if (demoAuth === 'true' && demoUser) {
+        //    try {
+        //      const parsedUser = JSON.parse(demoUser);
+        //      setUser(parsedUser);
+        //      setLoading(false); // Asegurar setLoading false en modo demo
+        //      return; // Salir temprano para modo demo
+        //    } catch (error) {
+        //      console.error('Error parsing demo user:', error);
+        //      localStorage.removeItem('demo_auth');
+        //      localStorage.removeItem('demo_user');
+        //    }
+        //  }
         
         // Get initial session
         const { data: { session } } = await supabase.auth.getSession();

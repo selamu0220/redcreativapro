@@ -1,30 +1,48 @@
 import React from 'react';
 import './App.css';
-// import { ThemeProvider } from '@/components/theme-provider';
-// import { Toaster } from '@/components/ui/sonner';
-// import { AuthProvider } from '@/contexts/AuthContext';
+import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/sonner'; // Restauramos Toaster por si se usa en Auth
+import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import { AuthPage } from '@/pages/AuthPage';
 // import LandingPresentation from '@/components/LandingPresentation';
 
-function App() {
-  console.log('App.tsx: App component is rendering (Ultra simplified)');
-  
+function MainContent() {
+  const { isAuthenticated, user, loading } = useAuth();
+  console.log('App.tsx: MainContent rendering. Auth state:', { isAuthenticated, userName: user?.name, loading });
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Cargando autenticación...</p>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <AuthPage />;
+  }
+
   return (
-    <div>
-      <h1>Página de Prueba Ultra Simplificada</h1>
-      <p>Si ves esto, el problema no está en el renderizado básico de React.</p>
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold text-center mb-8">¡Bienvenido, {user?.name || 'Usuario'}!</h1>
+        <p className="text-lg text-center">Has iniciado sesión correctamente.</p>
+        {/* Aquí iría el resto de tu aplicación, por ejemplo, AppLayout o rutas principales */}
+      </div>
     </div>
-    // <ThemeProvider defaultTheme="light">
-    //   <AuthProvider>
-    //     <div className="min-h-screen bg-background">
-    //       <div className="container mx-auto px-4 py-8">
-    //         <h1 className="text-4xl font-bold text-center mb-8">Página de prueba con AuthProvider</h1>
-    //         <p className="text-lg text-center">Si ves esto, AuthProvider y la estructura principal funcionan.</p>
-    //       </div>
-    //     </div>
-    //     {/* <Toaster /> */}
-    //     {/* <LandingPresentation onComplete={() => console.log('Presentation completed')} /> */}
-    //   </AuthProvider>
-    // </ThemeProvider>
+  );
+}
+
+function App() {
+  console.log('App.tsx: App component rendering with providers');
+  return (
+    <ThemeProvider defaultTheme="light">
+      <AuthProvider>
+        <MainContent />
+        <Toaster />
+        {/* <LandingPresentation onComplete={() => console.log('Presentation completed')} /> */}
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
