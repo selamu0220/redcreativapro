@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Post } from '@/types/blog';
 import { BlogList } from './BlogList';
@@ -9,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Plus } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useQuickRefresh } from '@/hooks/useQuickRefresh';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter, usePathname } from 'next/navigation';
 import { slugify } from '@/lib/utils';
 import { useSEO, useBlogSEO } from '@/hooks/useSEO';
 import { BlogArticleStructuredData } from '@/components/SEO/StructuredData';
@@ -20,8 +22,8 @@ export function BlogView() {
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const { toast } = useToast();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
 
   // Hook para refrescado rápido
   const { isRefreshing } = useQuickRefresh({
@@ -63,7 +65,7 @@ export function BlogView() {
 
   // Handle URL-based navigation
   useEffect(() => {
-    const path = location.pathname;
+    const path = pathname;
     const match = path.match(/\/blog\/(.+)-([a-zA-Z0-9]+)$/);
     
     if (match) {
@@ -73,7 +75,7 @@ export function BlogView() {
         setSelectedPost(post);
       }
     }
-  }, [posts, location.pathname]);
+  }, [posts, pathname]);
 
   // Aplicar SEO específico cuando hay un post seleccionado
   if (selectedPost) {
@@ -116,15 +118,15 @@ export function BlogView() {
 
   const handlePostSelect = (post: Post) => {
     setSelectedPost(post);
-    // Update URL with React Router
+    // Update URL with Next.js Router
     const url = `/blog/${slugify(post.title)}-${post.id}`;
-    navigate(url, { replace: true });
+    router.push(url);
   };
 
   const handleBack = () => {
     setSelectedPost(null);
-    // Update URL with React Router
-    navigate('/blog', { replace: true });
+    // Update URL with Next.js Router
+    router.push('/blog');
   };
 
   return (

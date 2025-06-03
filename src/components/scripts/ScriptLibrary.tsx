@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Script, ScriptStatus } from '@/types/scripts';
 import { mockScripts } from '@/data/mockScripts';

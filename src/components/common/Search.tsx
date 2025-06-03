@@ -1,3 +1,7 @@
+'use client';
+
+'use client';
+
 import { useCallback, useState, useEffect } from 'react';
 import { Search as SearchIcon, Calendar, FileText, BookOpen, Palette, X, Loader2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -10,7 +14,7 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { SearchResult, searchContent } from '@/lib/search';
 import { mockPosts } from '@/data/mockPosts';
 import { mockEvents } from '@/data/mockEvents';
@@ -29,7 +33,7 @@ export function Search() {
   const [loading, setLoading] = useState(false);
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSearch = useCallback(async (searchQuery: string) => {
     if (!searchQuery.trim()) {
@@ -81,7 +85,7 @@ export function Search() {
 
     setOpen(false);
     if (result.url) {
-      navigate(result.url);
+      router.push(result.url);
     }
   };
 

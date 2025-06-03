@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -80,8 +82,8 @@ export function AuthForm() {
     
     try {
       // Verificar si las claves de Supabase están configuradas correctamente
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
       
       // Si Supabase no está configurado o hay problemas de conexión, usar modo demo
       if (!supabaseUrl || !supabaseKey || supabaseKey.includes('example')) {

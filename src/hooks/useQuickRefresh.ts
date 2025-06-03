@@ -25,7 +25,7 @@ export const useQuickRefresh = (options: UseQuickRefreshOptions = {}) => {
   }, [onRefresh, isRefreshing]);
 
   useEffect(() => {
-    if (!autoRefresh) return;
+    if (!autoRefresh || typeof window === 'undefined') return;
 
     const handleQuickRefresh = () => {
       handleRefresh();

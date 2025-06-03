@@ -181,18 +181,14 @@ export function MainNav({ currentView }: MainNavProps) {
           <FileImage className="h-4 w-4" />
           <span className="hidden md:inline">SVG Viewer</span>
         </button>
-        <button
+        <Button 
           onClick={() => handleNavigation('/precios')}
-          className="ml-2"
+          variant="default" 
+          size="sm" 
+          className="ml-2 font-semibold"
         >
-          <Button 
-            variant="default" 
-            size="sm" 
-            className="font-semibold"
-          >
-            Plan Pro
-          </Button>
-        </button>
+          Plan Pro
+        </Button>
       </nav>
     </div>
   );

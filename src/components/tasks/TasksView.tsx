@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { TasksHeader } from './TasksHeader';
 import { TaskBoard } from './TaskBoard';

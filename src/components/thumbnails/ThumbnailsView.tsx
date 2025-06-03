@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { ThumbnailCreator } from './ThumbnailCreator';
 import { InfographicCreator } from './InfographicCreator';

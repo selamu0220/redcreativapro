@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import { SEO_CONFIG, generateMetaTags } from '../config/seo';
 
@@ -29,6 +31,9 @@ const DEFAULT_SEO = {
 
 export function useSEO(seoData: SEOData = {}) {
   useEffect(() => {
+    // Solo ejecutar en el cliente
+    if (typeof window === 'undefined') return;
+    
     // Combinar datos SEO con valores por defecto
     const finalSEO = { ...DEFAULT_SEO, ...seoData };
 

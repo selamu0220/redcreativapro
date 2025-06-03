@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ScriptLibrary } from './ScriptLibrary';
 import { useScriptsSEO } from '@/hooks/useSEO';

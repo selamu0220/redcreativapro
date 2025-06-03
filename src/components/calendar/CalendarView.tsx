@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { CalendarHeader } from './CalendarHeader';
 import { MonthView } from './MonthView';
