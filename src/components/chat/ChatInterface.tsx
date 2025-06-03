@@ -9,7 +9,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { useQuickRefresh } from '@/hooks/useQuickRefresh';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { generateScriptWithAI } from '@/lib/ai';
 import { Send, Bot, Loader2, Settings, Sparkles, Save, Copy, FileText, Star, Calendar, Image, FolderOpen, BarChart3 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -91,7 +91,7 @@ export function ChatInterface() {
   const [showActionButtons, setShowActionButtons] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const router = useRouter();
   const { isAuthenticated } = useAuth();
 
   // Hook para refrescado rápido

@@ -130,6 +130,19 @@ export const SEO_CONFIG = {
         'brainstorming IA',
         'soporte creativo'
       ]
+    },
+    
+    prompts: {
+      title: 'Biblioteca de Prompts - Red Creativa Pro | Prompts IA Optimizados',
+      description: 'Accede a nuestra colección de prompts optimizados para IA. Mejora tus resultados con instrucciones precisas para diferentes tareas creativas.',
+      keywords: [
+        'prompts IA',
+        'instrucciones IA',
+        'biblioteca prompts',
+        'optimización IA',
+        'plantillas prompts',
+        'ingeniería de prompts'
+      ]
     }
   },
   

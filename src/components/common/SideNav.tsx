@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
@@ -30,7 +31,7 @@ interface NavItem {
 }
 
 export function SideNav({ currentView, onShowLanding }: SideNavProps) {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Función para navegación con refresh rápido
   const handleNavigation = (path: string) => {
@@ -39,7 +40,7 @@ export function SideNav({ currentView, onShowLanding }: SideNavProps) {
       window.location.reload();
     } else {
       // Navegar a la nueva página y hacer refresh inmediato
-      navigate(`/${path}`);
+      router.push(`/${path}`);
       // Pequeño delay para asegurar que la navegación se complete antes del refresh
       setTimeout(() => {
         window.location.reload();
@@ -144,7 +145,7 @@ export function SideNav({ currentView, onShowLanding }: SideNavProps) {
         <Separator />
         
         <div className="px-2 space-y-2">
-          <Link to="/precios">
+          <Link href="/precios">
             <Button 
               variant="outline" 
               size="sm" 

@@ -16,21 +16,6 @@
       "static/chunks/main-app.js",
       "static/chunks/app/calendario/page.js"
     ],
-    "/miniaturas/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/miniaturas/page.js"
-    ],
-    "/chat/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/chat/page.js"
-    ],
-    "/aprendizaje/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/aprendizaje/page.js"
-    ],
     "/recursos/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -41,20 +26,25 @@
       "static/chunks/main-app.js",
       "static/chunks/app/scripts/page.js"
     ],
-    "/prompts/page": [
+    "/blog/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/prompts/page.js"
+      "static/chunks/app/blog/page.js"
+    ],
+    "/aprendizaje/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/aprendizaje/page.js"
+    ],
+    "/chat/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/chat/page.js"
     ],
     "/tareas/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/tareas/page.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

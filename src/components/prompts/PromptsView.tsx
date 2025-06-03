@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { PromptLibrary } from './PromptLibrary';
 import { usePromptsSEO } from '@/hooks/useSEO';

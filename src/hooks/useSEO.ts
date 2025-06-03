@@ -136,7 +136,7 @@ export function useSEO(seoData: SEOData = {}) {
 }
 
 // Hook específico para el blog
-export const useBlogSEO = (post?: {
+export const useBlogSEO = (post: {
   title: string;
   excerpt: string;
   author: { name: string };
@@ -144,7 +144,7 @@ export const useBlogSEO = (post?: {
   updatedAt: string;
   tags: string[];
   imageUrl: string;
-}) => {
+} | null = null) => {
   useEffect(() => {
     if (post) {
       const blogConfig = generateMetaTags('blog');

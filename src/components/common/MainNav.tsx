@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Calendar, FileText, BookOpen, Sparkles, Palette, Image, MessageSquare, GraduationCap, BarChart3, FolderOpen, FileImage, Crown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,7 @@ interface MainNavProps {
 
 export function MainNav({ currentView }: MainNavProps) {
   const { hasActiveSubscription } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   
   const handleNavigation = useCallback((path: string) => {
     const targetView = path.replace('/', '');
@@ -20,7 +20,7 @@ export function MainNav({ currentView }: MainNavProps) {
       window.location.reload();
     } else {
       // Navegar a la nueva página y hacer refresh inmediato
-      navigate(path);
+      router.push(path);
       // Pequeño delay para asegurar que la navegación se complete antes del refresh
       setTimeout(() => {
         window.location.reload();

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Script, ScriptStatus } from '@/types/scripts';
 import { mockScripts } from '@/data/mockScripts';
 import { ScriptList } from './ScriptList';
@@ -23,9 +23,9 @@ export function ScriptLibrary() {
   // Aplicar SEO específico para la página de guiones
   useScriptsSEO();
 
-  const handleFilter = (filtered: Script[]) => {
+  const handleFilter = useCallback((filtered: Script[]) => {
     setFilteredScripts(filtered);
-  };
+  }, []);
 
   const handleScriptSelect = (script: Script) => {
     setSelectedScript(script);

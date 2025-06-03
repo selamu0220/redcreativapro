@@ -78,14 +78,13 @@ export function BlogView() {
   }, [posts, pathname]);
 
   // Aplicar SEO específico cuando hay un post seleccionado
-  if (selectedPost) {
-    const slug = slugify(selectedPost.title);
-    const postWithSlug = {
-      ...selectedPost,
-      slug: slug
-    };
-    useBlogSEO(postWithSlug);
-  }
+  // Los hooks deben llamarse siempre, no condicionalmente
+  const postForSEO = selectedPost ? {
+    ...selectedPost,
+    slug: slugify(selectedPost.title)
+  } : null;
+  
+  useBlogSEO(postForSEO);
 
   const handleSavePost = (post: Post) => {
     if (editingPost) {

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ResourceHeader } from './ResourceHeader';
 import { ResourceGrid } from './ResourceGrid';
 import { ResourceFilters } from './ResourceFilters';
@@ -47,9 +47,9 @@ export function ResourcesView() {
     });
   };
 
-  const handleFilter = (filtered: Resource[]) => {
+  const handleFilter = useCallback((filtered: Resource[]) => {
     setFilteredResources(filtered);
-  };
+  }, []);
 
   const handleAddComment = (resourceId: string, comment: ResourceComment) => {
     const updatedResources = resources.map(resource => {

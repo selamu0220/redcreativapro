@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -28,7 +28,7 @@ export function AuthForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { login, signup } = useAuth();
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleDemoMode = async (values: z.infer<typeof formSchema>) => {
     console.log('Activating demo mode');
@@ -64,7 +64,7 @@ export function AuthForm() {
     localStorage.setItem('demo_auth', 'true');
     
     setTimeout(() => {
-      navigate('/blog');
+      router.push('/blog');
     }, 1000);
   };
 
@@ -114,7 +114,7 @@ export function AuthForm() {
           description: 'Has iniciado sesión correctamente.',
         });
         setTimeout(() => {
-          navigate('/blog');
+          router.push('/blog');
         }, 1000);
         return;
       } catch (loginError: any) {
