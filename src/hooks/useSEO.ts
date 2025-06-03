@@ -234,21 +234,7 @@ export function useCalendarSEO() {
   useSEO(seoData);
 }
 
-// Hook para generador de guiones
-export function useScriptsSEO() {
-  const scriptsConfig = generateMetaTags('guiones');
-  const seoData: SEOData = {
-    title: scriptsConfig.title,
-    description: scriptsConfig.description,
-    keywords: scriptsConfig.keywords,
-    ogTitle: scriptsConfig.title,
-    ogDescription: scriptsConfig.description,
-    ogImage: SEO_CONFIG.openGraph.images.default,
-    canonical: `${SEO_CONFIG.siteUrl}/guiones`
-  };
 
-  useSEO(seoData);
-}
 
 // Hook para creador de miniaturas
 export function useThumbnailsSEO() {
@@ -261,6 +247,38 @@ export function useThumbnailsSEO() {
     ogDescription: thumbnailsConfig.description,
     ogImage: SEO_CONFIG.openGraph.images.default,
     canonical: `${SEO_CONFIG.siteUrl}/miniaturas`
+  };
+
+  useSEO(seoData);
+}
+
+// Hook para prompts
+export function usePromptsSEO() {
+  const promptsConfig = generateMetaTags('prompts');
+  const seoData: SEOData = {
+    title: promptsConfig.title,
+    description: promptsConfig.description,
+    keywords: promptsConfig.keywords,
+    ogTitle: promptsConfig.title,
+    ogDescription: promptsConfig.description,
+    ogImage: SEO_CONFIG.openGraph.images.default,
+    canonical: `${SEO_CONFIG.siteUrl}/prompts`
+  };
+
+  useSEO(seoData);
+}
+
+// Hook para scripts
+export function useScriptsSEO() {
+  const scriptsConfig = generateMetaTags('guiones');
+  const seoData: SEOData = {
+    title: scriptsConfig.title,
+    description: scriptsConfig.description,
+    keywords: scriptsConfig.keywords,
+    ogTitle: scriptsConfig.title,
+    ogDescription: scriptsConfig.description,
+    ogImage: SEO_CONFIG.openGraph.images.default,
+    canonical: `${SEO_CONFIG.siteUrl}/scripts`
   };
 
   useSEO(seoData);
