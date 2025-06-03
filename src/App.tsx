@@ -16,6 +16,7 @@ import { PromptsView } from '@/components/prompts/PromptsView';
 import { ScriptsView } from '@/components/scripts/ScriptsView';
 import { ThumbnailsView } from '@/components/thumbnails/ThumbnailsView';
 import { ChatInterface } from '@/components/chat/ChatInterface';
+import HomePage from '@/components/HomePage';
 import './App.css';
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
             
             {/* Layout principal con todas las vistas */}
             <Route path="/" element={<AppLayout />}>
-              <Route index element={<Navigate to="/blog" replace />} />
+              <Route index element={<HomePage />} />
               <Route path="blog" element={<BlogView />} />
               <Route path="blog/:slug" element={<BlogView />} />
               <Route path="calendario" element={<CalendarView />} />
