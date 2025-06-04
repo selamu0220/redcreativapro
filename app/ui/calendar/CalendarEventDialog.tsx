@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { format, addHours, parseISO } from 'date-fns';
 import { CalendarIcon, Trash2, Plus, X, Sparkles } from 'lucide-react';
-import { EventType } from '@/types/calendar';
-import { AIProvider } from '@/types/ai';
-import { Button } from '@/components/ui/button';
+import { EventType } from '../../types/calendar';
+import { AIProvider } from '../../types/ai';
+import { Button } from '../../ui/button';
 import {
   Dialog,
   DialogContent,
@@ -14,7 +14,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '../../ui/dialog';
 import {
   Form,
   FormControl,
@@ -23,26 +23,26 @@ import {
   FormLabel,
   FormMessage,
   FormDescription,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from '../../ui/form';
+import { Input } from '../../ui/input';
+import { Textarea } from '../../ui/textarea';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
+} from '../../ui/popover';
+import { Calendar } from '../../ui/calendar';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { v4 } from '@/lib/utils';
-import { useToast } from '@/hooks/use-toast';
-import { generateScriptWithAI } from '@/lib/ai';
+} from '../../ui/select';
+import { Switch } from '../../ui/switch';
+import { v4 } from '../../lib/utils';
+import { useToast } from '../../hooks/use-toast';
+import { generateScriptWithAI } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\ai';
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required'),

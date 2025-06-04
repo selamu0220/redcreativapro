@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { TasksHeader } from './TasksHeader';
 import { TaskBoard } from './TaskBoard';
 import { TaskDialog } from './TaskDialog';
-import { TaskType, TaskStatus } from '@/types/tasks';
-import { mockTasks } from '@/data/mockTasks';
+import { TaskType, TaskStatus } from '../../types/tasks';
+import { mockTasks } from '../../data/mockTasks';
 
 export function TasksView() {
   const [tasks, setTasks] = useState<TaskType[]>(mockTasks);

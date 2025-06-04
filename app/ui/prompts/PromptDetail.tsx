@@ -1,11 +1,11 @@
-import { Prompt } from '@/types/prompts';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { formatDate } from '@/lib/dateUtils';
+import { Prompt } from '../../types/prompts';
+import { Button } from '../../ui/button';
+import { Badge } from '../../ui/badge';
+import { formatDate } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\dateUtils';
 import { Edit2, Trash2, Copy, Share2, Globe, Lock, Users } from 'lucide-react';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
+import { ScrollArea } from '../../ui/scroll-area';
+import { useToast } from '../../hooks/use-toast';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface PromptDetailProps {
   prompt: Prompt;

@@ -1,5 +1,5 @@
-import { CalendarView } from '@/components/calendar/CalendarView';
-import AppLayout from '@/app/components/AppLayout';
+import { CalendarView } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\calendar\CalendarView';
+import AppLayout from '../components/AppLayout';
 
 export default function CalendarioPage() {
   return (

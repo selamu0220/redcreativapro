@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useAuth } from '@/contexts/AuthContext';
-import { mockPosts } from '@/data/mockPosts';
-import { Post } from '@/types/blog';
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
+import { Button } from '../../ui/button';
+import { Badge } from '../../ui/badge';
+import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
+import { useAuth } from '../../contexts/AuthContext';
+import { mockPosts } from '../../data/mockPosts';
+import { Post } from '../../types/blog';
 import { PlusCircle, Calendar, User } from 'lucide-react';
 
 export function MiniBlog() {

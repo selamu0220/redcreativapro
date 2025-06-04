@@ -1,22 +1,22 @@
 import { useState, useRef, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
-import { ThumbnailSettings, ThumbnailImage, ThumbnailTemplate } from '@/types/thumbnails';
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
+import { Label } from '../../ui/label';
+import { Tabs, TabsList, TabsTrigger } from '../../ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
+import { Switch } from '../../ui/switch';
+import { ScrollArea } from '../../ui/scroll-area';
+import { useToast } from '../../hooks/use-toast';
+import { useAuth } from '../../contexts/AuthContext';
+import { ThumbnailSettings, ThumbnailImage, ThumbnailTemplate } from '../../types/thumbnails';
 import { ThumbnailTemplateSelector } from './ThumbnailTemplateSelector';
-import { v4, cn } from '@/lib/utils';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { v4, cn } from '../../lib/utils';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../ui/dialog';
 import { 
   Image, Type, Palette, Settings, Sparkles, Download, Plus, X, 
   FileImage, Upload, FolderUp, Maximize2, Minimize2, LayoutTemplate, Save
 } from 'lucide-react';
-import { useThumbnailsSEO } from '@/hooks/useSEO';
+import { useThumbnailsSEO } from '../../hooks/useSEO';
 
 const formatPresets = {
   youtube: { width: 1280, height: 720, name: 'YouTube (16:9)' },

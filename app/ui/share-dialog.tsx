@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { Check, Copy, Globe2, Lock, Users } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../../../../../../../../ui/button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useToast } from '@/hooks/use-toast';
+} from '../../../../../../../../../ui/dialog';
+import { Input } from '../../../../../../../../../ui/input';
+import { Label } from '../../../../../../../../../ui/label';
+import { RadioGroup, RadioGroupItem } from '../../../../../../../../../ui/radio-group';
+import { useToast } from '../../../../../../../../../hooks/use-toast';
 
 export type Visibility = 'private' | 'public' | 'shared';
 

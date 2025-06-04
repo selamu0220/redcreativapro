@@ -1,5 +1,5 @@
-import { PromptsView } from '@/components/prompts/PromptsView';
-import AppLayout from '@/app/components/AppLayout';
+import { PromptsView } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\prompts\PromptsView';
+import AppLayout from '../components/AppLayout';
 
 export default function PromptsPage() {
   return (

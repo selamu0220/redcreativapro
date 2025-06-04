@@ -1,6 +1,6 @@
-import { TaskType, TaskStatus } from '@/types/tasks';
+import { TaskType, TaskStatus } from '../../types/tasks';
 import { TaskColumn } from './TaskColumn';
-import { Card } from '@/components/ui/card';
+import { Card } from '../../ui/card';
 
 interface TaskBoardProps {
   tasks: TaskType[];

@@ -1,10 +1,10 @@
-import { Prompt } from '@/types/prompts';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { cn } from '@/lib/utils';
+import { Prompt } from '../../types/prompts';
+import { ScrollArea } from '../../ui/scroll-area';
+import { cn } from '../../lib/utils';
 import { Star, FileText } from 'lucide-react';
-import { formatDate } from '@/lib/dateUtils';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { formatDate } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\dateUtils';
+import { Badge } from '../../ui/badge';
+import { Button } from '../../ui/button';
 
 interface PromptListProps {
   prompts: Prompt[];

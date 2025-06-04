@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Learning, Video, Review, Task } from '@/types/learning';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
+import { Learning, Video, Review, Task } from '../../types/learning';
+import { Button } from '../../ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../../ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui/accordion';
+import { Checkbox } from '../../ui/checkbox';
+import { Badge } from '../../ui/badge';
 import { Star, PlayCircle, ListChecks, ArrowLeft, Plus } from 'lucide-react';
 import LearningCreator from './LearningCreator';
-import { toast } from '@/hooks/use-toast';
+import { toast } from '../../hooks/use-toast';
 
 // Datos de ejemplo mejorados
 const initialMockLearning: Learning[] = [

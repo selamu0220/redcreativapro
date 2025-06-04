@@ -1,9 +1,9 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { ThumbnailTemplate } from '@/types/thumbnails';
-import { thumbnailTemplates } from '@/data/thumbnailTemplates';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../ui/dialog';
+import { ScrollArea } from '../../ui/scroll-area';
+import { Tabs, TabsList, TabsTrigger } from '../../ui/tabs';
+import { Button } from '../../ui/button';
+import { ThumbnailTemplate } from '../../types/thumbnails';
+import { thumbnailTemplates } from '../../data/thumbnailTemplates';
 import { useState, useEffect } from 'react';
 import { Trash2, User } from 'lucide-react';
 

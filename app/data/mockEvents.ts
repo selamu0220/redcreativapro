@@ -1,4 +1,4 @@
-import { EventType } from '@/types/calendar';
+import { EventType } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\calendar';
 import { addDays, setHours, setMinutes } from 'date-fns';
 
 const today = new Date();

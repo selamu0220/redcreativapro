@@ -1,5 +1,5 @@
-import { TasksView } from '@/components/tasks/TasksView';
-import AppLayout from '@/app/components/AppLayout';
+import { TasksView } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\tasks\TasksView';
+import AppLayout from '../components/AppLayout';
 
 export default function TareasPage() {
   return (

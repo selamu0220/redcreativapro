@@ -1,4 +1,4 @@
-import { stripeConfig } from '@/stripe-config';
+import { stripeConfig } from './stripe-config';
 
 export async function redirectToCheckout(productKey: keyof typeof stripeConfig) {
   const product = stripeConfig[productKey];

@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { format } from 'date-fns';
 import { CalendarIcon, Trash2, Plus, X } from 'lucide-react';
-import { TaskType, TaskStatus, TaskPriority, Subtask } from '@/types/tasks';
-import { Button } from '@/components/ui/button';
+import { TaskType, TaskStatus, TaskPriority, Subtask } from '../../types/tasks';
+import { Button } from '../../ui/button';
 import {
   Dialog,
   DialogContent,
@@ -13,7 +13,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '../../ui/dialog';
 import {
   Form,
   FormControl,
@@ -21,25 +21,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+} from '../../ui/form';
+import { Input } from '../../ui/input';
+import { Textarea } from '../../ui/textarea';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
+} from '../../ui/popover';
+import { Calendar } from '../../ui/calendar';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
-import { v4, cn } from '@/lib/utils';
+} from '../../ui/select';
+import { Checkbox } from '../../ui/checkbox';
+import { Badge } from '../../ui/badge';
+import { v4, cn } from '../../lib/utils';
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required'),

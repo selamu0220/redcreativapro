@@ -1,1 +1,18 @@
-{}
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/blog/[slug]/page": "app/blog/[slug]/page.js",
+  "/aprendizaje/page": "app/aprendizaje/page.js",
+  "/auth/page": "app/auth/page.js",
+  "/calendario/page": "app/calendario/page.js",
+  "/blog/page": "app/blog/page.js",
+  "/chat/page": "app/chat/page.js",
+  "/miniaturas/page": "app/miniaturas/page.js",
+  "/page": "app/page.js",
+  "/presentacion/page": "app/presentacion/page.js",
+  "/proyectos/page": "app/proyectos/page.js",
+  "/prompts/page": "app/prompts/page.js",
+  "/scripts/page": "app/scripts/page.js",
+  "/recursos/page": "app/recursos/page.js",
+  "/tareas/page": "app/tareas/page.js",
+  "/svg-viewer/page": "app/svg-viewer/page.js"
+}

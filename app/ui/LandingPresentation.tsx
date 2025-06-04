@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 // import { motion, AnimatePresence } from 'framer-motion';
-// import { Button } from '@/components/ui/button';
+// import { Button } from '../../../../../../../../../ui/button';
 // import { ArrowRight, X, Sparkles, Zap, Rocket, Brain, Calendar, FileText } from 'lucide-react';
 
 interface LandingPresentationProps {

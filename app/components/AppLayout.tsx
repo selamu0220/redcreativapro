@@ -1,37 +1,42 @@
-import React, { useState, useCallback } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { MainNav } from '@/components/common/MainNav';
-import { SideNav } from '@/components/common/SideNav';
-import { ModeToggle } from '@/components/common/ModeToggle';
-import { UserNav } from '@/components/common/UserNav';
-import { Search } from '@/components/common/Search';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useAuth } from '@/contexts/AuthContext';
-import { useQuickRefresh } from '@/hooks/useQuickRefresh';
-import { Button } from '@/components/ui/button';
-import { LogIn, RefreshCw } from 'lucide-react';
-import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner';
+'use client';
 
-const AppLayout = () => {
+import { usePathname, useRouter } from 'next/navigation';
+import { MainNav } from './common/MainNav';
+import { SideNav } from './common/SideNav';
+import { ModeToggle } from './common/ModeToggle';
+import { UserNav } from './common/UserNav';
+import { Search } from './common/Search';
+import { ScrollArea } from '../ui/scroll-area';
+import { useAuth } from '../contexts/AuthContext';
+import { useQuickRefresh } from '../hooks/useQuickRefresh';
+import { Button } from '../ui/button';
+import { LogIn, RefreshCw } from 'lucide-react';
+import { EmailVerificationBanner } from './auth/EmailVerificationBanner';
+
+interface AppLayoutProps {
+  children: React.ReactNode;
+}
+
+const AppLayout = ({ children }: AppLayoutProps) => {
   console.log('AppLayout: Component is rendering');
   const { user, logout } = useAuth();
   console.log('AppLayout: useAuth returned, user:', user ? 'exists' : 'null');
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
+  const pathname = usePathname();
   const { isRefreshing, refresh: handleQuickRefresh } = useQuickRefresh();
 
   // Extraer la vista actual de la URL
   const getCurrentView = () => {
-    const path = location.pathname.slice(1); // Remover el '/'
+    const path = pathname.slice(1); // Remover el '/'
     return path || 'blog';
   };
 
   const handleAuthClick = () => {
-    navigate('/auth');
+    router.push('/auth');
   };
 
   const handleShowPresentation = () => {
-    navigate('/presentacion');
+    router.push('/presentacion');
   };
 
   // handleQuickRefresh viene del hook useQuickRefresh
@@ -88,13 +93,13 @@ const AppLayout = () => {
           <ScrollArea className="h-full w-full">
             <div className="p-6 h-full min-h-full">
               <EmailVerificationBanner />
-              <Outlet />
+              {children}
             </div>
           </ScrollArea>
         </main>
       </div>
-      </div>
-    );
+    </div>
+  );
 };
 
 export default AppLayout;

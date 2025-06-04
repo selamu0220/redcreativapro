@@ -4,7 +4,7 @@
 
 import { useCallback, useState, useEffect } from 'react';
 import { Search as SearchIcon, Calendar, FileText, BookOpen, Palette, X, Loader2 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Input } from '../../ui/input';
 import {
   CommandDialog,
   CommandEmpty,
@@ -12,19 +12,19 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
-import { Button } from '@/components/ui/button';
+} from '../../ui/command';
+import { Button } from '../../ui/button';
 import { useRouter } from 'next/navigation';
-import { SearchResult, searchContent } from '@/lib/search';
-import { mockPosts } from '@/data/mockPosts';
-import { mockEvents } from '@/data/mockEvents';
-import { mockResources } from '@/data/mockResources';
-import { mockScripts } from '@/data/mockScripts';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
-import { DialogTitle } from '@/components/ui/dialog';
+import { SearchResult, searchContent } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\search';
+import { mockPosts } from '../../data/mockPosts';
+import { mockEvents } from '../../data/mockEvents';
+import { mockResources } from '../../data/mockResources';
+import { mockScripts } from '../../data/mockScripts';
+import { Badge } from '../../ui/badge';
+import { ScrollArea } from '../../ui/scroll-area';
+import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../hooks/use-toast';
+import { DialogTitle } from '../../ui/dialog';
 
 export function Search() {
   const [open, setOpen] = useState(false);

@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '../../contexts/AuthContext';
+import { Button } from '../../ui/button';
+import { useToast } from '../../hooks/use-toast';
 import { Mail, X, RefreshCw } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { supabase } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\supabase';
 
 export function EmailVerificationBanner() {
   const { needsEmailVerification, pendingVerificationEmail, clearEmailVerification } = useAuth();

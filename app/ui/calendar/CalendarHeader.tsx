@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '../../ui/button';
 import { CalendarIcon, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { format, addMonths, addWeeks, addDays, subMonths, subWeeks, subDays } from 'date-fns';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '../../ui/tabs';
 
 type CalendarViewType = 'month' | 'week' | 'day';
 

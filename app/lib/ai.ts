@@ -1,4 +1,4 @@
-import { AIProvider, AIModel, AISettings } from '@/types/ai';
+import { AIProvider, AIModel, AISettings } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\ai';
 
 
 

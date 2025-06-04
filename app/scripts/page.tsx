@@ -1,5 +1,5 @@
-import { ScriptsView } from '@/components/scripts/ScriptsView';
-import AppLayout from '@/app/components/AppLayout';
+import { ScriptsView } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\scripts\ScriptsView';
+import AppLayout from '../components/AppLayout';
 
 export default function ScriptsPage() {
   return (

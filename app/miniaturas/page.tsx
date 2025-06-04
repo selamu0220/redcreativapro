@@ -1,5 +1,5 @@
-import { ThumbnailsView } from '@/components/thumbnails/ThumbnailsView';
-import AppLayout from '@/app/components/AppLayout';
+import { ThumbnailsView } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\thumbnails\ThumbnailsView';
+import AppLayout from '../components/AppLayout';
 
 export default function MiniaturasPage() {
   return (

@@ -1,71 +1,46 @@
-# Script para corregir todas las importaciones '@/' en el directorio app
+# Script para corregir rutas de importación @/ a rutas relativas
 
-# Función para obtener la ruta relativa correcta
+# Función para obtener ruta relativa
 function Get-RelativePath {
     param(
-        [string]$FromPath,
-        [string]$ToPath
+        [string]$From,
+        [string]$To
     )
     
-    $from = $FromPath -replace '\\', '/'
-    $to = $ToPath -replace '\\', '/'
-    
-    # Calcular niveles hacia arriba
-    $fromParts = $from.Split('/')
-    $toParts = $to.Split('/')
-    
-    # Encontrar el índice común
-    $commonIndex = 0
-    for ($i = 0; $i -lt [Math]::Min($fromParts.Length, $toParts.Length); $i++) {
-        if ($fromParts[$i] -eq $toParts[$i]) {
-            $commonIndex = $i + 1
-        } else {
-            break
-        }
-    }
-    
-    # Calcular niveles hacia arriba
-    $levelsUp = $fromParts.Length - $commonIndex - 1
-    $upPath = if ($levelsUp -gt 0) { '../' * $levelsUp } else { './' }
-    
-    # Agregar el resto del path
-    $remainingPath = $toParts[$commonIndex..($toParts.Length - 1)] -join '/'
-    
-    return $upPath + $remainingPath
+    $relativePath = [System.IO.Path]::GetRelativePath($From, $To)
+    return $relativePath -replace '\\', '/'
 }
 
 # Función para procesar archivos
 function Fix-Imports {
-    param([string]$FilePath)
+    param(
+        [string]$FilePath
+    )
     
     $content = Get-Content $FilePath -Raw
+    $fileDir = Split-Path $FilePath -Parent
     $modified = $false
     
-    # Obtener directorio del archivo
-    $fileDir = Split-Path $FilePath -Parent
-    $appDir = "c:\Users\programar\Documents\GitHub\redcreativapro\app"
-    
-    # Mapeo de rutas '@/' a rutas reales
+    # Mapeos de rutas @/ a directorios reales
     $mappings = @{
-        '@/lib/' = "$appDir\lib"
-        '@/types/' = "$appDir\types"
-        '@/hooks/' = "$appDir\hooks"
-        '@/contexts/' = "$appDir\contexts"
-        '@/data/' = "$appDir\data"
-        '@/config/' = "$appDir\config"
-        '@/components/ui/' = "$appDir\ui"
-        '@/components/theme-provider' = "$appDir\ui\theme-provider"
-        '@/components/common/' = "$appDir\ui\common"
-        '@/components/chat/' = "$appDir\ui\chat"
-        '@/components/' = "$appDir\ui"
+        '@/lib/' = 'c:\Users\programar\Documents\GitHub\redcreativapro\app\lib'
+        '@/types/' = 'c:\Users\programar\Documents\GitHub\redcreativapro\app\types'
+        '@/hooks/' = 'c:\Users\programar\Documents\GitHub\redcreativapro\app\hooks'
+        '@/contexts/' = 'c:\Users\programar\Documents\GitHub\redcreativapro\app\contexts'
+        '@/data/' = 'c:\Users\programar\Documents\GitHub\redcreativapro\app\data'
+        '@/config/' = 'c:\Users\programar\Documents\GitHub\redcreativapro\app\config'
+        '@/components/ui/' = 'c:\Users\programar\Documents\GitHub\redcreativapro\app\ui'
+        '@/components/' = 'c:\Users\programar\Documents\GitHub\redcreativapro\app\components'
+        '@/ui/' = 'c:\Users\programar\Documents\GitHub\redcreativapro\app\ui'
+        '@/pages/' = 'c:\Users\programar\Documents\GitHub\redcreativapro\app\components'
     }
     
     # Procesar cada mapeo
     foreach ($pattern in $mappings.Keys) {
         $targetDir = $mappings[$pattern]
         
-        # Buscar importaciones con este patrón
-        $regex = "from ['\"]" + [regex]::Escape($pattern) + "([^'\"]*)['\"];"
+        # Buscar todas las importaciones con este patrón
+        $regex = "from ['\"]" + [regex]::Escape($pattern) + "([^'\"]*)['\"]" 
         $matches = [regex]::Matches($content, $regex)
         
         foreach ($match in $matches) {
@@ -78,12 +53,17 @@ function Fix-Imports {
             # Calcular la ruta relativa
             $relativePath = Get-RelativePath $fileDir $fullImportPath
             
+            # Asegurar que empiece con ./
+            if (-not $relativePath.StartsWith('./') -and -not $relativePath.StartsWith('../')) {
+                $relativePath = './' + $relativePath
+            }
+            
             # Reemplazar en el contenido
-            $newImport = $fullMatch -replace [regex]::Escape($pattern + $importPath), $relativePath
-            $content = $content -replace [regex]::Escape($fullMatch), $newImport
+            $newImport = $fullMatch.Replace($pattern + $importPath, $relativePath)
+            $content = $content.Replace($fullMatch, $newImport)
             $modified = $true
             
-            Write-Host "Reemplazando en $FilePath: $pattern$importPath -> $relativePath"
+            Write-Host "Reemplazando en $($FilePath): $($pattern)$($importPath) -> $($relativePath)"
         }
     }
     
@@ -94,8 +74,8 @@ function Fix-Imports {
     }
 }
 
-# Obtener todos los archivos TypeScript y JavaScript en el directorio app
-$files = Get-ChildItem -Path "c:\Users\programar\Documents\GitHub\redcreativapro\app" -Recurse -Include "*.ts", "*.tsx", "*.js", "*.jsx"
+# Buscar todos los archivos TypeScript y TSX en el directorio app
+$files = Get-ChildItem -Path "c:\Users\programar\Documents\GitHub\redcreativapro\app" -Recurse -Include "*.ts", "*.tsx" | Where-Object { $_.Name -ne "globals.css" }
 
 Write-Host "Procesando $($files.Count) archivos..."
 

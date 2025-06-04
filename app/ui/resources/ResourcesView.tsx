@@ -6,12 +6,12 @@ import { ResourceGrid } from './ResourceGrid';
 import { ResourceFilters } from './ResourceFilters';
 import { ResourceUploader } from './ResourceUploader';
 import { ResourceDetail } from './ResourceDetail';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { useToast } from '@/hooks/use-toast';
-import { useQuickRefresh } from '@/hooks/useQuickRefresh';
-import { mockResources } from '@/data/mockResources';
-import { Resource, ResourceComment } from '@/types/resources';
-import { useResourceSEO } from '@/hooks/useSEO';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../ui/dialog';
+import { useToast } from '../../hooks/use-toast';
+import { useQuickRefresh } from '../../hooks/useQuickRefresh';
+import { mockResources } from '../../data/mockResources';
+import { Resource, ResourceComment } from '../../types/resources';
+import { useResourceSEO } from '../../hooks/useSEO';
 
 export function ResourcesView() {
   const [resources, setResources] = useState<Resource[]>(mockResources);

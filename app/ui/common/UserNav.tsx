@@ -1,16 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../hooks/use-toast';
+import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
+import { Button } from '../../ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "./c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ui\dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,18 +19,18 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+} from '../../ui/dropdown-menu';
+import { Input } from "./c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ui\input";
+import { Label } from "./c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ui\label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "./c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ui\select";
 import { CreditCard, LogOut, Settings, User, Crown } from 'lucide-react';
-import { AIProvider, AIModel, GeminiModel, OpenAIModel, AnthropicModel, CohereModel, MistralModel } from '@/types/ai';
+import { AIProvider, AIModel, GeminiModel, OpenAIModel, AnthropicModel, CohereModel, MistralModel } from '../../types/ai';
 
 export function UserNav() {
   const { user, logout, hasActiveSubscription } = useAuth();

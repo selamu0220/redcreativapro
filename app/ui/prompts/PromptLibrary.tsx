@@ -1,17 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { Prompt } from '@/types/prompts';
-import { mockPrompts } from '@/data/mockPrompts';
+import { Prompt } from '../../types/prompts';
+import { mockPrompts } from '../../data/mockPrompts';
 import { PromptList } from './PromptList';
 import { PromptDetail } from './PromptDetail';
 import { PromptEditor } from './PromptEditor';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '../../ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../ui/dialog';
+import { Tabs, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Plus, Library, Globe } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '../../hooks/use-toast';
+import { useAuth } from '../../contexts/AuthContext';
 
 export function PromptLibrary() {
   const [prompts, setPrompts] = useState<Prompt[]>(mockPrompts);

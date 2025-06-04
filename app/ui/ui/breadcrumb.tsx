@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ChevronRightIcon, DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { Slot } from '@radix-ui/react-slot';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 // Contenedor principal del breadcrumb, con aria-label
 const Breadcrumb = React.forwardRef<HTMLElement, React.ComponentPropsWithoutRef<'nav'> & { separator?: React.ReactNode }>(

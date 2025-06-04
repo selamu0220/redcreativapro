@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Separator } from '../ui/separator';
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
+import { Separator } from '../../ui/separator';
 import { usePrivacySEO } from '../../hooks/useSEO';
 
 const PrivacyPolicy: React.FC = () => {

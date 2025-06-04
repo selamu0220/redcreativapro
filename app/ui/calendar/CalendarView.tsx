@@ -6,11 +6,11 @@ import { MonthView } from './MonthView';
 import { WeekView } from './WeekView';
 import { DayView } from './DayView';
 import { CalendarEventDialog } from './CalendarEventDialog';
-import { EventType } from '@/types/calendar';
-import { mockEvents } from '@/data/mockEvents';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
-import { useCalendarSEO } from '@/hooks/useSEO';
+import { EventType } from '../../types/calendar';
+import { mockEvents } from '../../data/mockEvents';
+import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../hooks/use-toast';
+import { useCalendarSEO } from '../../hooks/useSEO';
 
 type CalendarViewType = 'month' | 'week' | 'day';
 

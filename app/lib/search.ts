@@ -1,7 +1,7 @@
-import { Post } from '@/types/blog';
-import { EventType } from '@/types/calendar';
-import { Resource } from '@/types/resources';
-import { Script } from '@/types/scripts';
+import { Post } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\blog';
+import { EventType } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\calendar';
+import { Resource } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\resources';
+import { Script } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\scripts';
 
 export type SearchResult = {
   id: string;

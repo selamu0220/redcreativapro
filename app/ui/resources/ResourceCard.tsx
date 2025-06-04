@@ -1,22 +1,22 @@
 import { useState } from 'react';
-import { Resource } from '@/types/resources';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Resource } from '../../types/resources';
+import { Card, CardContent, CardFooter, CardHeader } from '../../ui/card';
+import { Badge } from '../../ui/badge';
+import { Button } from '../../ui/button';
+import { AspectRatio } from '../../ui/aspect-ratio';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../ui/dialog';
 import { ResourceDetail } from './ResourceDetail';
-import { getResourceIcon } from '@/lib/resourceUtils';
-import { cn } from '@/lib/utils';
+import { getResourceIcon } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\resourceUtils';
+import { cn } from '../../lib/utils';
 import { Star, MoreHorizontal, Lock } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../hooks/use-toast';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '../../ui/dropdown-menu';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 interface ResourceCardProps {

@@ -1,6 +1,6 @@
-import { TaskType, TaskStatus } from '@/types/tasks';
+import { TaskType, TaskStatus } from '../../types/tasks';
 import { TaskCard } from './TaskCard';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { ScrollArea } from '../../ui/scroll-area';
 
 interface TaskColumnProps {
   title: string;

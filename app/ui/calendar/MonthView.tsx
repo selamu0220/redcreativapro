@@ -11,8 +11,8 @@ import {
   isToday,
   isSameDay,
 } from 'date-fns';
-import { EventType } from '@/types/calendar';
-import { cn } from '@/lib/utils';
+import { EventType } from '../../types/calendar';
+import { cn } from '../../lib/utils';
 import { CalendarDayEvents } from './CalendarDayEvents';
 
 interface MonthViewProps {

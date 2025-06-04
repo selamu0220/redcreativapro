@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
+import { Label } from '../../ui/label';
+import { Textarea } from '../../ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
+import { useToast } from '../../hooks/use-toast';
+import { useAuth } from '../../contexts/AuthContext';
 import { Loader2, Download, Play, Square, Sparkles } from 'lucide-react';
 
 interface InfographicTemplate {
@@ -163,7 +163,7 @@ export function InfographicCreator() {
   const generateContentFromPrompt = async (prompt: string) => {
     try {
       // Importar la función de IA
-      const { generateScriptWithAI } = await import('@/lib/ai');
+      const { generateScriptWithAI } = await import('../lib/ai');
       
       // Prompt especializado para generar infografías
       const aiPrompt = `

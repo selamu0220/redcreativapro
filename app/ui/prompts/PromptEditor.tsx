@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Prompt, PromptCategory, PromptVisibility } from '@/types/prompts';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { Prompt, PromptCategory, PromptVisibility } from '../../types/prompts';
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
+import { Textarea } from '../../ui/textarea';
 import {
   Form,
   FormControl,
@@ -13,18 +13,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from '../../ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
+} from '../../ui/select';
+import { Badge } from '../../ui/badge';
 import { Plus, X } from 'lucide-react';
-import { v4 } from '@/lib/utils';
-import { useAuth } from '@/contexts/AuthContext';
+import { v4 } from '../../lib/utils';
+import { useAuth } from '../../contexts/AuthContext';
 
 const formSchema = z.object({
   title: z.string().min(1, 'El título es requerido'),

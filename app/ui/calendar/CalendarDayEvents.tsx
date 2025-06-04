@@ -1,6 +1,6 @@
-import { EventType } from '@/types/calendar';
+import { EventType } from '../../types/calendar';
 import { parseISO, format } from 'date-fns';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 interface CalendarDayEventsProps {
   events: EventType[];

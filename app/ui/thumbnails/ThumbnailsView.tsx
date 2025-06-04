@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { ThumbnailCreator } from './ThumbnailCreator';
 import { InfographicCreator } from './InfographicCreator';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useThumbnailsSEO } from '@/hooks/useSEO';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
+import { useThumbnailsSEO } from '../../hooks/useSEO';
 import { Image, BarChart3 } from 'lucide-react';
 
 export function ThumbnailsView() {

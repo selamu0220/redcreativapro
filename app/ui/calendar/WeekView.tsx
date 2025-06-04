@@ -10,9 +10,9 @@ import {
   parse,
   addHours,
 } from 'date-fns';
-import { EventType } from '@/types/calendar';
-import { cn } from '@/lib/utils';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { EventType } from '../../types/calendar';
+import { cn } from '../../lib/utils';
+import { ScrollArea } from '../../ui/scroll-area';
 import { WeekViewEvent } from './WeekViewEvent';
 
 interface WeekViewProps {

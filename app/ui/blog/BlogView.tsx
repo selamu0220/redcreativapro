@@ -1,20 +1,20 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Post } from '@/types/blog';
+import { Post } from '../../types/blog';
 import { BlogList } from './BlogList';
 import { BlogPost } from './BlogPost';
 import { BlogEditor } from './BlogEditor';
-import { mockPosts } from '@/data/mockPosts';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { mockPosts } from '../../data/mockPosts';
+import { Button } from '../../ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../ui/dialog';
 import { Plus } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { useQuickRefresh } from '@/hooks/useQuickRefresh';
+import { useToast } from '../../hooks/use-toast';
+import { useQuickRefresh } from '../../hooks/useQuickRefresh';
 import { useRouter, usePathname } from 'next/navigation';
-import { slugify } from '@/lib/utils';
-import { useSEO, useBlogSEO } from '@/hooks/useSEO';
-import { BlogArticleStructuredData } from '@/components/SEO/StructuredData';
+import { slugify } from '../../lib/utils';
+import { useSEO, useBlogSEO } from '../../hooks/useSEO';
+import { BlogArticleStructuredData } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\SEO\StructuredData';
 
 export function BlogView() {
   const [posts, setPosts] = useState<Post[]>(mockPosts);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProjectManager } from '@/components/projects/ProjectManager';
+import { ProjectManager } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\projects\ProjectManager';
 
 export default function ProjectsPage() {
   return (

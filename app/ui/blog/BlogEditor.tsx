@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Post } from '@/types/blog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { Post } from '../../types/blog';
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
+import { Textarea } from '../../ui/textarea';
 import {
   Form,
   FormControl,
@@ -13,10 +13,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Badge } from '@/components/ui/badge';
+} from '../../ui/form';
+import { Badge } from '../../ui/badge';
 import { Plus, X } from 'lucide-react';
-import { v4 } from '@/lib/utils';
+import { v4 } from '../../lib/utils';
 
 const formSchema = z.object({
   title: z.string().min(1, 'El título es requerido'),

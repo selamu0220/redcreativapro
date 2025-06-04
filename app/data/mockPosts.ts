@@ -1,4 +1,4 @@
-import { Post } from '@/types/blog';
+import { Post } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\blog';
 
 export const mockPosts: Post[] = [
   {

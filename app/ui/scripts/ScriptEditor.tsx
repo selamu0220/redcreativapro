@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Script, ScriptStatus } from '@/types/scripts';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { Script, ScriptStatus } from '../../types/scripts';
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
+import { Textarea } from '../../ui/textarea';
 import {
   Form,
   FormControl,
@@ -13,20 +13,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
+} from '../../ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { v4 } from '@/lib/utils';
-import { useToast } from '@/hooks/use-toast';
+} from '../../ui/select';
+import { v4 } from '../../lib/utils';
+import { useToast } from '../../hooks/use-toast';
 import { Loader2, Sparkles } from 'lucide-react';
-import { generateScriptWithAI } from '@/lib/ai';
-import UsageLimits from '@/components/common/UsageLimits';
-import { AIProviderDialog } from '@/components/chat/AIProviderDialog';
+import { generateScriptWithAI } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\ai';
+import UsageLimits from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\common\UsageLimits';
+import { AIProviderDialog } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\chat\AIProviderDialog';
 
 const formSchema = z.object({
   title: z.string().min(1, 'El título es requerido'),

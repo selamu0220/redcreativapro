@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '../../ui/button';
 import { PlusCircle, KanbanSquare, List } from 'lucide-react';
-import { Toggle } from '@/components/ui/toggle';
+import { Toggle } from '../../ui/toggle';
 
 interface TasksHeaderProps {
   onAddTask: () => void;

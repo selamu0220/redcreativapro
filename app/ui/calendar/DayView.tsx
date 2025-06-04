@@ -6,9 +6,9 @@ import {
   parseISO,
   differenceInMinutes,
 } from 'date-fns';
-import { EventType } from '@/types/calendar';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { cn } from '@/lib/utils';
+import { EventType } from '../../types/calendar';
+import { ScrollArea } from '../../ui/scroll-area';
+import { cn } from '../../lib/utils';
 
 interface DayViewProps {
   events: EventType[];

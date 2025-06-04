@@ -1,17 +1,17 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
-import { Script, ScriptStatus } from '@/types/scripts';
-import { mockScripts } from '@/data/mockScripts';
+import { Script, ScriptStatus } from '../../types/scripts';
+import { mockScripts } from '../../data/mockScripts';
 import { ScriptList } from './ScriptList';
 import { ScriptDetail } from './ScriptDetail';
 import { ScriptFilters } from './ScriptFilters';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../ui/button';
 import { PlusCircle } from 'lucide-react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent } from '../../ui/dialog';
 import { ScriptEditor } from './ScriptEditor';
-import { useToast } from '@/hooks/use-toast';
-import { useScriptsSEO } from '@/hooks/useSEO';
+import { useToast } from '../../hooks/use-toast';
+import { useScriptsSEO } from '../../hooks/useSEO';
 
 export function ScriptLibrary() {
   const [scripts, setScripts] = useState<Script[]>(mockScripts);

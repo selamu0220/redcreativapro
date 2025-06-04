@@ -1,5 +1,5 @@
-import { BlogView } from '@/components/blog/BlogView';
-import AppLayout from '@/app/components/AppLayout';
+import { BlogView } from '../../ui/blog/BlogView';
+import AppLayout from '../../components/AppLayout';
 
 interface BlogPostPageProps {
   params: {

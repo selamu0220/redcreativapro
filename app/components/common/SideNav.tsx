@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
+import { Button } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ui\button';
+import { Separator } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ui\separator';
+import { cn } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\utils';
 import {
   Palette,
   Calendar,

@@ -1,15 +1,15 @@
 import React from 'react';
-import { Post } from '@/types/blog';
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { formatDate } from '@/lib/dateUtils';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Link } from '@/components/ui/link';
-import { slugify } from '@/lib/utils';
+import { Post } from '../../types/blog';
+import { Card, CardContent, CardFooter, CardHeader } from '../../ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
+import { Badge } from '../../ui/badge';
+import { Button } from '../../ui/button';
+import { formatDate } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\dateUtils';
+import { AspectRatio } from '../../ui/aspect-ratio';
+import { Link } from '../../ui/link';
+import { slugify } from '../../lib/utils';
 import { Clock, Eye, ArrowRight } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
+import { Separator } from '../../ui/separator';
 
 interface BlogListProps {
   posts: Post[];

@@ -1,16 +1,16 @@
-import { Resource, ResourceComment } from '@/types/resources';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { getResourceIcon } from '@/lib/resourceUtils';
-import { formatDate } from '@/lib/dateUtils';
+import { Resource, ResourceComment } from '../../types/resources';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
+import { Badge } from '../../ui/badge';
+import { Button } from '../../ui/button';
+import { Separator } from '../../ui/separator';
+import { getResourceIcon } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\resourceUtils';
+import { formatDate } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\dateUtils';
 import { Download, Link as LinkIcon, ExternalLink, Share2 } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Textarea } from '@/components/ui/textarea';
+import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
+import { Textarea } from '../../ui/textarea';
 import { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { v4 } from '@/lib/utils';
+import { useAuth } from '../../contexts/AuthContext';
+import { v4 } from '../../lib/utils';
 
 interface ResourceDetailProps {
   resource: Resource;

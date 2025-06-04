@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Resource } from '@/types/resources';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
+import { Resource } from '../../types/resources';
+import { Input } from '../../ui/input';
+import { Badge } from '../../ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
+import { Button } from '../../ui/button';
 import { Search, X } from 'lucide-react';
 
 interface ResourceFiltersProps {
