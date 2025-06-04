@@ -14,7 +14,7 @@ import { useQuickRefresh } from '../../hooks/useQuickRefresh';
 import { useRouter, usePathname } from 'next/navigation';
 import { slugify } from '../../lib/utils';
 import { useSEO, useBlogSEO } from '../../hooks/useSEO';
-import { BlogArticleStructuredData } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\SEO\StructuredData';
+import { BlogArticleStructuredData } from '../SEO/StructuredData';
 
 export function BlogView() {
   const [posts, setPosts] = useState<Post[]>(mockPosts);

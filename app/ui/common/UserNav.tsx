@@ -19,16 +19,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../../ui/dropdown-menu';
-import { Input } from "./c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ui\input";
-import { Label } from "./c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ui\label";
+} from "../dialog";
+import { Input } from "../input";
+import { Label } from "../label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ui\select";
+} from "../select";
 import { CreditCard, LogOut, Settings, User, Crown } from 'lucide-react';
 import { AIProvider, AIModel, GeminiModel, OpenAIModel, AnthropicModel, CohereModel, MistralModel } from '../../types/ai';
 

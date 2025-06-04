@@ -1,4 +1,4 @@
-import { Resource } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\resources';
+import { Resource } from '../types/resources';
 
 export const mockResources: Resource[] = [
   {
