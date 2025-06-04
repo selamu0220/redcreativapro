@@ -1,8 +1,7 @@
-'use client';
-
-import { usePathname, useRouter } from 'next/navigation';
-import { MainNav } from '@/app/components/common/MainNav';
-import { SideNav } from '@/app/components/common/SideNav';
+import React, { useState, useCallback } from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { MainNav } from '@/components/common/MainNav';
+import { SideNav } from '@/components/common/SideNav';
 import { ModeToggle } from '@/components/common/ModeToggle';
 import { UserNav } from '@/components/common/UserNav';
 import { Search } from '@/components/common/Search';
@@ -13,30 +12,26 @@ import { Button } from '@/components/ui/button';
 import { LogIn, RefreshCw } from 'lucide-react';
 import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner';
 
-interface AppLayoutProps {
-  children: React.ReactNode;
-}
-
-const AppLayout = ({ children }: AppLayoutProps) => {
+const AppLayout = () => {
   console.log('AppLayout: Component is rendering');
   const { user, logout } = useAuth();
   console.log('AppLayout: useAuth returned, user:', user ? 'exists' : 'null');
-  const router = useRouter();
-  const pathname = usePathname();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { isRefreshing, refresh: handleQuickRefresh } = useQuickRefresh();
 
   // Extraer la vista actual de la URL
   const getCurrentView = () => {
-    const path = pathname.slice(1); // Remover el '/'
+    const path = location.pathname.slice(1); // Remover el '/'
     return path || 'blog';
   };
 
   const handleAuthClick = () => {
-    router.push('/auth');
+    navigate('/auth');
   };
 
   const handleShowPresentation = () => {
-    router.push('/presentacion');
+    navigate('/presentacion');
   };
 
   // handleQuickRefresh viene del hook useQuickRefresh
@@ -93,13 +88,13 @@ const AppLayout = ({ children }: AppLayoutProps) => {
           <ScrollArea className="h-full w-full">
             <div className="p-6 h-full min-h-full">
               <EmailVerificationBanner />
-              {children}
+              <Outlet />
             </div>
           </ScrollArea>
         </main>
       </div>
-    </div>
-  );
+      </div>
+    );
 };
 
 export default AppLayout;
