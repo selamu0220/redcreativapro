@@ -3,15 +3,15 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { MainNav } from './common/MainNav';
 import { SideNav } from './common/SideNav';
-import { ModeToggle } from './common/ModeToggle';
-import { UserNav } from './common/UserNav';
-import { Search } from './common/Search';
+import { ModeToggle } from '../ui/common/ModeToggle';
+import { UserNav } from '../ui/common/UserNav';
+import { Search } from '../ui/common/Search';
 import { ScrollArea } from '../ui/scroll-area';
 import { useAuth } from '../contexts/AuthContext';
 import { useQuickRefresh } from '../hooks/useQuickRefresh';
 import { Button } from '../ui/button';
 import { LogIn, RefreshCw } from 'lucide-react';
-import { EmailVerificationBanner } from './auth/EmailVerificationBanner';
+import { EmailVerificationBanner } from '../ui/auth/EmailVerificationBanner';
 
 interface AppLayoutProps {
   children: React.ReactNode;

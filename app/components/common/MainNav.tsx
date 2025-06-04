@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '../../lib/utils';
 import { Calendar, FileText, BookOpen, Sparkles, Palette, Image, MessageSquare, GraduationCap, BarChart3, FolderOpen, FileImage, Crown } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface MainNavProps {
