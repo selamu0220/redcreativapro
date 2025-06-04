@@ -1,9 +1,9 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect } from 'react';
-import { useAuth } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\contexts\AuthContext';
-import { AuthForm } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\auth\AuthForm';
-import { EmailVerificationBanner } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\auth\EmailVerificationBanner';
+import { useAuth } from "../contexts\AuthContext";
+import { AuthForm } from "../components\auth\AuthForm";
+import { EmailVerificationBanner } from "../components\auth\EmailVerificationBanner";
 
 interface AuthPageProps {
   onClose?: () => void;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -24,15 +24,15 @@ import {
 import { v4 } from '../../lib/utils';
 import { useToast } from '../../hooks/use-toast';
 import { Loader2, Sparkles } from 'lucide-react';
-import { generateScriptWithAI } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\ai';
-import UsageLimits from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\common\UsageLimits';
-import { AIProviderDialog } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\chat\AIProviderDialog';
+import { generateScriptWithAI } from "../lib\ai";
+import UsageLimits from "../components\common\UsageLimits";
+import { AIProviderDialog } from "../components\chat\AIProviderDialog";
 
 const formSchema = z.object({
-  title: z.string().min(1, 'El título es requerido'),
+  title: z.string().min(1, 'El tÃ­tulo es requerido'),
   content: z.string().min(1, 'El contenido es requerido'),
   status: z.enum(['draft', 'review', 'final']),
-  category: z.string().min(1, 'La categoría es requerida'),
+  category: z.string().min(1, 'La categorÃ­a es requerida'),
   tags: z.string(),
   platforms: z.string(),
   seoKeywords: z.string(),
@@ -83,7 +83,7 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
     if (!title || !category) {
       toast({
         title: "Campos requeridos",
-        description: "Por favor, ingresa el título y la categoría antes de generar el guion",
+        description: "Por favor, ingresa el tÃ­tulo y la categorÃ­a antes de generar el guion",
         variant: "destructive"
       });
       return;
@@ -99,7 +99,7 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
     setIsGenerating(true);
 
     try {
-      const prompt = `Genera un guion detallado para ${category} con el título "${title}"${description ? ` y la siguiente descripción: ${description}` : ''}. El guion debe ser profesional, creativo y estar bien estructurado.`;
+      const prompt = `Genera un guion detallado para ${category} con el tÃ­tulo "${title}"${description ? ` y la siguiente descripciÃ³n: ${description}` : ''}. El guion debe ser profesional, creativo y estar bien estructurado.`;
       const content = await generateScriptWithAI(prompt);
       form.setValue('content', content);
       
@@ -110,7 +110,7 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "No se pudo generar el guion. Por favor, verifica tu configuración de IA.",
+        description: error.message || "No se pudo generar el guion. Por favor, verifica tu configuraciÃ³n de IA.",
         variant: "destructive"
       });
     } finally {
@@ -143,7 +143,7 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
             id: '1',
             name: 'Demo User',
           },
-          comment: script ? 'Actualización del guion' : 'Versión inicial',
+          comment: script ? 'ActualizaciÃ³n del guion' : 'VersiÃ³n inicial',
         },
         ...(script?.versions || []),
       ],
@@ -162,9 +162,9 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Título</FormLabel>
+                <FormLabel>TÃ­tulo</FormLabel>
                 <FormControl>
-                  <Input placeholder="Título del guion" {...field} />
+                  <Input placeholder="TÃ­tulo del guion" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -189,7 +189,7 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="draft">Borrador</SelectItem>
-                      <SelectItem value="review">Revisión</SelectItem>
+                      <SelectItem value="review">RevisiÃ³n</SelectItem>
                       <SelectItem value="final">Final</SelectItem>
                     </SelectContent>
                   </Select>
@@ -203,19 +203,19 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
               name="category"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Categoría</FormLabel>
+                  <FormLabel>CategorÃ­a</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Seleccionar categoría" />
+                        <SelectValue placeholder="Seleccionar categorÃ­a" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="Marketing">Marketing</SelectItem>
-                      <SelectItem value="Education">Educación</SelectItem>
+                      <SelectItem value="Education">EducaciÃ³n</SelectItem>
                       <SelectItem value="Entertainment">Entretenimiento</SelectItem>
                       <SelectItem value="Social Media">Redes Sociales</SelectItem>
                     </SelectContent>
@@ -249,7 +249,7 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
                   </Button>
                   <FormControl>
                     <Textarea
-                      placeholder="Escribe el contenido del guion aquí..."
+                      placeholder="Escribe el contenido del guion aquÃ­..."
                       className="min-h-[400px] font-mono"
                       {...field}
                     />
@@ -296,7 +296,7 @@ export function ScriptEditor({ script, onSave }: ScriptEditorProps) {
                 <FormLabel>Palabras clave SEO (separadas por comas)</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="tutorial, cómo hacer, educación"
+                    placeholder="tutorial, cÃ³mo hacer, educaciÃ³n"
                     {...field}
                   />
                 </FormControl>

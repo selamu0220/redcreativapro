@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -42,7 +42,7 @@ import {
 import { Switch } from '../../ui/switch';
 import { v4 } from '../../lib/utils';
 import { useToast } from '../../hooks/use-toast';
-import { generateScriptWithAI } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\ai';
+import { generateScriptWithAI } from "../lib\ai";
 
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required'),

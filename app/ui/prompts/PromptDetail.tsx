@@ -1,7 +1,7 @@
-import { Prompt } from '../../types/prompts';
+﻿import { Prompt } from '../../types/prompts';
 import { Button } from '../../ui/button';
 import { Badge } from '../../ui/badge';
-import { formatDate } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\dateUtils';
+import { formatDate } from "../lib\dateUtils";
 import { Edit2, Trash2, Copy, Share2, Globe, Lock, Users } from 'lucide-react';
 import { ScrollArea } from '../../ui/scroll-area';
 import { useToast } from '../../hooks/use-toast';
@@ -49,7 +49,7 @@ export function PromptDetail({ prompt, onEdit, onDelete, onShare, view }: Prompt
   const getVisibilityLabel = () => {
     switch (prompt.visibility) {
       case 'public':
-        return 'Público';
+        return 'PÃºblico';
       case 'private':
         return 'Privado';
       case 'shared':
@@ -67,9 +67,9 @@ export function PromptDetail({ prompt, onEdit, onDelete, onShare, view }: Prompt
             <h2 className="text-2xl font-bold">{prompt.title}</h2>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span>Creado {formatDate(prompt.createdAt)}</span>
-              <span>•</span>
+              <span>â€¢</span>
               <span>Usado {prompt.usageCount} veces</span>
-              <span>•</span>
+              <span>â€¢</span>
               <span className="flex items-center gap-1">
                 {getVisibilityIcon()}
                 {getVisibilityLabel()}

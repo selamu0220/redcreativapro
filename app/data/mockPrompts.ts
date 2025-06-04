@@ -1,4 +1,4 @@
-import { Prompt } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\prompts';
+﻿import { Prompt } from "../types\prompts";
 
 export const mockPrompts: Prompt[] = [
   {

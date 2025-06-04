@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
 import { ScrollArea } from '../../ui/scroll-area';
@@ -10,7 +10,7 @@ import { Badge } from '../../ui/badge';
 import { useToast } from '../../hooks/use-toast';
 import { useQuickRefresh } from '../../hooks/useQuickRefresh';
 import { useRouter } from 'next/navigation';
-import { generateScriptWithAI } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\ai';
+import { generateScriptWithAI } from "../lib\ai";
 import { Send, Bot, Loader2, Settings, Sparkles, Save, Copy, FileText, Star, Calendar, Image, FolderOpen, BarChart3 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Alert, AlertDescription } from '../../ui/alert';
@@ -18,7 +18,7 @@ import { AIProviderDialog } from './AIProviderDialog';
 import { mockPrompts } from '../../data/mockPrompts';
 import { Prompt } from '../../types/prompts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
-import UsageLimits from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\common\UsageLimits';
+import UsageLimits from "../components\common\UsageLimits";
 import { EventType } from '../../types/calendar';
 import { Resource } from '../../types/resources';
 import { ThumbnailSettings } from '../../types/thumbnails';
@@ -55,23 +55,23 @@ const suggestions: ChatSuggestion[] = [
     category: 'creative'
   },
   { 
-    text: "infografías",
-    action: "infografías",
+    text: "infografÃ­as",
+    action: "infografÃ­as",
     category: 'creative'
   },
   { 
     text: "Generar guion de video",
-    action: "Necesito un guion profesional para un video sobre [tema]. El video debe tener una duración aproximada de [X] minutos y estar dirigido a una audiencia de [tipo]. El tono debe ser [formal/informal/educativo/entretenido].",
+    action: "Necesito un guion profesional para un video sobre [tema]. El video debe tener una duraciÃ³n aproximada de [X] minutos y estar dirigido a una audiencia de [tipo]. El tono debe ser [formal/informal/educativo/entretenido].",
     category: 'content'
   },
   { 
     text: "Ideas de contenido",
-    action: "Genera 10 ideas de contenido para [plataforma] enfocadas en [nicho/tema]. Las ideas deben ser originales, tendencia y tener potencial viral. Incluye títulos atractivos y breves descripciones.",
+    action: "Genera 10 ideas de contenido para [plataforma] enfocadas en [nicho/tema]. Las ideas deben ser originales, tendencia y tener potencial viral. Incluye tÃ­tulos atractivos y breves descripciones.",
     category: 'content'
   },
   { 
     text: "Estrategia marketing",
-    action: "Desarrolla una estrategia de marketing digital para [objetivo]. Incluye canales, tácticas, presupuesto estimado, timeline y KPIs.",
+    action: "Desarrolla una estrategia de marketing digital para [objetivo]. Incluye canales, tÃ¡cticas, presupuesto estimado, timeline y KPIs.",
     category: 'marketing'
   }
 ];
@@ -94,14 +94,14 @@ export function ChatInterface() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 
-  // Hook para refrescado rápido
+  // Hook para refrescado rÃ¡pido
   const { isRefreshing } = useQuickRefresh({
     onRefresh: async () => {
       // Solo limpiar el input, mantener mensajes
       setInput('');
       
       toast({
-        title: '✅ Chat actualizado',
+        title: 'âœ… Chat actualizado',
         description: 'El chat se ha refrescado correctamente',
       });
     }
@@ -116,21 +116,21 @@ export function ChatInterface() {
   const processSpecialCommands = async (input: string): Promise<string | null> => {
     const command = input.toLowerCase().trim();
     
-    // Comandos simples y rápidos
+    // Comandos simples y rÃ¡pidos
     if (command.includes('evento') || command.includes('calendario')) {
-      return `📅 **Acceso rápido al Calendario**\n\n✨ Haz clic en el botón "Ir al Calendario" para:\n• Ver todos tus eventos\n• Crear nuevos eventos fácilmente\n• Gestionar tu programación\n\n🚀 ¡Es súper fácil y rápido!`;
+      return `ðŸ“… **Acceso rÃ¡pido al Calendario**\n\nâœ¨ Haz clic en el botÃ³n "Ir al Calendario" para:\nâ€¢ Ver todos tus eventos\nâ€¢ Crear nuevos eventos fÃ¡cilmente\nâ€¢ Gestionar tu programaciÃ³n\n\nðŸš€ Â¡Es sÃºper fÃ¡cil y rÃ¡pido!`;
     }
     
     if (command.includes('recurso') || command.includes('plantilla') || command.includes('archivo')) {
-      return `📁 **Acceso rápido a Recursos**\n\n✨ Haz clic en el botón "Ir a Recursos" para:\n• Buscar cualquier recurso\n• Subir nuevos archivos\n• Organizar tus plantillas\n\n🚀 ¡Todo en un solo lugar!`;
+      return `ðŸ“ **Acceso rÃ¡pido a Recursos**\n\nâœ¨ Haz clic en el botÃ³n "Ir a Recursos" para:\nâ€¢ Buscar cualquier recurso\nâ€¢ Subir nuevos archivos\nâ€¢ Organizar tus plantillas\n\nðŸš€ Â¡Todo en un solo lugar!`;
     }
     
-    if (command.includes('miniatura') || command.includes('thumbnail') || command.includes('diseño')) {
-      return `🎨 **Acceso rápido a Miniaturas**\n\n✨ Haz clic en el botón "Ir a Miniaturas" para:\n• Crear diseños increíbles\n• Usar plantillas predefinidas\n• Personalizar tus miniaturas\n\n🚀 ¡Diseña en segundos!`;
+    if (command.includes('miniatura') || command.includes('thumbnail') || command.includes('diseÃ±o')) {
+      return `ðŸŽ¨ **Acceso rÃ¡pido a Miniaturas**\n\nâœ¨ Haz clic en el botÃ³n "Ir a Miniaturas" para:\nâ€¢ Crear diseÃ±os increÃ­bles\nâ€¢ Usar plantillas predefinidas\nâ€¢ Personalizar tus miniaturas\n\nðŸš€ Â¡DiseÃ±a en segundos!`;
     }
     
-    if (command.includes('infografía') || command.includes('infographic') || command.includes('gráfico')) {
-      return `📊 **Acceso rápido a Infografías**\n\n✨ Haz clic en el botón "Crear Infografía" para:\n• Generar infografías con IA\n• Usar estilos predefinidos\n• Descargar en PNG o video\n\n🚀 ¡Crea contenido visual impactante!`;
+    if (command.includes('infografÃ­a') || command.includes('infographic') || command.includes('grÃ¡fico')) {
+      return `ðŸ“Š **Acceso rÃ¡pido a InfografÃ­as**\n\nâœ¨ Haz clic en el botÃ³n "Crear InfografÃ­a" para:\nâ€¢ Generar infografÃ­as con IA\nâ€¢ Usar estilos predefinidos\nâ€¢ Descargar en PNG o video\n\nðŸš€ Â¡Crea contenido visual impactante!`;
     }
     
     // Comando para crear evento
@@ -138,9 +138,9 @@ export function ChatInterface() {
       const eventData = input.replace('/crear-evento', '').trim();
       const eventInfo = parseEventCommand(eventData);
       if (eventInfo) {
-        return `He procesado tu solicitud para crear un evento:\n\n**${eventInfo.title}**\n📅 Fecha: ${eventInfo.date}\n🕐 Hora: ${eventInfo.time}\n📝 Descripción: ${eventInfo.description}\n🏷️ Tipo: ${eventInfo.type}\n\n*Para crear el evento definitivamente, usa el calendario de la aplicación.*`;
+        return `He procesado tu solicitud para crear un evento:\n\n**${eventInfo.title}**\nðŸ“… Fecha: ${eventInfo.date}\nðŸ• Hora: ${eventInfo.time}\nðŸ“ DescripciÃ³n: ${eventInfo.description}\nðŸ·ï¸ Tipo: ${eventInfo.type}\n\n*Para crear el evento definitivamente, usa el calendario de la aplicaciÃ³n.*`;
       }
-      return 'Por favor, proporciona los datos del evento en el formato: Título: [título] Fecha: [fecha] Hora: [hora] Descripción: [descripción] Tipo: [tipo]';
+      return 'Por favor, proporciona los datos del evento en el formato: TÃ­tulo: [tÃ­tulo] Fecha: [fecha] Hora: [hora] DescripciÃ³n: [descripciÃ³n] Tipo: [tipo]';
     }
 
     // Comando para buscar recursos
@@ -149,11 +149,11 @@ export function ChatInterface() {
       const foundResources = searchResources(searchQuery);
       if (foundResources.length > 0) {
         const resourceList = foundResources.slice(0, 5).map(r => 
-          `• **${r.title}** (${r.type}) - ${r.description}`
+          `â€¢ **${r.title}** (${r.type}) - ${r.description}`
         ).join('\n');
-        return `Encontré ${foundResources.length} recursos relacionados:\n\n${resourceList}\n\n*Visita la sección de Recursos para ver más detalles.*`;
+        return `EncontrÃ© ${foundResources.length} recursos relacionados:\n\n${resourceList}\n\n*Visita la secciÃ³n de Recursos para ver mÃ¡s detalles.*`;
       }
-      return 'No encontré recursos que coincidan con tu búsqueda. Intenta con otros términos.';
+      return 'No encontrÃ© recursos que coincidan con tu bÃºsqueda. Intenta con otros tÃ©rminos.';
     }
 
     // Comando para crear miniatura
@@ -161,9 +161,9 @@ export function ChatInterface() {
       const thumbnailData = input.replace('/crear-miniatura', '').trim();
       const thumbnailInfo = parseThumbnailCommand(thumbnailData);
       if (thumbnailInfo) {
-        return `He preparado la configuración para tu miniatura:\n\n🎨 **Título:** ${thumbnailInfo.title}\n📐 **Formato:** ${thumbnailInfo.format}\n\n*Ve a la sección de Miniaturas para crear y personalizar tu diseño.*`;
+        return `He preparado la configuraciÃ³n para tu miniatura:\n\nðŸŽ¨ **TÃ­tulo:** ${thumbnailInfo.title}\nðŸ“ **Formato:** ${thumbnailInfo.format}\n\n*Ve a la secciÃ³n de Miniaturas para crear y personalizar tu diseÃ±o.*`;
       }
-      return 'Por favor, proporciona los datos en el formato: Título: [título] Formato: [formato]';
+      return 'Por favor, proporciona los datos en el formato: TÃ­tulo: [tÃ­tulo] Formato: [formato]';
     }
 
     // Comando para analizar recursos
@@ -183,21 +183,21 @@ export function ChatInterface() {
     return null;
   };
 
-  // Funciones simplificadas para acceso rápido
+  // Funciones simplificadas para acceso rÃ¡pido
   const getQuickHelp = () => {
-    return `🚀 **Acceso súper rápido a tus herramientas**\n\n` +
-           `📅 **Calendario**: Escribe "calendario" o "evento"\n` +
-           `📁 **Recursos**: Escribe "recursos" o "plantillas"\n` +
-           `🎨 **Miniaturas**: Escribe "miniaturas" o "diseño"\n` +
-           `📊 **Infografías**: Escribe "infografías" o "gráfico"\n\n` +
-           `✨ ¡Es así de fácil! Solo menciona lo que necesitas.`;
+    return `ðŸš€ **Acceso sÃºper rÃ¡pido a tus herramientas**\n\n` +
+           `ðŸ“… **Calendario**: Escribe "calendario" o "evento"\n` +
+           `ðŸ“ **Recursos**: Escribe "recursos" o "plantillas"\n` +
+           `ðŸŽ¨ **Miniaturas**: Escribe "miniaturas" o "diseÃ±o"\n` +
+           `ðŸ“Š **InfografÃ­as**: Escribe "infografÃ­as" o "grÃ¡fico"\n\n` +
+           `âœ¨ Â¡Es asÃ­ de fÃ¡cil! Solo menciona lo que necesitas.`;
   };
 
   const parseEventCommand = (data: string) => {
-    const titleMatch = data.match(/Título:\s*([^\n]+)/);
+    const titleMatch = data.match(/TÃ­tulo:\s*([^\n]+)/);
     const dateMatch = data.match(/Fecha:\s*([^\n]+)/);
     const timeMatch = data.match(/Hora:\s*([^\n]+)/);
-    const descMatch = data.match(/Descripción:\s*([^\n]+)/);
+    const descMatch = data.match(/DescripciÃ³n:\s*([^\n]+)/);
     const typeMatch = data.match(/Tipo:\s*([^\n]+)/);
 
     if (titleMatch && dateMatch) {
@@ -205,7 +205,7 @@ export function ChatInterface() {
         title: titleMatch[1],
         date: dateMatch[1],
         time: timeMatch?.[1] || 'No especificada',
-        description: descMatch?.[1] || 'Sin descripción',
+        description: descMatch?.[1] || 'Sin descripciÃ³n',
         type: typeMatch?.[1] || 'General'
       };
     }
@@ -213,7 +213,7 @@ export function ChatInterface() {
   };
 
   const parseThumbnailCommand = (data: string) => {
-    const titleMatch = data.match(/Título:\s*([^\n]+)/);
+    const titleMatch = data.match(/TÃ­tulo:\s*([^\n]+)/);
     const formatMatch = data.match(/Formato:\s*([^\n]+)/);
 
     if (titleMatch) {
@@ -246,14 +246,14 @@ export function ChatInterface() {
     const types = [...new Set(categoryResources.map(r => r.type))];
     const avgRating = categoryResources.reduce((sum, r) => sum + (r.rating || 0), 0) / totalResources;
 
-    return `📊 **Análisis de Recursos${category ? ` - ${category}` : ''}**\n\n` +
-           `📁 Total de recursos: ${totalResources}\n` +
-           `🏷️ Tipos disponibles: ${types.join(', ')}\n` +
-           `⭐ Calificación promedio: ${avgRating.toFixed(1)}/5\n\n` +
+    return `ðŸ“Š **AnÃ¡lisis de Recursos${category ? ` - ${category}` : ''}**\n\n` +
+           `ðŸ“ Total de recursos: ${totalResources}\n` +
+           `ðŸ·ï¸ Tipos disponibles: ${types.join(', ')}\n` +
+           `â­ CalificaciÃ³n promedio: ${avgRating.toFixed(1)}/5\n\n` +
            `**Recomendaciones:**\n` +
-           `• Considera agregar más recursos de tipos menos representados\n` +
-           `• Revisa y actualiza recursos con calificaciones bajas\n` +
-           `• Organiza mejor las etiquetas para facilitar búsquedas`;
+           `â€¢ Considera agregar mÃ¡s recursos de tipos menos representados\n` +
+           `â€¢ Revisa y actualiza recursos con calificaciones bajas\n` +
+           `â€¢ Organiza mejor las etiquetas para facilitar bÃºsquedas`;
   };
 
   const optimizeCalendar = (month: string): string => {
@@ -266,15 +266,15 @@ export function ChatInterface() {
     const eventTypes = [...new Set(monthEvents.map(e => e.type))];
     const busyDays = [...new Set(monthEvents.map(e => new Date(e.date).getDate()))].length;
 
-    return `📅 **Optimización de Calendario${month ? ` - ${month}` : ''}**\n\n` +
-           `📊 Total de eventos: ${totalEvents}\n` +
-           `🏷️ Tipos de eventos: ${eventTypes.join(', ')}\n` +
-           `📆 Días ocupados: ${busyDays}\n\n` +
-           `**Sugerencias de optimización:**\n` +
-           `• Distribuye mejor los eventos a lo largo del mes\n` +
-           `• Considera agrupar eventos similares\n` +
-           `• Deja espacios libres para contenido espontáneo\n` +
-           `• Planifica con anticipación eventos importantes`;
+    return `ðŸ“… **OptimizaciÃ³n de Calendario${month ? ` - ${month}` : ''}**\n\n` +
+           `ðŸ“Š Total de eventos: ${totalEvents}\n` +
+           `ðŸ·ï¸ Tipos de eventos: ${eventTypes.join(', ')}\n` +
+           `ðŸ“† DÃ­as ocupados: ${busyDays}\n\n` +
+           `**Sugerencias de optimizaciÃ³n:**\n` +
+           `â€¢ Distribuye mejor los eventos a lo largo del mes\n` +
+           `â€¢ Considera agrupar eventos similares\n` +
+           `â€¢ Deja espacios libres para contenido espontÃ¡neo\n` +
+           `â€¢ Planifica con anticipaciÃ³n eventos importantes`;
   };
 
   const handleSend = async () => {
@@ -452,23 +452,23 @@ export function ChatInterface() {
                   <Sparkles className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold mb-2">¡Hola! Soy tu asistente súper fácil</h3>
+                  <h3 className="text-xl font-semibold mb-2">Â¡Hola! Soy tu asistente sÃºper fÃ¡cil</h3>
                   <p className="text-muted-foreground">
-                    🚀 Acceso instantáneo a todas tus herramientas. 
+                    ðŸš€ Acceso instantÃ¡neo a todas tus herramientas. 
                     Solo escribe lo que necesitas: <strong>calendario</strong>, <strong>recursos</strong> o <strong>miniaturas</strong>.
-                    ¡Es así de simple!
+                    Â¡Es asÃ­ de simple!
                   </p>
                   
                   <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3 text-sm border border-green-200 dark:border-green-800">
                     <h4 className="font-medium mb-2 text-green-900 dark:text-green-100 flex items-center gap-2">
-                      ✨ Acceso Súper Rápido
+                      âœ¨ Acceso SÃºper RÃ¡pido
                     </h4>
                     <div className="space-y-1 text-xs text-green-700 dark:text-green-300">
-                      <div>✨ Escribe <strong>"calendario"</strong> para gestionar eventos</div>
-                      <div>✨ Escribe <strong>"recursos"</strong> para buscar plantillas</div>
-                      <div>✨ Escribe <strong>"miniaturas"</strong> para crear diseños</div>
-                      <div>✨ Escribe <strong>"infografías"</strong> para crear gráficos</div>
-                      <div className="mt-2 text-green-600 dark:text-green-400">🚀 ¡Es así de fácil!</div>
+                      <div>âœ¨ Escribe <strong>"calendario"</strong> para gestionar eventos</div>
+                      <div>âœ¨ Escribe <strong>"recursos"</strong> para buscar plantillas</div>
+                      <div>âœ¨ Escribe <strong>"miniaturas"</strong> para crear diseÃ±os</div>
+                      <div>âœ¨ Escribe <strong>"infografÃ­as"</strong> para crear grÃ¡ficos</div>
+                      <div className="mt-2 text-green-600 dark:text-green-400">ðŸš€ Â¡Es asÃ­ de fÃ¡cil!</div>
                     </div>
                   </div>
                 </div>
@@ -514,7 +514,7 @@ export function ChatInterface() {
                         {message.content}
                       </div>
                       
-                      {/* Botones de acción rápida para comandos especiales */}
+                      {/* Botones de acciÃ³n rÃ¡pida para comandos especiales */}
                       {message.role === 'assistant' && showActionButtons && (
                         <div className="mt-3 flex flex-wrap gap-2">
                           {message.content.includes('evento') && (
@@ -545,7 +545,7 @@ export function ChatInterface() {
                                 navigate('/recursos');
                                 toast({
                                   title: "Navegando a Recursos",
-                                  description: "Ve a la sección de recursos para explorar más"
+                                  description: "Ve a la secciÃ³n de recursos para explorar mÃ¡s"
                                 });
                               }}
                             >
@@ -563,7 +563,7 @@ export function ChatInterface() {
                                 navigate('/thumbnails');
                                 toast({
                                   title: "Navegando a Miniaturas",
-                                  description: "Ve a la sección de miniaturas para crear tu diseño"
+                                  description: "Ve a la secciÃ³n de miniaturas para crear tu diseÃ±o"
                                 });
                               }}
                             >
@@ -571,22 +571,22 @@ export function ChatInterface() {
                               Crear Miniatura
                             </Button>
                           )}
-                          {message.content.includes('infografía') && (
+                          {message.content.includes('infografÃ­a') && (
                             <Button
                               variant="outline"
                               size="sm"
                               className="h-8 text-xs"
                               onClick={() => {
-                                // Navegar a infografías
+                                // Navegar a infografÃ­as
                                 navigate('/infografias');
                                 toast({
-                                  title: "Navegando a Infografías",
-                                  description: "Ve a la sección de infografías para crear tu diseño"
+                                  title: "Navegando a InfografÃ­as",
+                                  description: "Ve a la secciÃ³n de infografÃ­as para crear tu diseÃ±o"
                                 });
                               }}
                             >
                               <BarChart3 className="h-3 w-3 mr-1" />
-                              Crear Infografía
+                              Crear InfografÃ­a
                             </Button>
                           )}
                         </div>
@@ -611,8 +611,8 @@ export function ChatInterface() {
                               onClick={() => {
                                 // Implementar guardado de prompts
                                 toast({
-                                  title: "Próximamente",
-                                  description: "La función de guardar prompts estará disponible pronto"
+                                  title: "PrÃ³ximamente",
+                                  description: "La funciÃ³n de guardar prompts estarÃ¡ disponible pronto"
                                 });
                               }}
                             >
@@ -634,10 +634,10 @@ export function ChatInterface() {
               <div className="mb-4">
                 <Select value={promptCategory} onValueChange={setPromptCategory}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Filtrar por categoría" />
+                    <SelectValue placeholder="Filtrar por categorÃ­a" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">Todas las categorías</SelectItem>
+                    <SelectItem value="all">Todas las categorÃ­as</SelectItem>
                     {promptCategories.map((category) => (
                       <SelectItem key={category} value={category}>
                         {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -681,7 +681,7 @@ export function ChatInterface() {
                         ))}
                         {prompt.tags.length > 2 && (
                           <span className="text-xs text-muted-foreground">
-                            +{prompt.tags.length - 2} más
+                            +{prompt.tags.length - 2} mÃ¡s
                           </span>
                         )}
                       </div>

@@ -1,4 +1,4 @@
-import LandingPresentation from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\LandingPresentation';
+﻿import LandingPresentation from "../components\LandingPresentation";
 
 export default function PresentacionPage() {
   return <LandingPresentation />;

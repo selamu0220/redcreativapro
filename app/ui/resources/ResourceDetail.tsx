@@ -1,10 +1,10 @@
-import { Resource, ResourceComment } from '../../types/resources';
+﻿import { Resource, ResourceComment } from '../../types/resources';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
 import { Separator } from '../../ui/separator';
-import { getResourceIcon } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\resourceUtils';
-import { formatDate } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\dateUtils';
+import { getResourceIcon } from "../lib\resourceUtils";
+import { formatDate } from "../lib\dateUtils";
 import { Download, Link as LinkIcon, ExternalLink, Share2 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 import { Textarea } from '../../ui/textarea';
@@ -91,7 +91,7 @@ export function ResourceDetail({ resource, onAddComment }: ResourceDetailProps) 
                 {user && (
                   <div className="flex gap-4">
                     <Textarea
-                      placeholder="Añade un comentario..."
+                      placeholder="AÃ±ade un comentario..."
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
                     />
@@ -123,14 +123,14 @@ export function ResourceDetail({ resource, onAddComment }: ResourceDetailProps) 
                   </div>
                 ) : (
                   <div className="text-center text-muted-foreground py-8">
-                    No hay comentarios aún
+                    No hay comentarios aÃºn
                   </div>
                 )}
               </div>
             </TabsContent>
             <TabsContent value="history">
               <div className="p-4 text-center text-muted-foreground">
-                Historial de versiones próximamente
+                Historial de versiones prÃ³ximamente
               </div>
             </TabsContent>
           </Tabs>
@@ -138,7 +138,7 @@ export function ResourceDetail({ resource, onAddComment }: ResourceDetailProps) 
 
         <div className="space-y-4">
           <div className="border rounded-md p-4 space-y-4">
-            <h3 className="font-medium">Información</h3>
+            <h3 className="font-medium">InformaciÃ³n</h3>
             <Separator />
             <div className="space-y-2">
               <div className="flex justify-between">
@@ -146,11 +146,11 @@ export function ResourceDetail({ resource, onAddComment }: ResourceDetailProps) 
                 <span className="font-medium capitalize">{resource.type.replace('-', ' ')}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Añadido</span>
+                <span className="text-muted-foreground">AÃ±adido</span>
                 <span>{formatDate(resource.createdAt)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Tamaño</span>
+                <span className="text-muted-foreground">TamaÃ±o</span>
                 <span>{resource.size || 'N/A'}</span>
               </div>
               <div className="flex justify-between">

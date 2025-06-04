@@ -1,4 +1,4 @@
-import { TaskType, TaskPriority } from '../../types/tasks';
+﻿import { TaskType, TaskPriority } from '../../types/tasks';
 import {
   Card,
   CardContent,
@@ -8,7 +8,7 @@ import { Badge } from '../../ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 import { Progress } from '../../ui/progress';
 import { Checkbox } from '../../ui/checkbox';
-import { formatDate } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\dateUtils';
+import { formatDate } from "../lib\dateUtils";
 import { cn } from '../../lib/utils';
 import { CalendarDays, ArrowUpCircle, Circle, ArrowDownCircle } from 'lucide-react';
 

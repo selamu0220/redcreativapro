@@ -1,7 +1,7 @@
-import { Post } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\blog';
-import { EventType } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\calendar';
-import { Resource } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\resources';
-import { Script } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\scripts';
+﻿import { Post } from "../types\blog";
+import { EventType } from "../types\calendar";
+import { Resource } from "../types\resources";
+import { Script } from "../types\scripts";
 
 export type SearchResult = {
   id: string;
@@ -120,11 +120,11 @@ function calculateRelevance(
   const tagsLower = tags.map(t => t.toLowerCase());
 
   for (const term of searchTerms) {
-    // Título exacto
+    // TÃ­tulo exacto
     if (titleLower === term) {
       relevance += 20;
     }
-    // Título contiene término
+    // TÃ­tulo contiene tÃ©rmino
     else if (titleLower.includes(term)) {
       relevance += 10;
     }
@@ -138,7 +138,7 @@ function calculateRelevance(
       relevance += 5;
     }
 
-    // Contenido contiene término
+    // Contenido contiene tÃ©rmino
     if (contentLower.includes(term)) {
       relevance += 3;
     }

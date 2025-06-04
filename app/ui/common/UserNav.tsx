@@ -10,7 +10,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "./c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ui\dialog";
+} from "../dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,

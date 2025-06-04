@@ -1,4 +1,4 @@
-import { TaskType } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\tasks';
+﻿import { TaskType } from "../types\tasks";
 import { addDays } from 'date-fns';
 
 const today = new Date();

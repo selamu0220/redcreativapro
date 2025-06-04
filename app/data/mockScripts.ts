@@ -1,4 +1,4 @@
-import { Script } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\types\scripts';
+﻿import { Script } from "../types\scripts";
 
 export const mockScripts: Script[] = [
   {

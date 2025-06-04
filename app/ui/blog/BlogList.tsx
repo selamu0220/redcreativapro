@@ -1,10 +1,10 @@
-import React from 'react';
+﻿import React from 'react';
 import { Post } from '../../types/blog';
 import { Card, CardContent, CardFooter, CardHeader } from '../../ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
-import { formatDate } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\dateUtils';
+import { formatDate } from "../lib\dateUtils";
 import { AspectRatio } from '../../ui/aspect-ratio';
 import { Link } from '../../ui/link';
 import { slugify } from '../../lib/utils';
@@ -29,7 +29,7 @@ export function BlogList({ posts, onPostClick }: BlogListProps) {
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold tracking-tight">Blog de Red Creativa Pro</h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Descubre las últimas tendencias en marketing digital, consejos de productividad y estrategias creativas para impulsar tu contenido.
+          Descubre las Ãºltimas tendencias en marketing digital, consejos de productividad y estrategias creativas para impulsar tu contenido.
         </p>
         <Separator className="max-w-xs mx-auto" />
       </div>
@@ -37,7 +37,7 @@ export function BlogList({ posts, onPostClick }: BlogListProps) {
       {/* Featured Post */}
       {posts.length > 0 && (
         <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Artículo Destacado</h2>
+          <h2 className="text-2xl font-bold mb-6">ArtÃ­culo Destacado</h2>
           <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300">
             <div className="md:flex">
               <div className="md:w-1/2">
@@ -104,7 +104,7 @@ export function BlogList({ posts, onPostClick }: BlogListProps) {
                   onClick={() => onPostClick(posts[0])}
                   className="group"
                 >
-                  Leer Artículo Completo
+                  Leer ArtÃ­culo Completo
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
@@ -116,7 +116,7 @@ export function BlogList({ posts, onPostClick }: BlogListProps) {
       {/* Recent Posts Grid */}
       {posts.length > 1 && (
         <div>
-          <h2 className="text-2xl font-bold mb-6">Artículos Recientes</h2>
+          <h2 className="text-2xl font-bold mb-6">ArtÃ­culos Recientes</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.slice(1).map((post) => (
               <Card key={post.id} className="flex flex-col hover:shadow-lg transition-shadow duration-300 group">
@@ -148,7 +148,7 @@ export function BlogList({ posts, onPostClick }: BlogListProps) {
                       <span className="text-sm font-medium">{post.author.name}</span>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <span>{formatDate(post.createdAt)}</span>
-                        <span>•</span>
+                        <span>â€¢</span>
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           <span>{calculateReadTime(post.content)} min</span>
@@ -194,7 +194,7 @@ export function BlogList({ posts, onPostClick }: BlogListProps) {
                     variant="outline"
                     onClick={() => onPostClick(post)}
                   >
-                    Leer Más
+                    Leer MÃ¡s
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </CardFooter>

@@ -15,7 +15,7 @@ import {
 } from '../../ui/command';
 import { Button } from '../../ui/button';
 import { useRouter } from 'next/navigation';
-import { SearchResult, searchContent } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\search';
+import { SearchResult, searchContent } from '../../lib/search';
 import { mockPosts } from '../../data/mockPosts';
 import { mockEvents } from '../../data/mockEvents';
 import { mockResources } from '../../data/mockResources';

@@ -1,4 +1,4 @@
-import ProjectsPage from './c:\Users\programar\Documents\GitHub\redcreativapro\app\components\ProjectsPage';
+﻿import ProjectsPage from "../components\ProjectsPage";
 import AppLayout from '../components/AppLayout';
 
 export default function ProyectosPage() {

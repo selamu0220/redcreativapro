@@ -1,8 +1,8 @@
-import { Script } from '../../types/scripts';
+﻿import { Script } from '../../types/scripts';
 import { ScrollArea } from '../../ui/scroll-area';
 import { cn } from '../../lib/utils';
 import { FileText, Star, Calendar } from 'lucide-react';
-import { formatDate } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\dateUtils';
+import { formatDate } from "../lib\dateUtils";
 import { Badge } from '../../ui/badge';
 
 interface ScriptListProps {

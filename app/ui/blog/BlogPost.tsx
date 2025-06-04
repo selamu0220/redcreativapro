@@ -1,8 +1,8 @@
-import { Post } from '../../types/blog';
+﻿import { Post } from '../../types/blog';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
-import { formatDate } from './c:\Users\programar\Documents\GitHub\redcreativapro\app\lib\dateUtils';
+import { formatDate } from "../lib\dateUtils";
 import { ArrowLeft, Edit2 } from 'lucide-react';
 import { ScrollArea } from '../../ui/scroll-area';
 
