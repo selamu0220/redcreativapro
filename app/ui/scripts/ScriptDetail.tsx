@@ -1,11 +1,11 @@
-﻿import { Script, ScriptVersion } from '../../types/scripts';
+import { Script, ScriptVersion } from '../../types/scripts';
 import { Button } from '../../ui/button';
 import { Badge } from '../../ui/badge';
 import { Separator } from '../../ui/separator';
 import { ScrollArea } from '../../ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
-import { formatDate } from "../lib\dateUtils";
+import { formatDate } from "../../lib/dateUtils";
 import {
   Calendar,
   Clock,

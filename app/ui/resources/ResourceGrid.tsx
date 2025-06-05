@@ -1,6 +1,6 @@
-﻿import { Resource } from '../../types/resources';
+import { Resource } from '../../types/resources';
 import { ResourceCard } from './ResourceCard';
-import { EmptyState } from "../components\common\EmptyState";
+import { EmptyState } from "../common/EmptyState";
 
 interface ResourceGridProps {
   resources: Resource[];

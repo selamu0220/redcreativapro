@@ -1,10 +1,10 @@
-﻿import React from 'react';
+import React from 'react';
 import { Post } from '../../types/blog';
 import { Card, CardContent, CardFooter, CardHeader } from '../../ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
-import { formatDate } from "../lib\dateUtils";
+import { formatDate } from "../../lib/dateUtils";
 import { AspectRatio } from '../../ui/aspect-ratio';
 import { Link } from '../../ui/link';
 import { slugify } from '../../lib/utils';

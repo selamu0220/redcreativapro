@@ -1,9 +1,9 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect } from 'react';
-import { useAuth } from "../contexts\AuthContext";
-import { AuthForm } from "../components\auth\AuthForm";
-import { EmailVerificationBanner } from "../components\auth\EmailVerificationBanner";
+import { useAuth } from "../contexts/AuthContext";
+import { AuthForm } from "../ui/auth/AuthForm";
+import { EmailVerificationBanner } from "../ui/auth/EmailVerificationBanner";
 
 interface AuthPageProps {
   onClose?: () => void;

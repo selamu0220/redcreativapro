@@ -1,4 +1,4 @@
-﻿import { Post } from "../types\blog";
+import { Post } from "../types/blog";
 
 export const mockPosts: Post[] = [
   {

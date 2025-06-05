@@ -1,4 +1,4 @@
-﻿import LearningView from "../components\learning\LearningView";
+import LearningView from "../ui/learning/LearningView";
 import AppLayout from '../components/AppLayout';
 
 export default function AprendizajePage() {

@@ -1,5 +1,5 @@
-﻿import React from 'react';
-import { ProjectManager } from "../components\projects\ProjectManager";
+import React from 'react';
+import { ProjectManager } from "../ui/projects/ProjectManager";
 
 export default function ProjectsPage() {
   return (

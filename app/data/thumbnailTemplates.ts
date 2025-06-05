@@ -1,4 +1,4 @@
-﻿import { ThumbnailTemplate } from "../types\thumbnails";
+import { ThumbnailTemplate } from "../types/thumbnails";
 
 export const thumbnailTemplates: ThumbnailTemplate[] = [
   // Plantillas para TikTok (Formato Vertical 9:16)

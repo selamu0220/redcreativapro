@@ -1,5 +1,5 @@
-﻿import { FileText, Image, Link, Sparkles, File } from 'lucide-react';
-import { ResourceType } from "../types\resources";
+import { FileText, Image, Link, Sparkles, File } from 'lucide-react';
+import { ResourceType } from "../types/resources";
 
 export function getResourceIcon(type: ResourceType) {
   switch (type) {

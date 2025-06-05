@@ -1,10 +1,10 @@
-﻿import { Resource, ResourceComment } from '../../types/resources';
+import { Resource, ResourceComment } from '../../types/resources';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
 import { Separator } from '../../ui/separator';
-import { getResourceIcon } from "../lib\resourceUtils";
-import { formatDate } from "../lib\dateUtils";
+import { getResourceIcon } from "../../lib/resourceUtils";
+import { formatDate } from "../../lib/dateUtils";
 import { Download, Link as LinkIcon, ExternalLink, Share2 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '../../ui/avatar';
 import { Textarea } from '../../ui/textarea';

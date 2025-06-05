@@ -1,4 +1,4 @@
-﻿import { ResourcesView } from "../components\resources\ResourcesView";
+import { ResourcesView } from "../ui/resources/ResourcesView";
 import AppLayout from '../components/AppLayout';
 
 export default function RecursosPage() {

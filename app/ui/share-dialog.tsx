@@ -1,17 +1,17 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Check, Copy, Globe2, Lock, Users } from 'lucide-react';
-import { Button } from '../../../../../../../../../ui/button';
+import { Button } from '../button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '../../../../../../../../../ui/dialog';
-import { Input } from '../../../../../../../../../ui/input';
-import { Label } from '../../../../../../../../../ui/label';
-import { RadioGroup, RadioGroupItem } from '../../../../../../../../../ui/radio-group';
-import { useToast } from '../../../../../../../../../hooks/use-toast';
+} from '../dialog';
+import { Input } from '../input';
+import { Label } from '../label';
+import { RadioGroup, RadioGroupItem } from '../radio-group';
+import { useToast } from '../../hooks/use-toast';
 
 export type Visibility = 'private' | 'public' | 'shared';
 
@@ -74,7 +74,7 @@ export function ShareDialog({
     } else {
       toast({
         title: "Error",
-        description: "Por favor, ingresa al menos un email válido",
+        description: "Por favor, ingresa al menos un email vÃ¡lido",
         variant: "destructive",
       });
     }
@@ -86,7 +86,7 @@ export function ShareDialog({
         <DialogHeader>
           <DialogTitle>Compartir {title}</DialogTitle>
           <DialogDescription>
-            Elige cómo quieres compartir este contenido
+            Elige cÃ³mo quieres compartir este contenido
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
@@ -113,7 +113,7 @@ export function ShareDialog({
               <RadioGroupItem value="public" id="public" />
               <Label htmlFor="public" className="flex items-center gap-2">
                 <Globe2 className="h-4 w-4" />
-                Público
+                PÃºblico
               </Label>
             </div>
           </RadioGroup>

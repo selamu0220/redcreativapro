@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
 import { ScrollArea } from '../../ui/scroll-area';
@@ -10,7 +10,7 @@ import { Badge } from '../../ui/badge';
 import { useToast } from '../../hooks/use-toast';
 import { useQuickRefresh } from '../../hooks/useQuickRefresh';
 import { useRouter } from 'next/navigation';
-import { generateScriptWithAI } from "../lib\ai";
+import { generateScriptWithAI } from "../../lib/ai";
 import { Send, Bot, Loader2, Settings, Sparkles, Save, Copy, FileText, Star, Calendar, Image, FolderOpen, BarChart3 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { Alert, AlertDescription } from '../../ui/alert';
@@ -18,7 +18,7 @@ import { AIProviderDialog } from './AIProviderDialog';
 import { mockPrompts } from '../../data/mockPrompts';
 import { Prompt } from '../../types/prompts';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
-import UsageLimits from "../components\common\UsageLimits";
+import UsageLimits from "../common/UsageLimits";
 import { EventType } from '../../types/calendar';
 import { Resource } from '../../types/resources';
 import { ThumbnailSettings } from '../../types/thumbnails';

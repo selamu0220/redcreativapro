@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { format } from 'date-fns';
 import { CalendarIcon, Trash2, Plus, X } from 'lucide-react';
 import { TaskType, TaskStatus, TaskPriority, Subtask } from '../../types/tasks';
-import { Button } from '../../ui/button';
+import { Button } from '../button';
 import {
   Dialog,
   DialogContent,
@@ -13,7 +13,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '../../ui/dialog';
+} from '../dialog';
 import {
   Form,
   FormControl,
@@ -21,24 +21,24 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../../ui/form';
-import { Input } from '../../ui/input';
-import { Textarea } from '../../ui/textarea';
+} from '../form';
+import { Input } from '../input';
+import { Textarea } from '../textarea';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '../../ui/popover';
-import { Calendar } from '../../ui/calendar';
+} from '../popover';
+import { Calendar } from '../calendar';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '../../ui/select';
-import { Checkbox } from '../../ui/checkbox';
-import { Badge } from '../../ui/badge';
+} from '../select';
+import { Checkbox } from '../checkbox';
+import { Badge } from '../badge';
 import { v4, cn } from '../../lib/utils';
 
 const formSchema = z.object({

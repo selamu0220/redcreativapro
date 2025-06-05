@@ -1,4 +1,4 @@
-﻿import LandingPresentation from "../components\LandingPresentation";
+import LandingPresentation from "../ui/LandingPresentation";
 
 export default function PresentacionPage() {
   return <LandingPresentation />;

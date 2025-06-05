@@ -1,6 +1,6 @@
-﻿import { useState, useEffect } from 'react';
-import { supabase, db } from "../lib\supabase";
-import { useAuth } from "../contexts\AuthContext";
+import { useState, useEffect } from 'react';
+import { supabase, db } from "../lib/supabase";
+import { useAuth } from "../contexts/AuthContext";
 
 // Generic hook for CRUD operations
 export function useSupabaseTable<T>(tableName: string) {

@@ -1,4 +1,4 @@
-﻿import ProjectsPage from "../components\ProjectsPage";
+import ProjectsPage from "../components/ProjectsPage";
 import AppLayout from '../components/AppLayout';
 
 export default function ProyectosPage() {

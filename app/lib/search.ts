@@ -1,7 +1,7 @@
-﻿import { Post } from "../types\blog";
-import { EventType } from "../types\calendar";
-import { Resource } from "../types\resources";
-import { Script } from "../types\scripts";
+import { Post } from "../types/blog";
+import { EventType } from "../types/calendar";
+import { Resource } from "../types/resources";
+import { Script } from "../types/scripts";
 
 export type SearchResult = {
   id: string;

@@ -1,8 +1,8 @@
-﻿import { Prompt } from '../../types/prompts';
+import { Prompt } from '../../types/prompts';
 import { ScrollArea } from '../../ui/scroll-area';
 import { cn } from '../../lib/utils';
 import { Star, FileText } from 'lucide-react';
-import { formatDate } from "../lib\dateUtils";
+import { formatDate } from "../../lib/dateUtils";
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
 

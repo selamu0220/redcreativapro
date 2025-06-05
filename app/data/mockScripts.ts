@@ -1,4 +1,4 @@
-﻿import { Script } from "../types\scripts";
+import { Script } from "../types/scripts";
 
 export const mockScripts: Script[] = [
   {

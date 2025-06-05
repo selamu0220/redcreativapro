@@ -1,12 +1,12 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   DotsHorizontalIcon,
 } from '@radix-ui/react-icons';
 
-import { cn } from '../../../../../../../../../lib/utils';
-import { ButtonProps, buttonVariants } from '../../../../../../../../../ui/button';
+import { cn } from '../lib/utils';
+import { ButtonProps, buttonVariants } from '../button';
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
@@ -119,3 +119,4 @@ export {
   PaginationNext,
   PaginationEllipsis,
 };
+

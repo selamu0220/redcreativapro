@@ -1,7 +1,7 @@
-﻿import { Prompt } from '../../types/prompts';
+import { Prompt } from '../../types/prompts';
 import { Button } from '../../ui/button';
 import { Badge } from '../../ui/badge';
-import { formatDate } from "../lib\dateUtils";
+import { formatDate } from "../../lib/dateUtils";
 import { Edit2, Trash2, Copy, Share2, Globe, Lock, Users } from 'lucide-react';
 import { ScrollArea } from '../../ui/scroll-area';
 import { useToast } from '../../hooks/use-toast';

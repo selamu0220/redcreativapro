@@ -1,4 +1,4 @@
-﻿import { PromptsView } from "../components\prompts\PromptsView";
+import { PromptsView } from "../ui/prompts/PromptsView";
 import AppLayout from '../components/AppLayout';
 
 export default function PromptsPage() {

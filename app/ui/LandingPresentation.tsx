@@ -1,8 +1,8 @@
-'use client';
+﻿'use client';
 
 import { useEffect } from 'react';
 // import { motion, AnimatePresence } from 'framer-motion';
-// import { Button } from '../../../../../../../../../ui/button';
+// import { Button } from '../button';
 // import { ArrowRight, X, Sparkles, Zap, Rocket, Brain, Calendar, FileText } from 'lucide-react';
 
 interface LandingPresentationProps {
@@ -12,29 +12,29 @@ interface LandingPresentationProps {
 // const slides = [
 //   {
 //     title: "Red Creativa",
-//     subtitle: "Plataforma de gestión de contenido creativo",
-//     description: "Una herramienta integral para organizar y gestionar proyectos creativos, recursos digitales y colaboración en equipo.",
+//     subtitle: "Plataforma de gestiÃ³n de contenido creativo",
+//     description: "Una herramienta integral para organizar y gestionar proyectos creativos, recursos digitales y colaboraciÃ³n en equipo.",
 //     icon: Rocket,
 //     gradient: "from-slate-600 to-slate-800"
 //   },
 //   {
-//     title: "Gestión de Recursos",
+//     title: "GestiÃ³n de Recursos",
 //     subtitle: "Organiza tus archivos y materiales",
-//     description: "Sistema de almacenamiento y categorización de recursos digitales: imágenes, videos, documentos y plantillas. Acceso rápido y búsqueda avanzada.",
+//     description: "Sistema de almacenamiento y categorizaciÃ³n de recursos digitales: imÃ¡genes, videos, documentos y plantillas. Acceso rÃ¡pido y bÃºsqueda avanzada.",
 //     icon: Sparkles,
 //     gradient: "from-blue-600 to-blue-800"
 //   },
 //   {
 //     title: "Calendario Editorial",
 //     subtitle: "Planifica y programa tu contenido",
-//     description: "Herramienta de planificación para programar publicaciones, gestionar fechas de entrega y coordinar equipos de trabajo.",
+//     description: "Herramienta de planificaciÃ³n para programar publicaciones, gestionar fechas de entrega y coordinar equipos de trabajo.",
 //     icon: Calendar,
 //     gradient: "from-green-600 to-green-800"
 //   },
 //   {
 //     title: "Biblioteca de Prompts",
 //     subtitle: "Plantillas y guiones para IA",
-//     description: "Colección de prompts optimizados para diferentes herramientas de IA. Crea, guarda y comparte plantillas de texto efectivas.",
+//     description: "ColecciÃ³n de prompts optimizados para diferentes herramientas de IA. Crea, guarda y comparte plantillas de texto efectivas.",
 //     icon: Brain,
 //     gradient: "from-purple-600 to-purple-800"
 //   },
@@ -47,7 +47,7 @@ interface LandingPresentationProps {
 //   }
 // ];
 
-// // Componente de partículas flotantes
+// // Componente de partÃ­culas flotantes
 // const FloatingParticles = ({ count, gradient }: { count: number; gradient: string }) => {
 //   return (
 //     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -98,18 +98,19 @@ export default function LandingPresentation({ onComplete }: LandingPresentationP
             Red Creativa Pro
           </h1>
           <p className="text-2xl md:text-3xl font-bold text-white/90 tracking-wide mb-4">
-            Plataforma de Gestión Creativa
+            Plataforma de GestiÃ³n Creativa
           </p>
           <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-            Una herramienta integral para organizar proyectos creativos, recursos digitales y colaboración en equipo.
+            Una herramienta integral para organizar proyectos creativos, recursos digitales y colaboraciÃ³n en equipo.
           </p>
         </div>
         
         <div className="text-white/60 text-sm">
-          Cargando aplicación...
+          Cargando aplicaciÃ³n...
         </div>
       </div>
     </div>
 
   );
 }
+

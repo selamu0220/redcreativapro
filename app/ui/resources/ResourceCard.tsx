@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Resource } from '../../types/resources';
 import { Card, CardContent, CardFooter, CardHeader } from '../../ui/card';
 import { Badge } from '../../ui/badge';
@@ -6,7 +6,7 @@ import { Button } from '../../ui/button';
 import { AspectRatio } from '../../ui/aspect-ratio';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../ui/dialog';
 import { ResourceDetail } from './ResourceDetail';
-import { getResourceIcon } from "../lib\resourceUtils";
+import { getResourceIcon } from "../../lib/resourceUtils";
 import { cn } from '../../lib/utils';
 import { Star, MoreHorizontal, Lock } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';

@@ -1,4 +1,4 @@
-﻿import { AIProvider, AIModel, AISettings } from "../types\ai";
+import { AIProvider, AIModel, AISettings } from "../types/ai";
 
 
 

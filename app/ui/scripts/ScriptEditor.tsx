@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -24,9 +24,9 @@ import {
 import { v4 } from '../../lib/utils';
 import { useToast } from '../../hooks/use-toast';
 import { Loader2, Sparkles } from 'lucide-react';
-import { generateScriptWithAI } from "../lib\ai";
-import UsageLimits from "../components\common\UsageLimits";
-import { AIProviderDialog } from "../components\chat\AIProviderDialog";
+import { generateScriptWithAI } from "../../lib/ai";
+import UsageLimits from "../common/UsageLimits";
+import { AIProviderDialog } from "../chat/AIProviderDialog";
 
 const formSchema = z.object({
   title: z.string().min(1, 'El tÃ­tulo es requerido'),

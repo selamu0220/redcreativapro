@@ -2,12 +2,13 @@ import { BlogView } from '../../ui/blog/BlogView';
 import AppLayout from '../../components/AppLayout';
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params;
   return (
     <AppLayout>
       <BlogView />

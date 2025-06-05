@@ -1,6 +1,6 @@
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../../../../../../../ui/card';
-import { Button } from '../../../../../../../../../ui/button';
+﻿import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../card';
+import { Button } from '../button';
 import { useNavigate } from 'react-router-dom';
 import { 
   Calendar, 
@@ -48,7 +48,7 @@ const HomePage = () => {
     },
     {
       title: 'Chat IA',
-      description: 'Interactúa con asistentes de inteligencia artificial',
+      description: 'InteractÃºa con asistentes de inteligencia artificial',
       icon: MessageSquare,
       path: '/chat',
       color: 'text-cyan-600'
@@ -69,7 +69,7 @@ const HomePage = () => {
     },
     {
       title: 'Miniaturas',
-      description: 'Diseña thumbnails atractivos para tus videos',
+      description: 'DiseÃ±a thumbnails atractivos para tus videos',
       icon: Image,
       path: '/miniaturas',
       color: 'text-pink-600'
@@ -95,8 +95,8 @@ const HomePage = () => {
           Bienvenido a Red Creativa Pro
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Tu plataforma integral para la gestión de proyectos creativos, 
-          contenido digital y colaboración profesional.
+          Tu plataforma integral para la gestiÃ³n de proyectos creativos, 
+          contenido digital y colaboraciÃ³n profesional.
         </p>
       </div>
 
@@ -133,7 +133,7 @@ const HomePage = () => {
       {/* Quick Actions */}
       <div className="bg-muted/50 rounded-lg p-6 space-y-4">
         <h2 className="text-2xl font-semibold text-foreground">
-          Acciones Rápidas
+          Acciones RÃ¡pidas
         </h2>
         <div className="flex flex-wrap gap-3">
           <Button 
