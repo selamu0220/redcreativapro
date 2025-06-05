@@ -138,7 +138,7 @@ export function BlogView() {
           author={selectedPost.author.name}
           publishedDate={selectedPost.createdAt}
           modifiedDate={selectedPost.updatedAt}
-          imageUrl={selectedPost.imageUrl}
+          imageUrl={selectedPost.imageUrl || ''}
           articleUrl={`https://redcreativa.pro/blog/${slugify(selectedPost.title)}-${selectedPost.id}`}
           keywords={selectedPost.tags}
         />
@@ -177,7 +177,7 @@ export function BlogView() {
           </DialogHeader>
           <BlogEditor
             onSave={handleSavePost}
-            post={editingPost}
+            post={editingPost || undefined}
           />
         </DialogContent>
       </Dialog>

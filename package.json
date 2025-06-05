@@ -63,6 +63,7 @@
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.50.0",
     "react-router-dom": "^7.6.1",
+    "recharts": "^2.15.3",
     "sonner": "^1.4.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",

@@ -193,6 +193,8 @@ export function CalendarEventDialog({
       end: endDate.toISOString(),
       color: rest.color,
       script: rest.hasScript ? rest.script : undefined,
+      visibility: 'private',
+      ownerId: 'current-user',
     };
     
     onSave(newEvent);

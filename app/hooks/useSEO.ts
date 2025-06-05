@@ -109,9 +109,9 @@ export function useSEO(seoData: SEOData = {}) {
 
     // Structured Data (JSON-LD)
     if (finalSEO.structuredData) {
-      let structuredDataElement = document.querySelector('script[type="application/ld+json"]');
+      let structuredDataElement = document.querySelector('script[type="application/ld+json"]') as HTMLScriptElement;
       if (!structuredDataElement) {
-        structuredDataElement = document.createElement('script');
+        structuredDataElement = document.createElement('script') as HTMLScriptElement;
         structuredDataElement.type = 'application/ld+json';
         document.head.appendChild(structuredDataElement);
       }
@@ -143,7 +143,7 @@ export const useBlogSEO = (post: {
   createdAt: string;
   updatedAt: string;
   tags: string[];
-  imageUrl: string;
+  imageUrl?: string;
 } | null = null) => {
   useEffect(() => {
     if (post) {

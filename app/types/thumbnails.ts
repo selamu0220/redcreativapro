@@ -1,5 +1,3 @@
-import { GradientStop } from './thumbnails';
-
 export interface GradientStop {
   color: string;
   position: number;

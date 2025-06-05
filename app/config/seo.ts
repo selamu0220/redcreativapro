@@ -152,6 +152,8 @@ export const SEO_CONFIG = {
     locale: 'es_ES',
     alternateLocale: 'en_US',
     siteName: 'Red Creativa Pro',
+    title: 'Red Creativa Pro - Plataforma Integral para Creadores de Contenido',
+    description: 'Plataforma profesional para creadores de contenido con herramientas de IA, gestión de recursos creativos, calendario editorial, generador de miniaturas y scripts.',
     images: {
       default: 'https://redcreativa.pro/og-image.jpg',
       width: 1200,

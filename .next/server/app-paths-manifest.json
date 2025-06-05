@@ -1,18 +1,7 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/aprendizaje/page": "app/aprendizaje/page.js",
-  "/auth/page": "app/auth/page.js",
-  "/blog/[slug]/page": "app/blog/[slug]/page.js",
-  "/chat/page": "app/chat/page.js",
-  "/blog/page": "app/blog/page.js",
-  "/calendario/page": "app/calendario/page.js",
-  "/recursos/page": "app/recursos/page.js",
-  "/prompts/page": "app/prompts/page.js",
-  "/proyectos/page": "app/proyectos/page.js",
   "/page": "app/page.js",
-  "/svg-viewer/page": "app/svg-viewer/page.js",
-  "/scripts/page": "app/scripts/page.js",
-  "/presentacion/page": "app/presentacion/page.js",
-  "/miniaturas/page": "app/miniaturas/page.js",
-  "/tareas/page": "app/tareas/page.js"
+  "/recursos/page": "app/recursos/page.js",
+  "/calendario/page": "app/calendario/page.js",
+  "/prompts/page": "app/prompts/page.js",
+  "/blog/page": "app/blog/page.js"
 }

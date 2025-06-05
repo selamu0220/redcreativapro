@@ -19,7 +19,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../dialog";
+} from "../dropdown-menu";
 import { Input } from "../input";
 import { Label } from "../label";
 import {

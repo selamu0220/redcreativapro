@@ -41,6 +41,8 @@ export const mockScripts: Script[] = [
         avatarUrl: 'https://avatars.githubusercontent.com/u/124599?v=4',
       },
     ],
+    visibility: 'private',
+    ownerId: 'user1',
   },
   {
     id: '2',
@@ -65,6 +67,8 @@ export const mockScripts: Script[] = [
     aiGenerated: true,
     seoKeywords: ['tutorial', 'learning', 'education'],
     platforms: ['YouTube', 'Blog'],
+    visibility: 'private',
+    ownerId: 'user2',
   },
   {
     id: '3',
@@ -88,5 +92,7 @@ export const mockScripts: Script[] = [
     ],
     aiGenerated: false,
     platforms: ['Instagram', 'TikTok', 'Twitter'],
+    visibility: 'private',
+    ownerId: 'user3',
   },
 ];

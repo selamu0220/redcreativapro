@@ -230,7 +230,7 @@ export function ChatInterface() {
     return resources.filter(resource => 
       searchTerms.some(term => 
         resource.title.toLowerCase().includes(term) ||
-        resource.description.toLowerCase().includes(term) ||
+        (resource.description && resource.description.toLowerCase().includes(term)) ||
         resource.type.toLowerCase().includes(term) ||
         resource.tags.some(tag => tag.toLowerCase().includes(term))
       )
@@ -258,13 +258,13 @@ export function ChatInterface() {
 
   const optimizeCalendar = (month: string): string => {
     const monthEvents = events.filter(event => {
-      const eventMonth = new Date(event.date).toLocaleDateString('es-ES', { month: 'long' });
+      const eventMonth = new Date(event.start).toLocaleDateString('es-ES', { month: 'long' });
       return month ? eventMonth.toLowerCase().includes(month.toLowerCase()) : true;
     });
 
     const totalEvents = monthEvents.length;
-    const eventTypes = [...new Set(monthEvents.map(e => e.type))];
-    const busyDays = [...new Set(monthEvents.map(e => new Date(e.date).getDate()))].length;
+    const eventTypes = [...new Set(monthEvents.map(e => e.title))];
+    const busyDays = [...new Set(monthEvents.map(e => new Date(e.start).getDate()))].length;
 
     return `ðŸ“… **OptimizaciÃ³n de Calendario${month ? ` - ${month}` : ''}**\n\n` +
            `ðŸ“Š Total de eventos: ${totalEvents}\n` +
