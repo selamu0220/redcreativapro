@@ -45,7 +45,7 @@ export default function BlogPost({ post, onBack, onEdit }: BlogPostProps) {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => onEdit(post)}
+                onClick={() => onEdit()}
                 className="flex items-center gap-2"
               >
                 <Edit2 className="h-4 w-4" />

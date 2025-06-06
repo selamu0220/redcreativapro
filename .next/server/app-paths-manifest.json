@@ -1,9 +1,7 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/scripts/page": "app/scripts/page.js",
   "/prompts/page": "app/prompts/page.js",
-  "/presentacion/page": "app/presentacion/page.js",
-  "/blog/page": "app/blog/page.js",
+  "/recursos/page": "app/recursos/page.js",
   "/calendario/page": "app/calendario/page.js",
-  "/recursos/page": "app/recursos/page.js"
+  "/presentacion/page": "app/presentacion/page.js"
 }
