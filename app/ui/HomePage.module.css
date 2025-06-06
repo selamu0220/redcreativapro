@@ -1,0 +1,79 @@
+.container {
+  @apply min-h-screen bg-gradient-to-br from-background to-muted/20;
+}
+
+.header {
+  @apply text-center py-16 px-4;
+}
+
+.title {
+  @apply text-5xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent;
+}
+
+.subtitle {
+  @apply text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed;
+}
+
+.featuresGrid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4;
+}
+
+.featureCard {
+  @apply cursor-pointer transition-all duration-300 hover:scale-105;
+}
+
+.featureCardContent {
+  @apply h-full;
+}
+
+.featureIcon {
+  @apply w-12 h-12 mb-4 transition-colors duration-300;
+}
+
+.featureTitle {
+  @apply text-xl font-semibold mb-2 transition-colors;
+}
+
+.featureCard:hover .featureTitle {
+  @apply text-primary;
+}
+
+.featureDescription {
+  @apply text-muted-foreground;
+}
+
+.statsSection {
+  @apply py-16 px-4 bg-muted/30;
+}
+
+.statsGrid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto;
+}
+
+.statCard {
+  @apply text-center;
+}
+
+.statNumber {
+  @apply text-4xl font-bold text-primary mb-2;
+}
+
+.statLabel {
+  @apply text-muted-foreground;
+}
+
+.ctaSection {
+  @apply py-16 px-4 text-center;
+}
+
+.ctaTitle {
+  @apply text-3xl font-bold mb-4;
+}
+
+.ctaDescription {
+  @apply text-lg text-muted-foreground mb-8 max-w-xl mx-auto;
+}
+
+.ctaButton {
+  @apply bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg font-semibold transition-colors;
+}

@@ -1,0 +1,83 @@
+.nav {
+  @apply flex items-center gap-6;
+}
+
+.logoButton {
+  @apply flex items-center space-x-2 hover:opacity-80 transition-opacity;
+}
+
+.logoIcon {
+  @apply w-8 h-8;
+}
+
+.logoSvg {
+  @apply w-full h-full fill-current;
+}
+
+.brandContainer {
+  @apply flex items-center gap-2;
+}
+
+.brandText {
+  @apply hidden font-bold lg:inline-block;
+}
+
+.proBadge {
+  @apply hidden lg:flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-semibold rounded-full;
+}
+
+.proIcon {
+  @apply h-3 w-3;
+}
+
+.navItems {
+  @apply hidden md:flex items-center space-x-1;
+}
+
+.navItem {
+  @apply relative px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 hover:bg-accent hover:text-accent-foreground;
+}
+
+.navItemActive {
+  @apply bg-primary text-primary-foreground;
+}
+
+.navItemIcon {
+  @apply h-4 w-4 mr-2;
+}
+
+.navItemText {
+  @apply hidden lg:inline;
+}
+
+.mobileMenuButton {
+  @apply md:hidden p-2 rounded-md hover:bg-accent;
+}
+
+.mobileMenuIcon {
+  @apply h-5 w-5;
+}
+
+.mobileMenu {
+  @apply md:hidden absolute top-full left-0 right-0 bg-background border-t shadow-lg z-50;
+}
+
+.mobileMenuContent {
+  @apply p-4 space-y-2;
+}
+
+.mobileMenuItem {
+  @apply flex items-center space-x-3 px-3 py-2 rounded-md hover:bg-accent transition-colors;
+}
+
+.mobileMenuItemActive {
+  @apply bg-primary text-primary-foreground;
+}
+
+.mobileMenuItemIcon {
+  @apply h-5 w-5;
+}
+
+.mobileMenuItemText {
+  @apply font-medium;
+}

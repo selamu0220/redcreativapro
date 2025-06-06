@@ -1,7 +1,9 @@
-﻿import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../card';
-import { Button } from '../button';
+'use client';
+import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
+import { Button } from './button';
 import { useNavigate } from 'react-router-dom';
+import styles from './HomePage.module.css';
 import { 
   Calendar, 
   FileText, 
@@ -69,7 +71,7 @@ const HomePage = () => {
     },
     {
       title: 'Miniaturas',
-      description: 'DiseÃ±a thumbnails atractivos para tus videos',
+      description: 'Diseña thumbnails atractivos para tus videos',
       icon: Image,
       path: '/miniaturas',
       color: 'text-pink-600'
@@ -88,40 +90,40 @@ const HomePage = () => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className={styles.container}>
       {/* Hero Section */}
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold text-foreground">
+      <div className={styles.header}>
+        <h1 className={styles.title}>
           Bienvenido a Red Creativa Pro
         </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Tu plataforma integral para la gestiÃ³n de proyectos creativos, 
-          contenido digital y colaboraciÃ³n profesional.
+        <p className={styles.subtitle}>
+          Tu plataforma integral para la gestión de proyectos creativos,
+        contenido digital y colaboración profesional.
         </p>
       </div>
 
       {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className={styles.featuresGrid}>
         {features.map((feature) => {
           const IconComponent = feature.icon;
           return (
             <Card 
               key={feature.path} 
-              className="hover:shadow-lg transition-shadow cursor-pointer group"
+              className={styles.featureCard}
               onClick={() => handleFeatureClick(feature.path)}
             >
               <CardHeader className="pb-3">
                 <div className="flex items-center space-x-3">
-                  <div className={`p-2 rounded-lg bg-muted group-hover:bg-primary/10 transition-colors`}>
-                    <IconComponent className={`h-6 w-6 ${feature.color} group-hover:scale-110 transition-transform`} />
+                  <div className="p-2 rounded-lg bg-muted group-hover:bg-primary/10 transition-colors">
+                    <IconComponent className={`${styles.featureIcon} ${feature.color} group-hover:scale-110 transition-transform`} />
                   </div>
-                  <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                  <CardTitle className={styles.featureTitle}>
                     {feature.title}
                   </CardTitle>
                 </div>
               </CardHeader>
-              <CardContent>
-                <CardDescription className="text-sm">
+              <CardContent className={styles.featureCardContent}>
+                <CardDescription className={styles.featureDescription}>
                   {feature.description}
                 </CardDescription>
               </CardContent>
@@ -133,7 +135,7 @@ const HomePage = () => {
       {/* Quick Actions */}
       <div className="bg-muted/50 rounded-lg p-6 space-y-4">
         <h2 className="text-2xl font-semibold text-foreground">
-          Acciones RÃ¡pidas
+          Acciones Rápidas
         </h2>
         <div className="flex flex-wrap gap-3">
           <Button 

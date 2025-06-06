@@ -1,0 +1,119 @@
+.container {
+  @apply h-full flex flex-col;
+}
+
+.header {
+  @apply flex items-center justify-between mb-6;
+}
+
+.title {
+  @apply text-2xl font-bold;
+}
+
+.headerActions {
+  @apply flex items-center gap-2;
+}
+
+.addButton {
+  @apply flex items-center gap-2;
+}
+
+.addButtonIcon {
+  @apply h-4 w-4;
+}
+
+.board {
+  @apply flex-1 overflow-hidden;
+}
+
+.boardContainer {
+  @apply h-full;
+}
+
+.boardContent {
+  @apply flex gap-6 h-full p-1;
+}
+
+.column {
+  @apply flex-1 min-w-80 bg-muted/30 rounded-lg p-4;
+}
+
+.columnHeader {
+  @apply flex items-center justify-between mb-4;
+}
+
+.columnTitle {
+  @apply font-semibold text-sm uppercase tracking-wide;
+}
+
+.columnCount {
+  @apply bg-background text-muted-foreground px-2 py-1 rounded-full text-xs;
+}
+
+.columnContent {
+  @apply space-y-3 max-h-full overflow-y-auto;
+}
+
+.taskCard {
+  @apply bg-background border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer;
+}
+
+.taskCardDragging {
+  @apply opacity-50 rotate-2 scale-105;
+}
+
+.taskTitle {
+  @apply font-medium mb-2 line-clamp-2;
+}
+
+.taskDescription {
+  @apply text-sm text-muted-foreground mb-3 line-clamp-3;
+}
+
+.taskMeta {
+  @apply flex items-center justify-between text-xs text-muted-foreground;
+}
+
+.taskPriority {
+  @apply px-2 py-1 rounded-full text-xs font-medium;
+}
+
+.taskPriorityHigh {
+  @apply bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400;
+}
+
+.taskPriorityMedium {
+  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400;
+}
+
+.taskPriorityLow {
+  @apply bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400;
+}
+
+.taskDueDate {
+  @apply flex items-center gap-1;
+}
+
+.taskDueDateIcon {
+  @apply h-3 w-3;
+}
+
+.emptyColumn {
+  @apply flex flex-col items-center justify-center py-8 text-center;
+}
+
+.emptyColumnIcon {
+  @apply h-8 w-8 text-muted-foreground mb-2;
+}
+
+.emptyColumnText {
+  @apply text-sm text-muted-foreground;
+}
+
+.dropZone {
+  @apply border-2 border-dashed border-primary/50 bg-primary/5 rounded-lg p-4 transition-colors;
+}
+
+.dropZoneActive {
+  @apply border-primary bg-primary/10;
+}

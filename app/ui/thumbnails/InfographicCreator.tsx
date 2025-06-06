@@ -17,53 +17,130 @@ interface InfographicTemplate {
   textColor: string;
   accentColor: string;
   fontFamily: string;
+  borderRadius?: string;
+  shadow?: string;
+  aspectRatio?: string;
+  chromaKey?: boolean;
 }
 
 const infographicTemplates: InfographicTemplate[] = [
+  // Templates con Chroma Key Verde para DaVinci Resolve
   {
-    id: 'modern-blue',
-    name: 'Azul Moderno',
-    description: 'Diseño limpio con tonos azules',
-    bgColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    textColor: '#ffffff',
-    accentColor: '#4facfe',
-    fontFamily: 'Inter, sans-serif'
+    id: 'chroma-horizontal',
+    name: 'Horizontal Chroma Key',
+    description: 'Fondo verde horizontal para DaVinci Resolve',
+    bgColor: '#00FF00', // Verde chroma key
+    textColor: '#000000',
+    accentColor: '#FF6B35',
+    fontFamily: 'Arial, sans-serif',
+    aspectRatio: '16:9',
+    chromaKey: true,
+    shadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '12px'
   },
   {
-    id: 'warm-sunset',
-    name: 'Atardecer Cálido',
-    description: 'Colores cálidos y acogedores',
-    bgColor: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    textColor: '#ffffff',
-    accentColor: '#ff6b6b',
-    fontFamily: 'Inter, sans-serif'
+    id: 'chroma-vertical',
+    name: 'Vertical Chroma Key',
+    description: 'Fondo verde vertical para DaVinci Resolve',
+    bgColor: '#00FF00', // Verde chroma key
+    textColor: '#000000',
+    accentColor: '#FF6B35',
+    fontFamily: 'Arial, sans-serif',
+    aspectRatio: '9:16',
+    chromaKey: true,
+    shadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '12px'
   },
   {
-    id: 'nature-green',
-    name: 'Verde Naturaleza',
-    description: 'Inspirado en la naturaleza',
-    bgColor: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-    textColor: '#ffffff',
-    accentColor: '#00d4aa',
-    fontFamily: 'Inter, sans-serif'
+    id: 'chroma-square',
+    name: 'Cuadrado Chroma Key',
+    description: 'Fondo verde cuadrado para DaVinci Resolve',
+    bgColor: '#00FF00', // Verde chroma key
+    textColor: '#000000',
+    accentColor: '#FF6B35',
+    fontFamily: 'Arial, sans-serif',
+    aspectRatio: '1:1',
+    chromaKey: true,
+    shadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '12px'
   },
   {
-    id: 'dark-elegant',
-    name: 'Elegante Oscuro',
-    description: 'Diseño elegante y profesional',
-    bgColor: 'linear-gradient(135deg, #2c3e50 0%, #34495e 100%)',
-    textColor: '#ecf0f1',
+    id: 'chroma-professional',
+    name: 'Profesional Chroma Key',
+    description: 'Estilo profesional con fondo verde para DaVinci',
+    bgColor: '#00FF00', // Verde chroma key
+    textColor: '#1a1a1a',
+    accentColor: '#007ACC',
+    fontFamily: 'Roboto, sans-serif',
+    aspectRatio: '16:9',
+    chromaKey: true,
+    shadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '8px'
+  },
+  {
+    id: 'chroma-education',
+    name: 'Educativo Chroma Key',
+    description: 'Estilo educativo con fondo verde para DaVinci',
+    bgColor: '#00FF00', // Verde chroma key
+    textColor: '#2c3e50',
     accentColor: '#3498db',
-    fontFamily: 'Inter, sans-serif'
+    fontFamily: 'Open Sans, sans-serif',
+    aspectRatio: '16:9',
+    chromaKey: true,
+    shadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '10px'
   },
   {
-    id: 'vibrant-purple',
-    name: 'Púrpura Vibrante',
-    description: 'Colores vibrantes y energéticos',
-    bgColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    textColor: '#ffffff',
-    accentColor: '#9b59b6',
-    fontFamily: 'Inter, sans-serif'
+    id: 'chroma-tech',
+    name: 'Tech Chroma Key',
+    description: 'Estilo tecnológico con fondo verde para DaVinci',
+    bgColor: '#00FF00', // Verde chroma key
+    textColor: '#0f172a',
+    accentColor: '#10b981',
+    fontFamily: 'Inter, sans-serif',
+    aspectRatio: '16:9',
+    chromaKey: true,
+    shadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '16px'
+  },
+  {
+    id: 'chroma-story-modern',
+    name: 'Story Moderno Chroma',
+    description: 'Story moderno con fondo verde para DaVinci',
+    bgColor: '#00FF00', // Verde chroma key
+    textColor: '#1f2937',
+    accentColor: '#f59e0b',
+    fontFamily: 'Poppins, sans-serif',
+    aspectRatio: '9:16',
+    chromaKey: true,
+    shadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '20px'
+  },
+  {
+    id: 'chroma-youtube',
+    name: 'YouTube Chroma Key',
+    description: 'Optimizado para YouTube con fondo verde',
+    bgColor: '#00FF00', // Verde chroma key
+    textColor: '#111827',
+    accentColor: '#ef4444',
+    fontFamily: 'Roboto, sans-serif',
+    aspectRatio: '16:9',
+    chromaKey: true,
+    shadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '12px'
+  },
+  {
+    id: 'chroma-instagram',
+    name: 'Instagram Chroma Key',
+    description: 'Optimizado para Instagram con fondo verde',
+    bgColor: '#00FF00', // Verde chroma key
+    textColor: '#374151',
+    accentColor: '#8b5cf6',
+    fontFamily: 'Inter, sans-serif',
+    aspectRatio: '1:1',
+    chromaKey: true,
+    shadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+    borderRadius: '15px'
   }
 ];
 
@@ -75,29 +152,34 @@ interface AnimationType {
 
 const animationTypes: AnimationType[] = [
   {
-    id: 'zoom-fade',
-    name: 'Zoom y Desvanecimiento',
-    description: 'Efecto de zoom con desvanecimiento suave'
+    id: 'smooth-fade',
+    name: 'Fade Profesional',
+    description: 'Desvanecimiento suave y profesional para DaVinci'
   },
   {
-    id: 'slide-in',
-    name: 'Deslizamiento',
-    description: 'Los elementos aparecen deslizándose'
+    id: 'elastic-scale',
+    name: 'Zoom Elegante',
+    description: 'Zoom suave con entrada elegante'
   },
   {
-    id: 'rotation-pulse',
-    name: 'Rotación y Pulso',
-    description: 'Rotación sutil con efecto de pulso'
+    id: 'fluid-slide',
+    name: 'Slide Cinematográfico',
+    description: 'Deslizamiento cinematográfico lateral'
   },
   {
-    id: 'bounce',
-    name: 'Rebote',
-    description: 'Efecto de rebote dinámico'
+    id: 'gentle-bounce',
+    name: 'Bounce Sutil',
+    description: 'Rebote muy sutil y profesional'
   },
   {
-    id: 'typewriter',
-    name: 'Máquina de Escribir',
-    description: 'Texto aparece como si se escribiera'
+    id: 'morphing-reveal',
+    name: 'Reveal Circular',
+    description: 'Revelado circular progresivo'
+  },
+  {
+    id: 'breathing-glow',
+    name: 'Glow Dinámico',
+    description: 'Brillo dinámico continuo'
   },
   {
     id: 'particles',
@@ -107,13 +189,28 @@ const animationTypes: AnimationType[] = [
 ];
 
 export function InfographicCreator() {
-  const [prompt, setPrompt] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState<InfographicTemplate>(infographicTemplates[0]);
   const [selectedAnimation, setSelectedAnimation] = useState<AnimationType>(animationTypes[0]);
-  const [isGenerating, setIsGenerating] = useState(false);
-
+  const [prompt, setPrompt] = useState('');
   const [generatedContent, setGeneratedContent] = useState<any>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Estados para personalización
+  const [customColors, setCustomColors] = useState({
+    background: '#ffffff',
+    cardBackground: '#f8f9fa',
+    textColor: '#1a1a1a',
+    accentColor: '#007ACC'
+  });
+  const [borderSettings, setBorderSettings] = useState({
+    width: 2,
+    radius: 12,
+    color: '#e0e0e0'
+  });
+  const [useCustomColors, setUseCustomColors] = useState(false);
+  
   const { toast } = useToast();
   const { incrementUsage, canUseFeature } = useAuth();
 
@@ -163,28 +260,30 @@ export function InfographicCreator() {
   const generateContentFromPrompt = async (prompt: string) => {
     try {
       // Importar la función de IA
-      const { generateScriptWithAI } = await import('../lib/ai');
+      const { generateScriptWithAI } = await import('../../lib/ai');
       
-      // Prompt especializado para generar infografías
+      // Prompt especializado para generar infografías para redes sociales
       const aiPrompt = `
-Crea una infografía basada en el siguiente texto: "${prompt}"
+Crea una infografía para redes sociales basada en: "${prompt}"
 
 Debes responder ÚNICAMENTE con un JSON válido que contenga:
 {
-  "title": "Título principal de la infografía (máximo 50 caracteres)",
-  "points": ["Punto 1", "Punto 2", "Punto 3", "Punto 4"],
-  "recommendedTemplate": "modern-blue|warm-sunset|nature-green|dark-elegant|vibrant-purple",
+  "title": "Título atractivo para redes sociales (máximo 40 caracteres)",
+  "subtitle": "Subtítulo explicativo corto (máximo 30 caracteres)",
+  "points": ["Elemento 1", "Elemento 2", "Elemento 3"],
+  "recommendedTemplate": "chroma-horizontal|chroma-vertical|chroma-square|chroma-professional|chroma-education|chroma-tech|chroma-story-modern|chroma-youtube|chroma-instagram",
   "recommendedAnimation": "zoom-fade|slide-in|rotation-pulse|bounce|typewriter|particles",
-  "infographicType": "estadísticas|proceso|comparación|beneficios|tips|timeline"
+  "infographicType": "lista|ranking|comparación|beneficios|tips|herramientas"
 }
 
 Reglas importantes:
-- El título debe ser claro y atractivo
-- Incluye entre 3-6 puntos clave
-- Cada punto debe ser conciso (máximo 80 caracteres)
+- El título debe ser llamativo para redes sociales (ej: "Top 5 IAs que DEBES conocer")
+- El subtítulo debe complementar el título
+- Incluye exactamente 3-5 elementos específicos y útiles
+- Cada punto debe ser el nombre de una herramienta, tip o elemento concreto
+- Para temas de IA, incluye nombres reales de herramientas populares
 - Selecciona el template más apropiado para el tema
 - Elige la animación que mejor complemente el contenido
-- Identifica el tipo de infografía más adecuado
 
 Responde SOLO con el JSON, sin texto adicional.`;
       
@@ -213,8 +312,9 @@ Responde SOLO con el JSON, sin texto adicional.`;
           
           return {
             title: parsedResponse.title,
+            subtitle: parsedResponse.subtitle || '',
             points: parsedResponse.points,
-            type: parsedResponse.infographicType || 'general'
+            type: parsedResponse.infographicType || 'lista'
           };
         }
       } catch (parseError) {
@@ -224,47 +324,72 @@ Responde SOLO con el JSON, sin texto adicional.`;
       console.warn('AI generation failed, using fallback:', aiError);
     }
     
-    // Fallback: lógica simple para generar contenido basado en el prompt
+    // Fallback: lógica inteligente para generar contenido específico para redes sociales
     const words = prompt.toLowerCase();
-    let title = 'Infografía Generada';
-    let points = ['Punto 1', 'Punto 2', 'Punto 3'];
+    let title = 'Top 5 Herramientas';
+    let subtitle = 'Imprescindibles';
+    let points = ['Herramienta 1', 'Herramienta 2', 'Herramienta 3'];
     
-    if (words.includes('meditación') || words.includes('mindfulness')) {
-      title = 'Beneficios de la Meditación';
+    if (words.includes('ia') || words.includes('inteligencia artificial') || words.includes('ai')) {
+      title = 'Top 5 IAs que DEBES conocer';
+      subtitle = '2024 Edition';
       points = [
-        'Reduce el estrés y la ansiedad',
-        'Mejora la concentración',
-        'Aumenta la autoconciencia',
-        'Promueve el bienestar emocional'
+        'ChatGPT - Conversación y escritura',
+        'Midjourney - Generación de imágenes',
+        'Claude - Análisis y razonamiento',
+        'Runway - Edición de video con IA',
+        'Notion AI - Productividad inteligente'
       ];
-    } else if (words.includes('ejercicio') || words.includes('fitness')) {
-      title = 'Beneficios del Ejercicio';
+    } else if (words.includes('herramientas') || words.includes('apps') || words.includes('software')) {
+      title = 'Apps que cambiarán tu vida';
+      subtitle = 'Productividad 2024';
       points = [
-        'Fortalece el sistema cardiovascular',
-        'Mejora la fuerza muscular',
-        'Aumenta la energía',
-        'Reduce el riesgo de enfermedades'
+        'Notion - Organización total',
+        'Figma - Diseño colaborativo',
+        'Loom - Videos explicativos',
+        'Calendly - Gestión de citas'
       ];
     } else if (words.includes('productividad') || words.includes('trabajo')) {
-      title = 'Tips de Productividad';
+      title = 'Hacks de Productividad';
+      subtitle = 'Que funcionan';
       points = [
-        'Establece metas claras',
-        'Elimina distracciones',
-        'Toma descansos regulares',
-        'Organiza tu espacio de trabajo'
+        'Técnica Pomodoro',
+        'Método Getting Things Done',
+        'Time Blocking',
+        'Regla de los 2 minutos'
+      ];
+    } else if (words.includes('marketing') || words.includes('redes sociales')) {
+      title = 'Estrategias de Marketing';
+      subtitle = 'Que SÍ funcionan';
+      points = [
+        'Storytelling auténtico',
+        'Contenido de valor',
+        'Engagement genuino',
+        'Consistencia en posting'
+      ];
+    } else if (words.includes('diseño') || words.includes('creatividad')) {
+      title = 'Principios de Diseño';
+      subtitle = 'Esenciales';
+      points = [
+        'Contraste efectivo',
+        'Jerarquía visual clara',
+        'Espacios en blanco',
+        'Tipografía legible'
       ];
     } else {
-      // Generar contenido genérico basado en el prompt
-      title = prompt.length > 30 ? prompt.substring(0, 30) + '...' : prompt;
+      // Generar contenido genérico pero atractivo para redes sociales
+      const cleanPrompt = prompt.trim();
+      title = cleanPrompt.length > 25 ? cleanPrompt.substring(0, 25) + '...' : cleanPrompt;
+      subtitle = 'Guía práctica';
       points = [
-        'Aspecto importante 1',
-        'Consideración clave 2',
-        'Beneficio principal 3',
-        'Resultado esperado 4'
+        'Consejo práctico #1',
+        'Estrategia clave #2',
+        'Tip esencial #3',
+        'Resultado garantizado #4'
       ];
     }
     
-    return { title, points };
+    return { title, subtitle, points };
   };
 
   const downloadAsImage = async () => {
@@ -324,73 +449,209 @@ Responde SOLO con el JSON, sin texto adicional.`;
   };
   
   const createSVGFromContent = (content: any, template: InfographicTemplate) => {
-    const width = 1920;
-    const height = 1080;
+    // Usar colores personalizados si están habilitados
+    const colors = useCustomColors ? {
+      bgColor: customColors.background,
+      cardBgColor: customColors.cardBackground,
+      textColor: customColors.textColor,
+      accentColor: customColors.accentColor
+    } : {
+      bgColor: template.bgColor,
+      cardBgColor: 'rgba(255, 255, 255, 0.9)',
+      textColor: template.textColor,
+      accentColor: template.accentColor
+    };
     
-    // Extraer colores del gradiente
-    const gradientMatch = template.bgColor.match(/linear-gradient\(135deg,\s*([^\s]+)\s+0%,\s*([^\s]+)\s+100%\)/);
-    const color1 = gradientMatch ? gradientMatch[1] : '#667eea';
-    const color2 = gradientMatch ? gradientMatch[2] : '#764ba2';
+    const borders = useCustomColors ? borderSettings : {
+      width: 1,
+      radius: 12,
+      color: 'rgba(0, 0, 0, 0.1)'
+    };
+    // Determinar dimensiones según el formato
+    let width = 1920;
+    let height = 1080;
+    
+    if (template.aspectRatio === '1:1') {
+      width = height = 1080; // Cuadrado
+    } else if (template.aspectRatio === '9:16') {
+      width = 1080;
+      height = 1920; // Vertical para stories
+    }
+    
+    // Crear fondo profesional con gradiente
+    let backgroundElement = '';
+    if (template.chromaKey) {
+      // Para chroma key, usar fondo verde
+      backgroundElement = `<rect width="100%" height="100%" fill="#00FF00" />`;
+    } else {
+      // Extraer colores del gradiente o usar color sólido
+      const bgColor = colors.bgColor;
+      const gradientMatch = bgColor.match(/linear-gradient\(135deg,\s*([^\s]+)\s+0%,\s*([^\s]+)\s+100%\)/);
+      if (gradientMatch) {
+        const color1 = gradientMatch[1];
+        const color2 = gradientMatch[2];
+        backgroundElement = `
+          <defs>
+            <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:${color1};stop-opacity:1" />
+              <stop offset="100%" style="stop-color:${color2};stop-opacity:1" />
+            </linearGradient>
+            <filter id="professionalShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="rgba(0,0,0,0.25)"/>
+            </filter>
+            <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.3)"/>
+            </filter>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#bgGradient)" />`;
+      } else {
+        backgroundElement = `
+          <defs>
+            <filter id="professionalShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="rgba(0,0,0,0.25)"/>
+            </filter>
+            <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="rgba(0,0,0,0.3)"/>
+            </filter>
+          </defs>
+          <rect width="100%" height="100%" fill="${bgColor}" />`;
+      }
+    }
+    
+    // Configuración del contenedor principal profesional
+    const containerWidth = width * 0.85;
+    const containerHeight = height * 0.8;
+    const containerX = (width - containerWidth) / 2;
+    const containerY = (height - containerHeight) / 2;
+    const containerRadius = 16;
+    
+    // Ajustar tamaños de fuente de manera profesional
+    const titleSize = template.aspectRatio === '9:16' ? 72 : 84;
+    const subtitleSize = template.aspectRatio === '9:16' ? 36 : 42;
+    const pointSize = template.aspectRatio === '9:16' ? 32 : 38;
+    
+    // Posiciones optimizadas
+    const titleY = containerY + containerHeight * 0.2;
+    const subtitleY = containerY + containerHeight * 0.32;
+    const pointsStartY = containerY + containerHeight * 0.45;
+    const pointSpacing = containerHeight * 0.08;
+    
+    // Crear elementos decorativos profesionales
+    const accentBarWidth = containerWidth * 0.15;
+    const accentBarHeight = 6;
+    const accentBarX = containerX + (containerWidth - accentBarWidth) / 2;
+    const accentBarY = titleY + 20;
     
     return `
       <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:${color1};stop-opacity:1" />
-            <stop offset="100%" style="stop-color:${color2};stop-opacity:1" />
-          </linearGradient>
-        </defs>
+        ${backgroundElement}
         
-        <!-- Fondo -->
-        <rect width="100%" height="100%" fill="url(#bgGradient)" />
+        <!-- Contenedor principal con diseño profesional -->
+        <rect x="${containerX}" y="${containerY}" 
+              width="${containerWidth}" height="${containerHeight}" 
+              fill="${colors.cardBgColor}" 
+              stroke="${borders.color}" 
+              stroke-width="${borders.width}" 
+              rx="${borders.radius}" 
+              filter="url(#professionalShadow)" />
         
-        <!-- Título -->
-        <text x="${width/2}" y="200" 
+        <!-- Barra decorativa de acento -->
+        <rect x="${accentBarX}" y="${accentBarY}" 
+              width="${accentBarWidth}" height="${accentBarHeight}" 
+              fill="${colors.accentColor}" 
+              rx="3" />
+        
+        <!-- Título con sombra profesional -->
+        <text x="${width/2}" y="${titleY}" 
               text-anchor="middle" 
-              fill="${template.textColor}" 
+              fill="${colors.textColor}" 
               font-family="${template.fontFamily}" 
-              font-size="72" 
-              font-weight="bold">
+              font-size="${titleSize}" 
+              font-weight="700" 
+              filter="url(#textShadow)">
           ${content.title}
         </text>
         
-        <!-- Puntos -->
+        <!-- Subtítulo elegante -->
+        ${content.subtitle ? `
+        <text x="${width/2}" y="${subtitleY}" 
+              text-anchor="middle" 
+              fill="${colors.textColor}" 
+              font-family="${template.fontFamily}" 
+              font-size="${subtitleSize}" 
+              font-weight="300" 
+              opacity="0.8">
+          ${content.subtitle}
+        </text>` : ''}
+        
+        <!-- Puntos con diseño profesional -->
         ${content.points.map((point: string, index: number) => {
-          const y = 350 + (index * 120);
+          const y = pointsStartY + (index * pointSpacing);
+          const iconX = containerX + containerWidth * 0.08;
+          const textX = containerX + containerWidth * 0.15;
+          const lineY = y + 15;
+          
           return `
-            <circle cx="240" cy="${y}" r="12" fill="${template.accentColor}" />
-            <text x="300" y="${y + 12}" 
-                  fill="${template.textColor}" 
+            <!-- Icono profesional -->
+            <circle cx="${iconX}" cy="${y}" r="6" fill="${colors.accentColor}" />
+            <circle cx="${iconX}" cy="${y}" r="3" fill="white" />
+            
+            <!-- Texto del punto -->
+            <text x="${textX}" y="${y + 6}" 
+                  fill="${colors.textColor}" 
                   font-family="${template.fontFamily}" 
-                  font-size="40">
-              ${point}
+                  font-size="${pointSize}" 
+                  font-weight="400">
+              ${point.length > 60 ? point.substring(0, 57) + '...' : point}
             </text>
+            
+            <!-- Línea sutil de separación -->
+            ${index < content.points.length - 1 ? `
+            <line x1="${textX}" y1="${lineY}" x2="${containerX + containerWidth * 0.9}" y2="${lineY}" 
+                  stroke="rgba(0,0,0,0.1)" stroke-width="1" />` : ''}
           `;
         }).join('')}
+        
+        <!-- Elementos decorativos adicionales -->
+        <circle cx="${containerX + containerWidth * 0.95}" cy="${containerY + containerHeight * 0.1}" 
+                r="4" fill="${colors.accentColor}" opacity="0.3" />
+        <circle cx="${containerX + containerWidth * 0.05}" cy="${containerY + containerHeight * 0.9}" 
+                r="6" fill="${colors.accentColor}" opacity="0.2" />
       </svg>
     `;
   };
 
   // Funciones de animación profesionales para el video
-  const animateZoomFade = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
+  const animateSmoothFade = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
     ctx.save();
     
-    // Easing suave para zoom profesional
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-    const easedProgress = easeOutCubic(progress);
+    // Fade profesional con movimiento sutil
+    const alpha = progress;
+    const translateY = 20 * (1 - progress);
+    const blur = Math.max(0, 5 * (1 - progress));
     
-    // Zoom dramático desde 0.8 a 1.0
-    const scale = 0.8 + (0.2 * easedProgress);
-    const alpha = Math.min(1, progress * 1.5);
+    ctx.filter = `blur(${blur}px)`;
+    ctx.globalAlpha = alpha;
+    ctx.translate(0, translateY);
     
-    // Efecto de brillo al final
-    if (progress > 0.7) {
-      const glowIntensity = (progress - 0.7) / 0.3;
-      ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
-      ctx.shadowBlur = 30 * glowIntensity;
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    ctx.restore();
+  };
+
+  const animateElasticScale = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
+    ctx.save();
+    
+    // Zoom elegante y sutil
+    let scale, opacity;
+    if (progress < 0.6) {
+      scale = 0.8 + (progress / 0.6) * 0.22; // 0.8 to 1.02
+      opacity = (progress / 0.6) * 0.9;
+    } else {
+      scale = 1.02 - ((progress - 0.6) / 0.4) * 0.02; // 1.02 to 1
+      opacity = 0.9 + ((progress - 0.6) / 0.4) * 0.1;
     }
     
-    ctx.globalAlpha = alpha;
+    ctx.globalAlpha = opacity;
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.scale(scale, scale);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
@@ -399,117 +660,77 @@ Responde SOLO con el JSON, sin texto adicional.`;
     ctx.restore();
   };
 
-  const animateSlideIn = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
+  const animateFluidSlide = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
     ctx.save();
     
-    // Easing suave para deslizamiento elegante
-    const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
-    const easedProgress = easeOutQuart(progress);
-    
-    // Deslizamiento desde la derecha con efecto de desenfoque
-    const offsetX = canvas.width * (1 - easedProgress);
-    const alpha = Math.min(1, progress * 1.8);
-    
-    // Desenfoque durante el movimiento
-    if (progress < 0.8) {
-      const blurAmount = (1 - progress) * 5;
-      ctx.filter = `blur(${blurAmount}px)`;
-    }
+    // Deslizamiento cinematográfico lateral
+    const translateX = -50 * (1 - progress);
+    const alpha = progress;
     
     ctx.globalAlpha = alpha;
-    ctx.drawImage(img, offsetX, 0, canvas.width, canvas.height);
+    ctx.translate(translateX, 0);
+    
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     ctx.restore();
   };
 
-  const animateRotationPulse = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
+  const animateGentleBounce = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
     ctx.save();
     
-    // Rotación elegante con pulso
-    const rotation = Math.sin(progress * Math.PI * 2) * 0.05;
-    const pulseScale = 0.95 + Math.sin(progress * Math.PI * 3) * 0.05;
-    const breatheAlpha = 0.9 + Math.sin(progress * Math.PI * 4) * 0.1;
+    // Rebote muy sutil y profesional
+    let translateY, opacity;
+    if (progress < 0.6) {
+      translateY = -20 + (progress / 0.6) * 25; // -20 to 5
+      opacity = (progress / 0.6) * 0.8;
+    } else {
+      translateY = 5 - ((progress - 0.6) / 0.4) * 5; // 5 to 0
+      opacity = 0.8 + ((progress - 0.6) / 0.4) * 0.2;
+    }
     
-    // Efecto de brillo pulsante
-    const brightness = 1 + Math.sin(progress * Math.PI * 2) * 0.1;
-    ctx.filter = `brightness(${brightness}) contrast(1.1)`;
+    ctx.globalAlpha = opacity;
+    ctx.translate(0, translateY);
     
-    ctx.globalAlpha = breatheAlpha;
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    ctx.restore();
+  };
+
+  const animateMorphingReveal = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
+    ctx.save();
+    
+    // Revelado circular progresivo
+    const radius = Math.min(canvas.width, canvas.height) * progress / 2;
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    
+    // Crear máscara circular
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+    ctx.clip();
+    
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    ctx.restore();
+  };
+
+  const animateBreathingGlow = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
+    ctx.save();
+    
+    // Brillo dinámico continuo
+    const breathe = Math.sin(progress * Math.PI * 6) * 0.01 + 1;
+    const brightness = Math.sin(progress * Math.PI * 6) * 0.05 + 1;
+    const shadowIntensity = Math.sin(progress * Math.PI * 6) * 0.1 + 0.2;
+    
+    // Filtro de brillo sutil
+    ctx.filter = `brightness(${brightness}) drop-shadow(0 0 ${15 + Math.sin(progress * Math.PI * 6) * 10}px rgba(0,0,0,${shadowIntensity}))`;
+    
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.rotate(rotation);
-    ctx.scale(pulseScale, pulseScale);
+    ctx.scale(breathe, breathe);
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
     
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     ctx.restore();
   };
 
-  const animateBounce = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
-    ctx.save();
-    
-    // Función de rebote realista
-    const bounceEase = (t: number) => {
-      if (t < 1/2.75) {
-        return 7.5625 * t * t;
-      } else if (t < 2/2.75) {
-        return 7.5625 * (t -= 1.5/2.75) * t + 0.75;
-      } else if (t < 2.5/2.75) {
-        return 7.5625 * (t -= 2.25/2.75) * t + 0.9375;
-      } else {
-        return 7.5625 * (t -= 2.625/2.75) * t + 0.984375;
-      }
-    };
-    
-    const bounceProgress = bounceEase(progress);
-    const scale = 0.7 + (0.3 * bounceProgress);
-    const alpha = Math.min(1, progress * 2);
-    
-    // Sombra durante el rebote
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-    ctx.shadowBlur = 15;
-    ctx.shadowOffsetY = 8;
-    
-    ctx.globalAlpha = alpha;
-    ctx.translate(canvas.width / 2, canvas.height / 2);
-    ctx.scale(scale, scale);
-    ctx.translate(-canvas.width / 2, -canvas.height / 2);
-    
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    ctx.restore();
-  };
 
-  const animateTypewriter = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
-    ctx.save();
-    
-    // Dibujar imagen base con fade in
-    const baseAlpha = Math.min(1, progress * 2);
-    ctx.globalAlpha = baseAlpha;
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    ctx.restore();
-    
-    // Efecto de máquina de escribir con gradiente
-    ctx.save();
-    const revealWidth = canvas.width * progress;
-    
-    // Gradiente suave para el revelado
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-    gradient.addColorStop(Math.max(0, (revealWidth - 100) / canvas.width), 'rgba(255, 255, 255, 0)');
-    gradient.addColorStop(revealWidth / canvas.width, 'rgba(255, 255, 255, 0.9)');
-    gradient.addColorStop(Math.min(1, (revealWidth + 50) / canvas.width), 'rgba(255, 255, 255, 1)');
-    gradient.addColorStop(1, 'rgba(255, 255, 255, 1)');
-    
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Cursor parpadeante
-    if (progress < 0.95) {
-      const cursorOpacity = Math.sin(Date.now() * 0.008) * 0.5 + 0.5;
-      ctx.fillStyle = `rgba(0, 0, 0, ${cursorOpacity})`;
-      ctx.fillRect(revealWidth, canvas.height * 0.2, 4, canvas.height * 0.6);
-    }
-    
-    ctx.restore();
-  };
 
   const animateParticles = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, progress: number, canvas: HTMLCanvasElement) => {
     // Imagen base con fade in
@@ -553,6 +774,43 @@ Responde SOLO con el JSON, sin texto adicional.`;
     }
     
     ctx.restore();
+  };
+
+  const animatePreview = async () => {
+    if (!generatedContent || !containerRef.current) return;
+    
+    setIsAnimating(true);
+    
+    // Simulate animation preview with same duration as video (3 seconds)
+    const container = containerRef.current;
+    const duration = 3000; // 3 seconds - same as video
+    
+    // Remove any existing animation classes first
+    container.classList.remove(
+      'animate-smooth-fade',
+      'animate-elastic-scale', 
+      'animate-fluid-slide',
+      'animate-gentle-bounce',
+      'animate-morphing-reveal',
+      'animate-breathing-glow'
+    );
+    
+    // Force reflow to ensure class removal takes effect
+    container.offsetHeight;
+    
+    // Apply animation class based on selected animation
+    container.classList.add(`animate-${selectedAnimation.id}`);
+    
+    // Show toast notification
+    toast({
+      title: 'Vista Previa',
+      description: `Reproduciendo animación: ${selectedAnimation.name}`
+    });
+    
+    setTimeout(() => {
+      container.classList.remove(`animate-${selectedAnimation.id}`);
+      setIsAnimating(false);
+    }, duration);
   };
 
   const downloadAsVideo = async () => {
@@ -639,20 +897,23 @@ Responde SOLO con el JSON, sin texto adicional.`;
            
            // Aplicar animación según el tipo seleccionado
            switch (selectedAnimation.id) {
-             case 'zoom-fade':
-               animateZoomFade(ctx, img, progress, canvas);
+             case 'smooth-fade':
+               animateSmoothFade(ctx, img, progress, canvas);
                break;
-             case 'slide-in':
-               animateSlideIn(ctx, img, progress, canvas);
+             case 'elastic-scale':
+               animateElasticScale(ctx, img, progress, canvas);
                break;
-             case 'rotation-pulse':
-               animateRotationPulse(ctx, img, progress, canvas);
+             case 'fluid-slide':
+               animateFluidSlide(ctx, img, progress, canvas);
                break;
-             case 'bounce':
-               animateBounce(ctx, img, progress, canvas);
+             case 'gentle-bounce':
+               animateGentleBounce(ctx, img, progress, canvas);
                break;
-             case 'typewriter':
-               animateTypewriter(ctx, img, progress, canvas);
+             case 'morphing-reveal':
+               animateMorphingReveal(ctx, img, progress, canvas);
+               break;
+             case 'breathing-glow':
+               animateBreathingGlow(ctx, img, progress, canvas);
                break;
              case 'particles':
                animateParticles(ctx, img, progress, canvas);
@@ -770,6 +1031,157 @@ Responde SOLO con el JSON, sin texto adicional.`;
               </Select>
             </div>
 
+            {/* Controles de personalización */}
+            <div className="space-y-4 border-t pt-4">
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  id="useCustomColors"
+                  checked={useCustomColors}
+                  onChange={(e) => setUseCustomColors(e.target.checked)}
+                  className="rounded"
+                />
+                <Label htmlFor="useCustomColors" className="text-sm font-medium">
+                  Usar colores personalizados
+                </Label>
+              </div>
+
+              {useCustomColors && (
+                <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-medium text-sm text-gray-700">Personalización de Colores</h4>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="bgColor" className="text-xs">Fondo exterior</Label>
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="color"
+                          id="bgColor"
+                          value={customColors.background}
+                          onChange={(e) => setCustomColors(prev => ({ ...prev, background: e.target.value }))}
+                          className="w-8 h-8 rounded border"
+                        />
+                        <Input
+                          value={customColors.background}
+                          onChange={(e) => setCustomColors(prev => ({ ...prev, background: e.target.value }))}
+                          className="text-xs"
+                          placeholder="#ffffff"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="cardBgColor" className="text-xs">Fondo interior</Label>
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="color"
+                          id="cardBgColor"
+                          value={customColors.cardBackground}
+                          onChange={(e) => setCustomColors(prev => ({ ...prev, cardBackground: e.target.value }))}
+                          className="w-8 h-8 rounded border"
+                        />
+                        <Input
+                          value={customColors.cardBackground}
+                          onChange={(e) => setCustomColors(prev => ({ ...prev, cardBackground: e.target.value }))}
+                          className="text-xs"
+                          placeholder="#f8f9fa"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="textColor" className="text-xs">Color de texto</Label>
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="color"
+                          id="textColor"
+                          value={customColors.textColor}
+                          onChange={(e) => setCustomColors(prev => ({ ...prev, textColor: e.target.value }))}
+                          className="w-8 h-8 rounded border"
+                        />
+                        <Input
+                          value={customColors.textColor}
+                          onChange={(e) => setCustomColors(prev => ({ ...prev, textColor: e.target.value }))}
+                          className="text-xs"
+                          placeholder="#1a1a1a"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="accentColor" className="text-xs">Color de acento</Label>
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="color"
+                          id="accentColor"
+                          value={customColors.accentColor}
+                          onChange={(e) => setCustomColors(prev => ({ ...prev, accentColor: e.target.value }))}
+                          className="w-8 h-8 rounded border"
+                        />
+                        <Input
+                          value={customColors.accentColor}
+                          onChange={(e) => setCustomColors(prev => ({ ...prev, accentColor: e.target.value }))}
+                          className="text-xs"
+                          placeholder="#007ACC"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h4 className="font-medium text-sm text-gray-700">Configuración de Bordes</h4>
+                    
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="space-y-2">
+                        <Label htmlFor="borderWidth" className="text-xs">Grosor</Label>
+                        <Input
+                          type="number"
+                          id="borderWidth"
+                          min="0"
+                          max="10"
+                          value={borderSettings.width}
+                          onChange={(e) => setBorderSettings(prev => ({ ...prev, width: parseInt(e.target.value) || 0 }))}
+                          className="text-xs"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="borderRadius" className="text-xs">Radio</Label>
+                        <Input
+                          type="number"
+                          id="borderRadius"
+                          min="0"
+                          max="50"
+                          value={borderSettings.radius}
+                          onChange={(e) => setBorderSettings(prev => ({ ...prev, radius: parseInt(e.target.value) || 0 }))}
+                          className="text-xs"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="borderColor" className="text-xs">Color</Label>
+                        <div className="flex items-center space-x-1">
+                          <input
+                            type="color"
+                            id="borderColor"
+                            value={borderSettings.color}
+                            onChange={(e) => setBorderSettings(prev => ({ ...prev, color: e.target.value }))}
+                            className="w-6 h-6 rounded border"
+                          />
+                          <Input
+                            value={borderSettings.color}
+                            onChange={(e) => setBorderSettings(prev => ({ ...prev, color: e.target.value }))}
+                            className="text-xs"
+                            placeholder="#e0e0e0"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <Button
               onClick={generateInfographic}
               disabled={isGenerating || !prompt.trim()}
@@ -800,14 +1212,27 @@ Responde SOLO con el JSON, sin texto adicional.`;
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-2 pt-4">
+                <div className="grid grid-cols-3 gap-2 pt-4">
+                  <Button
+                    onClick={animatePreview}
+                    variant="outline"
+                    size="sm"
+                    disabled={isAnimating}
+                  >
+                    {isAnimating ? (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                      <Play className="mr-2 h-4 w-4" />
+                    )}
+                    {isAnimating ? 'Animando...' : 'Preview'}
+                  </Button>
                   <Button
                     onClick={downloadAsImage}
                     variant="outline"
                     size="sm"
                   >
                     <Download className="mr-2 h-4 w-4" />
-                    Descargar PNG
+                    PNG
                   </Button>
                   <Button
                     onClick={downloadAsVideo}
@@ -815,7 +1240,7 @@ Responde SOLO con el JSON, sin texto adicional.`;
                     size="sm"
                   >
                     <Play className="mr-2 h-4 w-4" />
-                    Descargar Video
+                    Video
                   </Button>
                 </div>
               </>
@@ -834,32 +1259,79 @@ Responde SOLO con el JSON, sin texto adicional.`;
           <CardContent>
             <div
               ref={containerRef}
-              className="relative w-full h-96 rounded-lg overflow-hidden border-2 border-dashed border-gray-300 flex items-center justify-center"
+              className="relative w-full h-96 rounded-lg overflow-hidden flex items-center justify-center"
               style={{
-                background: generatedContent ? selectedTemplate.bgColor : '#f8f9fa',
-                color: generatedContent ? selectedTemplate.textColor : '#6c757d',
-                fontFamily: selectedTemplate.fontFamily
+                background: generatedContent ? 
+                  (useCustomColors ? customColors.background : selectedTemplate.bgColor) : 
+                  '#f8f9fa',
+                color: generatedContent ? 
+                  (useCustomColors ? customColors.textColor : selectedTemplate.textColor) : 
+                  '#6c757d',
+                fontFamily: selectedTemplate.fontFamily,
+                border: useCustomColors ? 
+                  `${borderSettings.width}px solid ${borderSettings.color}` : 
+                  '2px dashed #d1d5db',
+                borderRadius: useCustomColors ? `${borderSettings.radius}px` : '8px'
               }}
             >
               {generatedContent ? (
-                <div className="text-center space-y-6 p-8 animate-fade-in">
-                  <h2 className="text-3xl font-bold mb-6 animate-fade-in-down">
-                    {generatedContent.title}
-                  </h2>
-                  <div className="space-y-4">
-                    {generatedContent.points.map((point: string, index: number) => (
-                      <div
-                        key={index}
-                        className="flex items-center space-x-3 animate-fade-in-up"
-                        style={{ animationDelay: `${index * 0.2}s` }}
+                <div className="relative w-full h-full flex items-center justify-center">
+                  {/* Fondo interior personalizable */}
+                  <div 
+                    className="absolute inset-4 rounded-lg shadow-lg flex items-center justify-center"
+                    style={{
+                      backgroundColor: useCustomColors ? customColors.cardBackground : 'rgba(255, 255, 255, 0.9)',
+                      border: useCustomColors ? `1px solid ${borderSettings.color}` : '1px solid rgba(0, 0, 0, 0.1)',
+                      borderRadius: useCustomColors ? `${Math.max(0, borderSettings.radius - 4)}px` : '8px'
+                    }}
+                  >
+                    <div className="text-center space-y-6 p-8 animate-fade-in">
+                      <h2 
+                        className="text-3xl font-bold mb-6 animate-fade-in-down"
+                        style={{
+                          color: useCustomColors ? customColors.textColor : selectedTemplate.textColor
+                        }}
                       >
-                        <div
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: selectedTemplate.accentColor }}
-                        />
-                        <span className="text-lg">{point}</span>
+                        {generatedContent.title}
+                      </h2>
+                      {generatedContent.subtitle && (
+                        <p 
+                          className="text-lg opacity-80 animate-fade-in-down"
+                          style={{
+                            color: useCustomColors ? customColors.textColor : selectedTemplate.textColor,
+                            animationDelay: '0.2s'
+                          }}
+                        >
+                          {generatedContent.subtitle}
+                        </p>
+                      )}
+                      <div className="space-y-4">
+                        {generatedContent.points.map((point: string, index: number) => (
+                          <div
+                            key={index}
+                            className="flex items-center space-x-3 animate-fade-in-up"
+                            style={{ animationDelay: `${index * 0.2}s` }}
+                          >
+                            <div
+                              className="w-3 h-3 rounded-full flex-shrink-0"
+                              style={{ 
+                                backgroundColor: useCustomColors ? 
+                                  customColors.accentColor : 
+                                  selectedTemplate.accentColor 
+                              }}
+                            />
+                            <span 
+                              className="text-lg text-left"
+                              style={{
+                                color: useCustomColors ? customColors.textColor : selectedTemplate.textColor
+                              }}
+                            >
+                              {point}
+                            </span>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -906,6 +1378,38 @@ Responde SOLO con el JSON, sin texto adicional.`;
             transform: translateY(0);
           }
         }
+
+        @keyframes smoothFade {
+          0% { opacity: 0; transform: translateY(20px); filter: blur(5px); }
+          100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+        }
+        
+        @keyframes elasticScale {
+          0% { transform: scale(0.8); opacity: 0; }
+          60% { transform: scale(1.02); opacity: 0.9; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes fluidSlide {
+          0% { transform: translateX(-50px); opacity: 0; }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes gentleBounce {
+          0% { transform: translateY(-20px); opacity: 0; }
+          60% { transform: translateY(5px); opacity: 0.8; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes morphingReveal {
+          0% { clip-path: circle(0% at 50% 50%); }
+          100% { clip-path: circle(100% at 50% 50%); }
+        }
+        
+        @keyframes breathingGlow {
+          0%, 100% { transform: scale(1); filter: brightness(1) drop-shadow(0 0 15px rgba(0,0,0,0.2)); }
+          50% { transform: scale(1.01); filter: brightness(1.05) drop-shadow(0 0 25px rgba(0,0,0,0.3)); }
+        }
         
         .animate-fade-in {
           animation: fadeIn 1s ease-out forwards;
@@ -919,6 +1423,30 @@ Responde SOLO con el JSON, sin texto adicional.`;
         .animate-fade-in-down {
           animation: fadeInDown 0.8s ease-out forwards;
           opacity: 0;
+        }
+
+        .animate-smooth-fade {
+          animation: smoothFade 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        
+        .animate-elastic-scale {
+          animation: elasticScale 3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+        
+        .animate-fluid-slide {
+          animation: fluidSlide 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        
+        .animate-gentle-bounce {
+          animation: gentleBounce 3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+        
+        .animate-morphing-reveal {
+          animation: morphingReveal 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        
+        .animate-breathing-glow {
+          animation: breathingGlow 3s ease-in-out infinite;
         }
       `}</style>
     </div>

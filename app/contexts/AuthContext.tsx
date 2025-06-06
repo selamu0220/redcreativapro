@@ -55,16 +55,115 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const loadUserProfile = useCallback(async (supabaseUser: SupabaseUser) => {
     try {
       setLoading(true); // Asegurar que estamos en loading al cargar perfil
-      // Try to get existing profile
-      const { data: profile, error } = await supabase
+      console.log('Loading profile for user:', supabaseUser.id);
+      
+      // Check if Supabase is properly configured
+      if (!supabase) {
+        console.error('Supabase client not initialized');
+        return;
+      }
+      
+      // Usar un timeout más corto para la consulta de perfil
+      const profilePromise = supabase
         .from('users')
         .select('*')
         .eq('id', supabaseUser.id)
         .single();
+      
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Profile query timeout')), 5000)
+      );
+      
+      const { data: profile, error } = await Promise.race([profilePromise, timeoutPromise]) as any;
+        
+      console.log('Profile query result:', { profile, error });
 
-      if (error && error.code !== 'PGRST116') {
-        console.error('Error loading profile:', error);
-        return;
+      // Handle different types of errors
+      if (error) {
+        if (error.code === 'PGRST116') {
+          // No rows returned - this is expected for new users
+          console.log('No existing profile found for user, will create new one');
+        } else if (error.code === '42P01') {
+          // Table does not exist
+          console.error('Users table does not exist in Supabase database. Please run the database migrations.');
+          // En lugar de lanzar error, crear un perfil temporal
+          console.log('Creating temporary profile due to missing table');
+          const tempProfile = {
+            id: supabaseUser.id,
+            email: supabaseUser.email || '',
+            full_name: supabaseUser.user_metadata?.full_name || supabaseUser.email?.split('@')[0] || 'Usuario',
+            subscription_tier: 'free',
+            subscription_end_date: null
+          };
+          
+          const userData: User = {
+            id: tempProfile.id,
+            email: tempProfile.email,
+            name: tempProfile.full_name,
+            subscriptionType: tempProfile.subscription_tier as 'free' | 'monthly' | 'annual',
+            subscriptionEndDate: tempProfile.subscription_end_date ? new Date(tempProfile.subscription_end_date) : null,
+            dailyUsage: {
+              date: new Date().toISOString().split('T')[0],
+              aiRequests: 0,
+              promptsUsed: 0,
+              scriptsGenerated: 0
+            },
+            dailyLimits: {
+              aiRequests: 100,
+              promptsUsed: 20,
+              scriptsGenerated: 5
+            }
+          };
+          
+          setUser(userData);
+          return;
+        } else if (error.code === '42501') {
+          // Insufficient privileges
+          console.error('Insufficient privileges to access users table. Please check RLS policies.');
+          return;
+        } else if (error.message === 'Profile query timeout') {
+          console.error('Profile query timed out - database may be slow or unavailable');
+          // Crear perfil temporal en caso de timeout
+          const tempProfile = {
+            id: supabaseUser.id,
+            email: supabaseUser.email || '',
+            full_name: supabaseUser.user_metadata?.full_name || supabaseUser.email?.split('@')[0] || 'Usuario',
+            subscription_tier: 'free',
+            subscription_end_date: null
+          };
+          
+          const userData: User = {
+            id: tempProfile.id,
+            email: tempProfile.email,
+            name: tempProfile.full_name,
+            subscriptionType: tempProfile.subscription_tier as 'free' | 'monthly' | 'annual',
+            subscriptionEndDate: tempProfile.subscription_end_date ? new Date(tempProfile.subscription_end_date) : null,
+            dailyUsage: {
+              date: new Date().toISOString().split('T')[0],
+              aiRequests: 0,
+              promptsUsed: 0,
+              scriptsGenerated: 0
+            },
+            dailyLimits: {
+              aiRequests: 100,
+              promptsUsed: 20,
+              scriptsGenerated: 5
+            }
+          };
+          
+          setUser(userData);
+          return;
+        } else {
+          // Other errors
+          console.error('Error loading profile:', {
+            message: error.message,
+            code: error.code,
+            details: error.details,
+            hint: error.hint,
+            fullError: error
+          });
+          return;
+        }
       }
 
       let userProfile;
@@ -86,7 +185,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           .single();
 
         if (createError) {
-          console.error('Error creating profile:', createError);
+          console.error('Error creating profile:', {
+            message: createError.message,
+            code: createError.code,
+            details: createError.details,
+            hint: createError.hint,
+            fullError: createError
+          });
           return;
         }
         userProfile = createdProfile;
@@ -115,7 +220,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       setUser(userData);
     } catch (error) {
-      console.error('Error in loadUserProfile:', error);
+      console.error('Error in loadUserProfile:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        fullError: error
+      });
       setUser(null); // Limpiar usuario en caso de error
     } finally {
       setLoading(false); // Asegurar que loading se desactiva

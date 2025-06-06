@@ -2,10 +2,10 @@
 
 export const SEO_CONFIG = {
   // Información básica del sitio
-  siteName: 'Red Creativa Pro',
+  siteName: 'Red Creativa Pro Beta',
   siteUrl: 'https://redcreativa.pro',
-  defaultTitle: 'Red Creativa Pro - Plataforma Integral para Creadores de Contenido',
-  defaultDescription: 'Plataforma profesional para creadores de contenido con herramientas de IA, gestión de recursos creativos, calendario editorial, generador de miniaturas y scripts.',
+  defaultTitle: 'Red Creativa Pro Beta - Plataforma Integral para Creadores de Contenido',
+  defaultDescription: 'Plataforma profesional para creadores de contenido con herramientas de IA, gestión de recursos creativos, calendario editorial, generador de miniaturas y scripts. Versión Beta gratuita.',
   defaultKeywords: [
     'creadores de contenido',
     'herramientas IA',
@@ -23,10 +23,10 @@ export const SEO_CONFIG = {
   
   // Información de la organización
   organization: {
-    name: 'Red Creativa Pro',
+    name: 'Red Creativa Pro Beta',
     url: 'https://redcreativa.pro',
     logo: 'https://redcreativa.pro/logo.png',
-    description: 'Plataforma integral para creadores de contenido con herramientas de IA, gestión de recursos creativos, calendario editorial y más.',
+    description: 'Plataforma integral para creadores de contenido con herramientas de IA, gestión de recursos creativos, calendario editorial y más. Versión Beta gratuita.',
     socialMedia: {
       twitter: 'https://twitter.com/redcreativapro',
       instagram: 'https://instagram.com/redcreativapro',
@@ -41,8 +41,8 @@ export const SEO_CONFIG = {
   // Configuración por páginas
   pages: {
     home: {
-      title: 'Red Creativa Pro - Plataforma Integral para Creadores de Contenido | Herramientas IA',
-      description: 'Plataforma profesional para creadores de contenido con herramientas de IA, gestión de recursos creativos, calendario editorial, generador de miniaturas y scripts. Optimiza tu flujo de trabajo creativo.',
+      title: 'Red Creativa Pro Beta - Plataforma Integral para Creadores de Contenido | Herramientas IA',
+      description: 'Plataforma profesional para creadores de contenido con herramientas de IA, gestión de recursos creativos, calendario editorial, generador de miniaturas y scripts. Optimiza tu flujo de trabajo creativo. Versión Beta gratuita.',
       keywords: [
         'plataforma creadores contenido',
         'herramientas IA creatividad',
@@ -142,6 +142,21 @@ export const SEO_CONFIG = {
         'optimización IA',
         'plantillas prompts',
         'ingeniería de prompts'
+      ]
+    },
+    
+    videoEditor: {
+      title: 'Editor de Video - Red Creativa Pro | Edición Profesional',
+      description: 'Editor de video profesional con herramientas avanzadas de edición, efectos, transiciones y exportación. Crea contenido de alta calidad para redes sociales y más.',
+      keywords: [
+        'editor de video',
+        'edición profesional',
+        'efectos de video',
+        'transiciones',
+        'exportación video',
+        'timeline editor',
+        'herramientas video',
+        'producción audiovisual'
       ]
     }
   },

@@ -1,0 +1,95 @@
+.layout {
+  @apply flex h-screen w-screen max-w-full max-h-full bg-background relative;
+}
+
+.sidebar {
+  @apply w-64 min-w-64 border-r bg-card flex-shrink-0;
+}
+
+.sidebarContent {
+  @apply p-4 h-full overflow-y-auto;
+}
+
+.sidebarHeader {
+  @apply mb-6;
+}
+
+.sidebarNav {
+  @apply space-y-2;
+}
+
+.mainContent {
+  @apply flex-1 flex flex-col min-w-0;
+}
+
+.topBar {
+  @apply border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-40;
+}
+
+.topBarContent {
+  @apply flex h-14 items-center justify-between px-4 lg:px-6;
+}
+
+.topBarLeft {
+  @apply flex items-center gap-4;
+}
+
+.topBarRight {
+  @apply flex items-center gap-4;
+}
+
+.refreshButton {
+  @apply flex items-center gap-2;
+}
+
+.refreshIcon {
+  @apply h-4 w-4;
+}
+
+.authButton {
+  @apply flex items-center gap-2;
+}
+
+.authIcon {
+  @apply h-4 w-4;
+}
+
+.presentationButton {
+  @apply hidden lg:flex;
+}
+
+.contentArea {
+  @apply flex-1 overflow-hidden;
+}
+
+.scrollableContent {
+  @apply h-full;
+}
+
+.contentPadding {
+  @apply p-4 lg:p-6;
+}
+
+.verificationBanner {
+  @apply border-b;
+}
+
+.mobileToggle {
+  @apply lg:hidden;
+}
+
+.desktopNav {
+  @apply hidden lg:block;
+}
+
+.userSection {
+  @apply flex items-center gap-2;
+}
+
+.searchSection {
+  @apply flex-1 max-w-md;
+}
+
+.actionButtons {
+  @apply flex items-center gap-2;
+}

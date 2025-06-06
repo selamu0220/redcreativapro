@@ -1,0 +1,187 @@
+.container {
+  @apply space-y-8;
+}
+
+.header {
+  @apply text-center space-y-4;
+}
+
+.title {
+  @apply text-4xl font-bold tracking-tight;
+}
+
+.subtitle {
+  @apply text-xl text-muted-foreground max-w-2xl mx-auto;
+}
+
+.separator {
+  @apply max-w-xs mx-auto;
+}
+
+.featuredSection {
+  @apply mb-12;
+}
+
+.featuredTitle {
+  @apply text-2xl font-bold mb-6;
+}
+
+.featuredCard {
+  @apply overflow-hidden hover:shadow-lg transition-shadow duration-300;
+}
+
+.featuredContent {
+  @apply md:flex;
+}
+
+.featuredImage {
+  @apply md:w-1/2;
+}
+
+.featuredImageContainer {
+  @apply object-cover w-full h-full;
+}
+
+.featuredInfo {
+  @apply md:w-1/2 p-6 flex flex-col justify-between;
+}
+
+.featuredMeta {
+  @apply flex items-center gap-4 text-sm text-muted-foreground mb-4;
+}
+
+.featuredMetaItem {
+  @apply flex items-center gap-1;
+}
+
+.featuredMetaIcon {
+  @apply h-4 w-4;
+}
+
+.featuredPostTitle {
+  @apply text-2xl font-bold mb-3 line-clamp-2;
+}
+
+.featuredExcerpt {
+  @apply text-muted-foreground mb-4 line-clamp-3;
+}
+
+.featuredFooter {
+  @apply flex items-center justify-between;
+}
+
+.featuredAuthor {
+  @apply flex items-center gap-3;
+}
+
+.featuredAvatar {
+  @apply h-10 w-10;
+}
+
+.featuredAuthorInfo {
+  @apply space-y-1;
+}
+
+.featuredAuthorName {
+  @apply text-sm font-medium;
+}
+
+.featuredDate {
+  @apply text-xs text-muted-foreground;
+}
+
+.featuredButton {
+  @apply flex items-center gap-2;
+}
+
+.featuredButtonIcon {
+  @apply h-4 w-4;
+}
+
+.postsGrid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+.postCard {
+  @apply cursor-pointer transition-all duration-300 hover:shadow-md;
+}
+
+.postImage {
+  @apply overflow-hidden rounded-t-lg;
+}
+
+.postImageContainer {
+  @apply object-cover w-full h-full transition-transform duration-300;
+}
+
+.postCard:hover .postImageContainer {
+  @apply scale-105;
+}
+
+.postContent {
+  @apply p-4 space-y-3;
+}
+
+.postMeta {
+  @apply flex items-center gap-3 text-xs text-muted-foreground;
+}
+
+.postMetaItem {
+  @apply flex items-center gap-1;
+}
+
+.postMetaIcon {
+  @apply h-3 w-3;
+}
+
+.postTitle {
+  @apply font-semibold line-clamp-2 transition-colors;
+}
+
+.postCard:hover .postTitle {
+  @apply text-primary;
+}
+
+.postExcerpt {
+  @apply text-sm text-muted-foreground line-clamp-2;
+}
+
+.postFooter {
+  @apply flex items-center justify-between pt-3 border-t;
+}
+
+.postAuthor {
+  @apply flex items-center gap-2;
+}
+
+.postAvatar {
+  @apply h-6 w-6;
+}
+
+.postAuthorName {
+  @apply text-xs font-medium;
+}
+
+.postTags {
+  @apply flex gap-1;
+}
+
+.postTag {
+  @apply text-xs;
+}
+
+.emptyState {
+  @apply text-center py-12;
+}
+
+.emptyStateIcon {
+  @apply h-12 w-12 mx-auto mb-4 text-muted-foreground;
+}
+
+.emptyStateTitle {
+  @apply text-lg font-semibold mb-2;
+}
+
+.emptyStateDescription {
+  @apply text-muted-foreground;
+}

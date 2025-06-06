@@ -1,0 +1,179 @@
+.container {
+  @apply space-y-6;
+}
+
+.header {
+  @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4;
+}
+
+.headerContent {
+  @apply space-y-2;
+}
+
+.title {
+  @apply text-3xl font-bold;
+}
+
+.subtitle {
+  @apply text-muted-foreground;
+}
+
+.headerActions {
+  @apply flex items-center gap-2;
+}
+
+.uploadButton {
+  @apply flex items-center gap-2;
+}
+
+.uploadButtonIcon {
+  @apply h-4 w-4;
+}
+
+.filtersSection {
+  @apply bg-muted/30 rounded-lg p-4;
+}
+
+.filtersGrid {
+  @apply grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4;
+}
+
+.filterGroup {
+  @apply space-y-2;
+}
+
+.filterLabel {
+  @apply text-sm font-medium;
+}
+
+.searchInput {
+  @apply w-full;
+}
+
+.selectTrigger {
+  @apply w-full;
+}
+
+.resourcesGrid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
+}
+
+.resourceCard {
+  @apply cursor-pointer transition-all duration-300 hover:shadow-lg;
+}
+
+.resourceCardContent {
+  @apply space-y-4;
+}
+
+.resourcePreview {
+  @apply relative overflow-hidden rounded-lg bg-muted;
+}
+
+.resourceImage {
+  @apply w-full h-48 object-cover transition-transform duration-300;
+}
+
+.resourceCard:hover .resourceImage {
+  @apply scale-105;
+}
+
+.resourcePlaceholder {
+  @apply w-full h-48 flex items-center justify-center;
+}
+
+.resourcePlaceholderIcon {
+  @apply h-12 w-12 text-muted-foreground;
+}
+
+.resourceInfo {
+  @apply space-y-2;
+}
+
+.resourceTitle {
+  @apply font-semibold line-clamp-2 transition-colors;
+}
+
+.resourceCard:hover .resourceTitle {
+  @apply text-primary;
+}
+
+.resourceDescription {
+  @apply text-sm text-muted-foreground line-clamp-2;
+}
+
+.resourceMeta {
+  @apply flex items-center justify-between text-xs text-muted-foreground;
+}
+
+.resourceType {
+  @apply px-2 py-1 bg-primary/10 text-primary rounded-full;
+}
+
+.resourceDate {
+  @apply flex items-center gap-1;
+}
+
+.resourceDateIcon {
+  @apply h-3 w-3;
+}
+
+.resourceActions {
+  @apply flex items-center gap-2 opacity-0 transition-opacity;
+}
+
+.resourceCard:hover .resourceActions {
+  @apply opacity-100;
+}
+
+.actionButton {
+  @apply p-2 rounded-md hover:bg-accent transition-colors;
+}
+
+.actionIcon {
+  @apply h-4 w-4;
+}
+
+.emptyState {
+  @apply text-center py-12;
+}
+
+.emptyStateIcon {
+  @apply h-16 w-16 mx-auto mb-4 text-muted-foreground;
+}
+
+.emptyStateTitle {
+  @apply text-xl font-semibold mb-2;
+}
+
+.emptyStateDescription {
+  @apply text-muted-foreground mb-6;
+}
+
+.emptyStateButton {
+  @apply flex items-center gap-2 mx-auto;
+}
+
+.loadingGrid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
+}
+
+.loadingCard {
+  @apply space-y-4;
+}
+
+.loadingSkeleton {
+  @apply animate-pulse;
+}
+
+.loadingImage {
+  @apply w-full h-48 bg-muted rounded-lg;
+}
+
+.loadingTitle {
+  @apply h-4 bg-muted rounded;
+}
+
+.loadingDescription {
+  @apply h-3 bg-muted rounded;
+}

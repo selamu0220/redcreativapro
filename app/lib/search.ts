@@ -120,11 +120,11 @@ function calculateRelevance(
   const tagsLower = tags.map(t => t.toLowerCase());
 
   for (const term of searchTerms) {
-    // TÃ­tulo exacto
+    // Título exacto
     if (titleLower === term) {
       relevance += 20;
     }
-    // TÃ­tulo contiene tÃ©rmino
+    // Título contiene término
     else if (titleLower.includes(term)) {
       relevance += 10;
     }
@@ -138,7 +138,7 @@ function calculateRelevance(
       relevance += 5;
     }
 
-    // Contenido contiene tÃ©rmino
+    // Contenido contiene término
     if (contentLower.includes(term)) {
       relevance += 3;
     }

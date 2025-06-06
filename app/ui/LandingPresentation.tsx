@@ -1,116 +1,218 @@
-﻿'use client';
+'use client';
 
-import { useEffect } from 'react';
-// import { motion, AnimatePresence } from 'framer-motion';
-// import { Button } from '../button';
-// import { ArrowRight, X, Sparkles, Zap, Rocket, Brain, Calendar, FileText } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ModeToggle } from './common/ModeToggle';
+import { Sparkles, Rocket, Zap, Star, ArrowRight } from 'lucide-react';
 
 interface LandingPresentationProps {
   onComplete: () => void;
 }
 
-// const slides = [
-//   {
-//     title: "Red Creativa",
-//     subtitle: "Plataforma de gestiÃ³n de contenido creativo",
-//     description: "Una herramienta integral para organizar y gestionar proyectos creativos, recursos digitales y colaboraciÃ³n en equipo.",
-//     icon: Rocket,
-//     gradient: "from-slate-600 to-slate-800"
-//   },
-//   {
-//     title: "GestiÃ³n de Recursos",
-//     subtitle: "Organiza tus archivos y materiales",
-//     description: "Sistema de almacenamiento y categorizaciÃ³n de recursos digitales: imÃ¡genes, videos, documentos y plantillas. Acceso rÃ¡pido y bÃºsqueda avanzada.",
-//     icon: Sparkles,
-//     gradient: "from-blue-600 to-blue-800"
-//   },
-//   {
-//     title: "Calendario Editorial",
-//     subtitle: "Planifica y programa tu contenido",
-//     description: "Herramienta de planificaciÃ³n para programar publicaciones, gestionar fechas de entrega y coordinar equipos de trabajo.",
-//     icon: Calendar,
-//     gradient: "from-green-600 to-green-800"
-//   },
-//   {
-//     title: "Biblioteca de Prompts",
-//     subtitle: "Plantillas y guiones para IA",
-//     description: "ColecciÃ³n de prompts optimizados para diferentes herramientas de IA. Crea, guarda y comparte plantillas de texto efectivas.",
-//     icon: Brain,
-//     gradient: "from-purple-600 to-purple-800"
-//   },
-//   {
-//     title: "Comunidad y Aprendizaje",
-//     subtitle: "Comparte conocimiento y colabora",
-//     description: "Espacio para compartir recursos, intercambiar ideas y aprender de otros creativos. Blog integrado y sistema de comentarios.",
-//     icon: FileText,
-//     gradient: "from-orange-600 to-orange-800"
-//   }
-// ];
+// Componente de partículas flotantes
+const FloatingParticles = () => {
+  const [particles, setParticles] = useState<Array<{left: number, top: number, delay: number, duration: number}>>([]);
+  
+  useEffect(() => {
+    // Generar partículas solo en el cliente para evitar errores de hidratación
+    const newParticles = Array.from({ length: 50 }).map(() => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      delay: Math.random() * 3,
+      duration: 2 + Math.random() * 3
+    }));
+    setParticles(newParticles);
+  }, []);
+  
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((particle, i) => (
+        <div
+          key={i}
+          className="absolute animate-pulse"
+          style={{
+            left: `${particle.left}%`,
+            top: `${particle.top}%`,
+            animationDelay: `${particle.delay}s`,
+            animationDuration: `${particle.duration}s`
+          }}
+        >
+          <div className="w-1 h-1 bg-white/30 rounded-full" />
+        </div>
+      ))}
+    </div>
+  );
+};
 
-// // Componente de partÃ­culas flotantes
-// const FloatingParticles = ({ count, gradient }: { count: number; gradient: string }) => {
-//   return (
-//     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-//       {Array.from({ length: count }).map((_, i) => (
-//         <motion.div
-//           key={i}
-//           className={`absolute w-2 h-2 bg-gradient-to-r ${gradient} rounded-full opacity-60`}
-//           initial={{
-//             x: Math.random() * window.innerWidth,
-//             y: Math.random() * window.innerHeight,
-//             scale: Math.random() * 0.5 + 0.5
-//           }}
-//           animate={{
-//             x: Math.random() * window.innerWidth,
-//             y: Math.random() * window.innerHeight,
-//             scale: [0.5, 1.5, 0.5],
-//             rotate: [0, 360]
-//           }}
-//           transition={{
-//             duration: Math.random() * 10 + 10,
-//             repeat: Infinity,
-//             ease: "linear"
-//           }}
-//         />
-//       ))}
-//     </div>
-//   );
-// };
+// Componente de ondas animadas
+const AnimatedWaves = () => {
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-pulse" />
+        <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-pink-400 to-transparent animate-pulse" style={{ animationDelay: '2s' }} />
+      </div>
+    </div>
+  );
+};
+
+// Componente de características destacadas
+const FeatureHighlight = ({ icon: Icon, title, delay }: { icon: any, title: string, delay: number }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+  
+  return (
+    <div className={`flex items-center space-x-3 transition-all duration-1000 transform ${
+      isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+    }`}>
+      <div className="p-2 rounded-full bg-white/10 backdrop-blur-sm">
+        <Icon className="w-5 h-5 text-white" />
+      </div>
+      <span className="text-white/80 font-medium">{title}</span>
+    </div>
+  );
+};
 
 export default function LandingPresentation({ onComplete }: LandingPresentationProps) {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  const features = [
+    { icon: Rocket, title: "Gestión de Proyectos" },
+    { icon: Sparkles, title: "Recursos Creativos" },
+    { icon: Zap, title: "Automatización IA" },
+    { icon: Star, title: "Colaboración en Equipo" }
+  ];
+
   useEffect(() => {
-    // Auto-complete after 3 seconds for demo purposes
-    const timer = setTimeout(() => {
-      onComplete();
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, [onComplete]);
+    // Progreso de carga animado
+    const progressInterval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(progressInterval);
+          setTimeout(() => {
+            setIsLoading(false);
+            onComplete();
+          }, 500);
+          return 100;
+        }
+        return prev + 2;
+      });
+    }, 50);
+
+    // Animación de características
+    const stepInterval = setInterval(() => {
+      setCurrentStep(prev => (prev + 1) % features.length);
+    }, 800);
+
+    return () => {
+      clearInterval(progressInterval);
+      clearInterval(stepInterval);
+    };
+  }, [onComplete, features.length]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-black/20" />
+      {/* Efectos de fondo */}
+      <FloatingParticles />
+      <AnimatedWaves />
       
-      {/* Main content */}
-      <div className="relative z-10 text-center px-8 max-w-4xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-6xl md:text-8xl font-black text-white drop-shadow-2xl tracking-wider mb-6">
-            Red Creativa Pro
-          </h1>
-          <p className="text-2xl md:text-3xl font-bold text-white/90 tracking-wide mb-4">
-            Plataforma de GestiÃ³n Creativa
-          </p>
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-            Una herramienta integral para organizar proyectos creativos, recursos digitales y colaboraciÃ³n en equipo.
-          </p>
+      {/* Theme Toggle */}
+      <div className="absolute top-4 right-4 z-20">
+        <ModeToggle />
+      </div>
+      
+      {/* Overlay con gradiente */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
+      
+      {/* Contenido principal */}
+      <div className="relative z-10 text-center px-8 max-w-5xl mx-auto">
+        {/* Logo y título principal */}
+        <div className="mb-12">
+          <div className="mb-8 relative">
+            <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-purple-600/30 to-blue-600/30 rounded-full" />
+            <h1 className="relative text-6xl md:text-8xl font-black text-white drop-shadow-2xl tracking-wider mb-6 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+              Red Creativa Pro
+            </h1>
+          </div>
+          
+          <div className="space-y-4">
+            <p className="text-2xl md:text-3xl font-bold text-white/90 tracking-wide">
+              Plataforma de Gestión Creativa
+            </p>
+            <p className="text-lg md:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+              Una herramienta integral para organizar proyectos creativos, recursos digitales y colaboración en equipo.
+            </p>
+          </div>
         </div>
         
-        <div className="text-white/60 text-sm">
-          Cargando aplicaciÃ³n...
+        {/* Características destacadas */}
+        <div className="mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {features.map((feature, index) => (
+              <FeatureHighlight
+                key={index}
+                icon={feature.icon}
+                title={feature.title}
+                delay={index * 200}
+              />
+            ))}
+          </div>
+        </div>
+        
+        {/* Barra de progreso y estado de carga */}
+        <div className="space-y-6">
+          <div className="max-w-md mx-auto">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-white/60 text-sm font-medium">Inicializando aplicación</span>
+              <span className="text-white/60 text-sm font-mono">{progress}%</span>
+            </div>
+            <div className="w-full bg-white/10 rounded-full h-2 backdrop-blur-sm">
+              <div 
+                className="bg-gradient-to-r from-purple-500 to-blue-500 h-2 rounded-full transition-all duration-300 ease-out relative overflow-hidden"
+                style={{ width: `${progress}%` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse" />
+              </div>
+            </div>
+          </div>
+          
+          {/* Indicador de característica actual */}
+          <div className="flex items-center justify-center space-x-2">
+            <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full animate-pulse" />
+            <span className="text-white/60 text-sm">
+              Cargando: {features[currentStep]?.title}
+            </span>
+          </div>
+          
+          {/* Botón de acceso rápido */}
+          <div className="pt-4">
+            <button
+              onClick={() => {
+                setProgress(100);
+                setTimeout(() => {
+                  setIsLoading(false);
+                  onComplete();
+                }, 200);
+              }}
+              className="group inline-flex items-center space-x-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full border border-white/20 hover:border-white/30 transition-all duration-300 text-white/80 hover:text-white"
+            >
+              <span className="text-sm font-medium">Acceder ahora</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
         </div>
       </div>
+      
+      {/* Efectos de esquinas */}
+      <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-transparent rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-blue-500/20 to-transparent rounded-full blur-3xl" />
     </div>
-
   );
 }
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
+import styles from './AppLayout.module.css';
 import { MainNav } from './common/MainNav';
 import { SideNav } from './common/SideNav';
 import { ModeToggle } from '../ui/common/ModeToggle';
@@ -44,11 +45,11 @@ const AppLayout = ({ children }: AppLayoutProps) => {
   const currentView = getCurrentView();
 
   return (
-    <div className="flex h-screen w-screen max-w-full max-h-full bg-background relative">
+    <div className={styles.layout}>
       {/* Sidebar */}
-      <div className="w-64 min-w-64 border-r bg-card flex-shrink-0">
-        <div className="p-4 h-full overflow-y-auto">
-          <h1 className="text-xl font-bold text-foreground mb-4">Red Creativa Pro</h1>
+      <div className={styles.sidebar}>
+        <div className={styles.sidebarContent}>
+          <h1 className="text-xl font-bold text-foreground mb-4">Red Creativa Pro Beta</h1>
           <SideNav 
             currentView={currentView} 
             onShowLanding={handleShowPresentation}
@@ -57,10 +58,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className={styles.mainContent}>
         {/* Header */}
-        <header className="border-b bg-card px-6 py-3 flex-shrink-0">
-          <div className="flex items-center justify-between">
+        <header className={styles.topBar}>
+          <div className={styles.topBarContent}>
             <div className="flex items-center space-x-4 min-w-0">
               <MainNav currentView={currentView} />
               <Search />

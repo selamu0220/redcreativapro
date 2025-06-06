@@ -99,15 +99,15 @@ export function AuthForm() {
         return;
       }
       
-      // Intentar autenticación real con timeout
+      // Intentar autenticación real con timeout reducido
       try {
         console.log('Attempting real authentication...');
-        await Promise.race([
-          login(values.email, values.password),
-          new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Login timeout')), 10000)
-          )
-        ]);
+        const loginPromise = login(values.email, values.password);
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Login timeout - La autenticación está tardando más de lo esperado. Esto puede indicar un problema con la base de datos.')), 15000)
+        );
+        
+        await Promise.race([loginPromise, timeoutPromise]);
         console.log('Login successful');
         toast({
           title: '¡Bienvenido de vuelta!',

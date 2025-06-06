@@ -5,11 +5,8 @@ import { Progress } from '../../ui/progress';
 import { Clock, Zap, FileText, Code } from 'lucide-react';
 
 const UsageLimits: React.FC = () => {
-  const { user, getRemainingUsage } = useAuth();
-
-  if (!user || user.subscriptionType !== 'free') {
-    return null;
-  }
+  // En Red Creativa Pro Beta, todo es gratuito sin límites
+  return null;
 
   const features = [
     {

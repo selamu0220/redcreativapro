@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { Check, Copy, Globe2, Lock, Users } from 'lucide-react';
 import { Button } from '../button';
 import {
@@ -74,7 +74,7 @@ export function ShareDialog({
     } else {
       toast({
         title: "Error",
-        description: "Por favor, ingresa al menos un email vÃ¡lido",
+        description: "Por favor, ingresa al menos un email válido",
         variant: "destructive",
       });
     }
@@ -86,7 +86,7 @@ export function ShareDialog({
         <DialogHeader>
           <DialogTitle>Compartir {title}</DialogTitle>
           <DialogDescription>
-            Elige cÃ³mo quieres compartir este contenido
+            Elige cómo quieres compartir este contenido
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">

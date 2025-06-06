@@ -91,7 +91,7 @@ export function ResourceDetail({ resource, onAddComment }: ResourceDetailProps) 
                 {user && (
                   <div className="flex gap-4">
                     <Textarea
-                      placeholder="AÃ±ade un comentario..."
+                      placeholder="Añade un comentario..."
                       value={newComment}
                       onChange={(e) => setNewComment(e.target.value)}
                     />
@@ -130,7 +130,7 @@ export function ResourceDetail({ resource, onAddComment }: ResourceDetailProps) 
             </TabsContent>
             <TabsContent value="history">
               <div className="p-4 text-center text-muted-foreground">
-                Historial de versiones prÃ³ximamente
+                Historial de versiones próximamente
               </div>
             </TabsContent>
           </Tabs>
@@ -138,7 +138,7 @@ export function ResourceDetail({ resource, onAddComment }: ResourceDetailProps) 
 
         <div className="space-y-4">
           <div className="border rounded-md p-4 space-y-4">
-            <h3 className="font-medium">InformaciÃ³n</h3>
+            <h3 className="font-medium">Información</h3>
             <Separator />
             <div className="space-y-2">
               <div className="flex justify-between">
@@ -146,11 +146,11 @@ export function ResourceDetail({ resource, onAddComment }: ResourceDetailProps) 
                 <span className="font-medium capitalize">{resource.type.replace('-', ' ')}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">AÃ±adido</span>
+                <span className="text-muted-foreground">Añadido</span>
                 <span>{formatDate(resource.createdAt)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">TamaÃ±o</span>
+                <span className="text-muted-foreground">Tamaño</span>
                 <span>{resource.size || 'N/A'}</span>
               </div>
               <div className="flex justify-between">

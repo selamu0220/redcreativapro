@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Post } from '../../types/blog';
 import { BlogList } from './BlogList';
-import { BlogPost } from './BlogPost';
+import BlogPost from './BlogPost';
 import { BlogEditor } from './BlogEditor';
 import { mockPosts } from '../../data/mockPosts';
 import { Button } from '../../ui/button';
@@ -14,7 +14,6 @@ import { useQuickRefresh } from '../../hooks/useQuickRefresh';
 import { useRouter, usePathname } from 'next/navigation';
 import { slugify } from '../../lib/utils';
 import { useSEO, useBlogSEO } from '../../hooks/useSEO';
-import { BlogArticleStructuredData } from '../SEO/StructuredData';
 
 export function BlogView() {
   const [posts, setPosts] = useState<Post[]>(mockPosts);
@@ -130,19 +129,7 @@ export function BlogView() {
 
   return (
     <div className="space-y-6">
-      {/* Datos estructurados para artículos específicos */}
-      {selectedPost && (
-        <BlogArticleStructuredData
-          title={selectedPost.title}
-          description={selectedPost.excerpt}
-          author={selectedPost.author.name}
-          publishedDate={selectedPost.createdAt}
-          modifiedDate={selectedPost.updatedAt}
-          imageUrl={selectedPost.imageUrl || ''}
-          articleUrl={`https://redcreativa.pro/blog/${slugify(selectedPost.title)}-${selectedPost.id}`}
-          keywords={selectedPost.tags}
-        />
-      )}
+
       
       <div className="flex items-center justify-between">
         <div>

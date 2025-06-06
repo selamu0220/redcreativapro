@@ -80,7 +80,7 @@ export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [mode, setMode] = useState<'chat' | 'prompt'>('chat');
+  const [mode, setMode] = useState<string>('chat');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isAIDialogOpen, setIsAIDialogOpen] = useState(false);
   const [prompts] = useState<Prompt[]>(mockPrompts);
@@ -427,7 +427,7 @@ export function ChatInterface() {
             Gestiona tu contenido con ayuda de IA
           </p>
         </div>
-        <Tabs value={mode} onValueChange={(value: 'chat' | 'prompt') => setMode(value)}>
+        <Tabs value={mode} onValueChange={setMode}>
           <TabsList>
             <TabsTrigger value="chat" className="flex items-center gap-2">
               <Bot className="h-4 w-4" />

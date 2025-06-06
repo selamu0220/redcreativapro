@@ -1,0 +1,134 @@
+/* Navigation Components CSS Module */
+
+/* Main Navigation Styles */
+.navContainer {
+  @apply bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm;
+}
+
+.navContent {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.navFlex {
+  @apply flex justify-between items-center h-16;
+}
+
+/* Logo and Brand */
+.logoContainer {
+  @apply flex items-center space-x-3;
+}
+
+.logoButton {
+  @apply flex items-center space-x-2 text-xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 rounded-lg px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800;
+}
+
+.logoIcon {
+  @apply w-8 h-8 text-blue-600 dark:text-blue-400;
+}
+
+.brandText {
+  @apply font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+}
+
+.proBadge {
+  @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-yellow-400 to-orange-500 text-white shadow-sm;
+}
+
+/* Navigation Links */
+.navLinks {
+  @apply hidden md:flex items-center space-x-1;
+}
+
+.navLink {
+  @apply px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 relative;
+}
+
+.navLinkActive {
+  @apply bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 shadow-sm;
+}
+
+.navLinkActive::after {
+  content: '';
+  @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-blue-600 dark:bg-blue-400 rounded-full;
+}
+
+/* Mobile Menu */
+.mobileMenuButton {
+  @apply md:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200;
+}
+
+.mobileMenu {
+  @apply md:hidden absolute top-16 left-0 right-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-lg z-50;
+}
+
+.mobileMenuContent {
+  @apply px-4 py-2 space-y-1;
+}
+
+.mobileNavLink {
+  @apply block px-4 py-3 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200;
+}
+
+/* User Navigation */
+.userNav {
+  @apply flex items-center space-x-3;
+}
+
+.userButton {
+  @apply flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200;
+}
+
+.userAvatar {
+  @apply w-8 h-8 rounded-full border-2 border-gray-300 dark:border-gray-600 hover:border-blue-500 dark:hover:border-blue-400 transition-colors duration-200;
+}
+
+/* Search Component */
+.searchContainer {
+  @apply relative flex-1 max-w-md mx-4;
+}
+
+.searchInput {
+  @apply w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
+}
+
+.searchIcon {
+  @apply absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500;
+}
+
+/* Dropdown Menus */
+.dropdown {
+  @apply absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50;
+}
+
+.dropdownItem {
+  @apply block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200;
+}
+
+.dropdownDivider {
+  @apply border-t border-gray-200 dark:border-gray-600 my-1;
+}
+
+/* Notification Badge */
+.notificationBadge {
+  @apply absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-medium;
+}
+
+/* Theme Toggle */
+.themeToggle {
+  @apply p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navFlex {
+    @apply h-14;
+  }
+  
+  .logoButton {
+    @apply text-lg;
+  }
+  
+  .searchContainer {
+    @apply hidden;
+  }
+}

@@ -5,7 +5,7 @@ export const thumbnailTemplates: ThumbnailTemplate[] = [
   {
     id: 'tiktok-modern',
     name: 'TikTok Moderno',
-    description: 'DiseÃ±o vertical moderno para TikTok e Instagram Stories',
+    description: 'Diseño vertical moderno para TikTok e Instagram Stories',
     preview: 'https://images.pexels.com/photos/3617500/pexels-photo-3617500.jpeg',
     category: 'tech',
     settings: {
@@ -32,8 +32,8 @@ export const thumbnailTemplates: ThumbnailTemplate[] = [
   },
   {
     id: 'tiktok-neon',
-    name: 'TikTok NeÃ³n',
-    description: 'Estilo neÃ³n vibrante para contenido de gaming y tech',
+    name: 'TikTok Neón',
+    description: 'Estilo neón vibrante para contenido de gaming y tech',
     preview: 'https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg',
     category: 'gaming',
     settings: {
@@ -62,7 +62,7 @@ export const thumbnailTemplates: ThumbnailTemplate[] = [
   {
     id: 'tiktok-education',
     name: 'TikTok Educativo',
-    description: 'DiseÃ±o limpio y profesional para contenido educativo',
+    description: 'Diseño limpio y profesional para contenido educativo',
     preview: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg',
     category: 'education',
     settings: {
@@ -90,7 +90,7 @@ export const thumbnailTemplates: ThumbnailTemplate[] = [
   {
     id: 'tiktok-lifestyle',
     name: 'TikTok Lifestyle',
-    description: 'Estilo cÃ¡lido y acogedor para contenido de estilo de vida',
+    description: 'Estilo cálido y acogedor para contenido de estilo de vida',
     preview: 'https://images.pexels.com/photos/1591447/pexels-photo-1591447.jpeg',
     category: 'lifestyle',
     settings: {
@@ -120,7 +120,7 @@ export const thumbnailTemplates: ThumbnailTemplate[] = [
   {
     id: 'modern-gradient',
     name: 'Gradiente Moderno',
-    description: 'DiseÃ±o con degradado suave y tipografÃ­a moderna',
+    description: 'Diseño con degradado suave y tipografía moderna',
     preview: 'https://images.pexels.com/photos/3617500/pexels-photo-3617500.jpeg',
     category: 'tech',
     settings: {
@@ -147,8 +147,8 @@ export const thumbnailTemplates: ThumbnailTemplate[] = [
   },
   {
     id: 'neon-vibes',
-    name: 'Vibes NeÃ³n',
-    description: 'Estilo neÃ³n con efectos brillantes',
+    name: 'Vibes Neón',
+    description: 'Estilo neón con efectos brillantes',
     preview: 'https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg',
     category: 'gaming',
     settings: {
@@ -177,7 +177,7 @@ export const thumbnailTemplates: ThumbnailTemplate[] = [
   {
     id: 'minimal-clean',
     name: 'Minimalista',
-    description: 'DiseÃ±o limpio y minimalista',
+    description: 'Diseño limpio y minimalista',
     preview: 'https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg',
     category: 'tech',
     settings: {
@@ -205,7 +205,7 @@ export const thumbnailTemplates: ThumbnailTemplate[] = [
   {
     id: 'sunset-vibes',
     name: 'Atardecer',
-    description: 'Gradientes cÃ¡lidos tipo atardecer',
+    description: 'Gradientes cálidos tipo atardecer',
     preview: 'https://images.pexels.com/photos/3052361/pexels-photo-3052361.jpeg',
     category: 'lifestyle',
     settings: {

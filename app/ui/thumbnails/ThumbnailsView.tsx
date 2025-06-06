@@ -13,9 +13,9 @@ export function ThumbnailsView() {
   
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Thumbnails & Graphics</h1>
-        <p className="text-muted-foreground">
+      <div className="space-y-2">
+        <h1 className="text-2xl font-bold tracking-tight leading-tight">Thumbnails & Graphics</h1>
+        <p className="text-muted-foreground text-sm leading-relaxed">
           Create stunning thumbnails and infographics for your content.
         </p>
       </div>

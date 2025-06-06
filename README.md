@@ -1,6 +1,6 @@
-# Red Creativa Pro
+# Red Creativa Pro Beta
 
-Plataforma integral para profesionales creativos y agencias.
+Plataforma integral para profesionales creativos y agencias - Versión Beta gratuita.
 
 ## Requisitos
 

@@ -16,7 +16,10 @@ import {
   GraduationCap,
   BarChart3,
   FolderOpen,
-  FileImage
+  FileImage,
+  Youtube,
+  User,
+  Video
 } from 'lucide-react';
 
 interface SideNavProps {
@@ -84,6 +87,12 @@ export function SideNav({ currentView, onShowLanding }: SideNavProps) {
       variant: currentView === 'miniaturas' ? 'default' : 'ghost',
     },
     {
+      title: 'Editor de Video',
+      icon: <Video className="h-5 w-5" />,
+      view: 'editor-video',
+      variant: currentView === 'editor-video' ? 'default' : 'ghost',
+    },
+    {
       title: 'Tareas',
       icon: <BarChart3 className="h-5 w-5" />,
       view: 'tareas',
@@ -113,12 +122,24 @@ export function SideNav({ currentView, onShowLanding }: SideNavProps) {
       view: 'svg-viewer',
       variant: currentView === 'svg-viewer' ? 'default' : 'ghost',
     },
+    {
+      title: 'Sobre Red Creativa',
+      icon: <Youtube className="h-5 w-5" />,
+      view: 'sobre-red-creativa',
+      variant: currentView === 'sobre-red-creativa' ? 'default' : 'ghost',
+    },
+    {
+      title: 'Sobre el Creador',
+      icon: <User className="h-5 w-5" />,
+      view: 'sobre-el-creador',
+      variant: currentView === 'sobre-el-creador' ? 'default' : 'ghost',
+    },
   ];
 
   return (
     <div className="space-y-4">
       <div className="px-2">
-        <h2 className="mb-2 px-2 text-lg font-semibold tracking-tight">
+        <h2 className="mb-3 px-2 text-sm font-medium tracking-wide uppercase text-muted-foreground">
           Navegación Principal
         </h2>
         <div className="space-y-1">
@@ -127,14 +148,14 @@ export function SideNav({ currentView, onShowLanding }: SideNavProps) {
               key={item.view}
               onClick={() => handleNavigation(item.view)}
               className={cn(
-                'flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-all hover:text-accent-foreground w-full text-left',
+                'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all hover:text-accent-foreground w-full text-left leading-none',
                 item.variant === 'default'
                   ? 'bg-accent text-accent-foreground'
                   : 'text-muted-foreground hover:bg-accent'
               )}
             >
               {item.icon}
-              <span>{item.title}</span>
+              <span className="truncate">{item.title}</span>
             </button>
           ))}
         </div>
@@ -142,15 +163,6 @@ export function SideNav({ currentView, onShowLanding }: SideNavProps) {
         <Separator />
         
         <div className="px-2 space-y-2">
-          <Link href="/precios">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="w-full justify-start"
-            >
-              💎 Plan Pro
-            </Button>
-          </Link>
           <Button 
             variant="ghost" 
             size="sm" 

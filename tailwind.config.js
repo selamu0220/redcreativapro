@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
+  safelist: [
+    'brutal',
+    'theme-black',
+    'theme-white',
+    'theme-neurobrutalismo'
+  ],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',

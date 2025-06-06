@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '../../lib/utils';
-import { Calendar, FileText, BookOpen, Sparkles, Palette, Image, MessageSquare, GraduationCap, BarChart3, FolderOpen, FileImage, Crown } from 'lucide-react';
+import { Calendar, FileText, BookOpen, Sparkles, Palette, Image, MessageSquare, GraduationCap, BarChart3, FolderOpen, FileImage, Video } from 'lucide-react';
 import { Button } from '../../ui/button';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -12,7 +12,6 @@ interface MainNavProps {
 }
 
 export function MainNav({ currentView }: MainNavProps) {
-  const { hasActiveSubscription } = useAuth();
   const router = useRouter();
   
   const handleNavigation = useCallback((path: string) => {
@@ -40,12 +39,6 @@ export function MainNav({ currentView }: MainNavProps) {
         </div>
         <div className="flex items-center gap-2">
           <span className="hidden font-bold lg:inline-block">Red Creativa</span>
-          {hasActiveSubscription() && (
-            <div className="hidden lg:flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-semibold rounded-full">
-              <Crown className="h-3 w-3" />
-              <span>PRO</span>
-            </div>
-          )}
         </div>
       </button>
       <nav className="flex items-center gap-1">
@@ -108,6 +101,18 @@ export function MainNav({ currentView }: MainNavProps) {
         >
           <Image className="h-4 w-4" />
           <span className="hidden md:inline">Miniaturas</span>
+        </button>
+        <button
+          onClick={() => handleNavigation('/editor-video')}
+          className={cn(
+            'text-sm font-medium transition-colors hover:text-primary flex items-center gap-1 px-2 py-1.5 rounded-md',
+            currentView === 'editor-video'
+              ? 'text-primary bg-muted'
+              : 'text-muted-foreground'
+          )}
+        >
+          <Video className="h-4 w-4" />
+          <span className="hidden md:inline">Editor Video</span>
         </button>
         <button
           onClick={() => handleNavigation('/tareas')}
@@ -182,12 +187,12 @@ export function MainNav({ currentView }: MainNavProps) {
           <span className="hidden md:inline">SVG Viewer</span>
         </button>
         <Button 
-          onClick={() => handleNavigation('/precios')}
-          variant="default" 
+          variant="outline" 
           size="sm" 
-          className="ml-2 font-semibold"
+          className="ml-2 font-semibold cursor-not-allowed opacity-60"
+          disabled
         >
-          Plan Pro
+          Próximamente
         </Button>
       </nav>
     </div>

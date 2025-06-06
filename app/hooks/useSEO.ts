@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { SEO_CONFIG, generateMetaTags } from '../config/seo';
+import { Post } from '../types/blog';
 
 interface SEOData {
   title?: string;
@@ -135,77 +136,58 @@ export function useSEO(seoData: SEOData = {}) {
   }, [seoData]);
 }
 
-// Hook específico para el blog
-export const useBlogSEO = (post: {
-  title: string;
-  excerpt: string;
-  author: { name: string };
-  createdAt: string;
-  updatedAt: string;
-  tags: string[];
-  imageUrl?: string;
-} | null = null) => {
-  useEffect(() => {
-    if (post) {
-      const blogConfig = generateMetaTags('blog');
-      const seoData: SEOData = {
-        title: `${post.title} - ${blogConfig.title}`,
+// Hook específico para blog
+export function useBlogSEO(post?: Post) {
+  let seoData: SEOData;
+  
+  if (post) {
+    // SEO para un post específico
+    seoData = {
+      title: `${post.title} | ${SEO_CONFIG.defaultTitle}`,
+      description: post.excerpt,
+      keywords: post.tags,
+      ogTitle: post.title,
+      ogDescription: post.excerpt,
+      ogImage: post.imageUrl || SEO_CONFIG.openGraph.images.default,
+      canonical: `${SEO_CONFIG.siteUrl}/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`,
+      structuredData: {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: post.title,
         description: post.excerpt,
-        keywords: post.tags,
-        ogTitle: post.title,
-        ogDescription: post.excerpt,
-        ogImage: post.imageUrl,
-        twitterTitle: post.title,
-        twitterDescription: post.excerpt,
-        twitterImage: post.imageUrl,
-        canonical: `${SEO_CONFIG.siteUrl}/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`,
-        structuredData: {
-          '@context': 'https://schema.org',
-          '@type': 'Article',
-          headline: post.title,
-          description: post.excerpt,
-          author: {
-            '@type': 'Person',
-            name: post.author.name,
-          },
-          publisher: {
-            '@type': 'Organization',
-            name: SEO_CONFIG.organization?.name || 'Red Creativa',
-            logo: {
-              '@type': 'ImageObject',
-              url: SEO_CONFIG.organization?.logo || 'https://redcreativa.pro/logo.svg',
-            },
-          },
-          datePublished: post.createdAt,
-          dateModified: post.updatedAt,
-          image: {
-            '@type': 'ImageObject',
-            url: post.imageUrl,
-          },
-          mainEntityOfPage: {
-            '@type': 'WebPage',
-            '@id': `${SEO_CONFIG.siteUrl}/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`,
-          },
-          keywords: post.tags.join(', '),
+        author: {
+           '@type': 'Person',
+           name: post.author.name,
+         },
+         datePublished: post.createdAt,
+         dateModified: post.updatedAt,
+        image: {
+          '@type': 'ImageObject',
+          url: post.imageUrl,
         },
-      };
-      useSEO(seoData);
-    } else {
-      // SEO para la página principal del blog
-      const blogConfig = generateMetaTags('blog');
-      const seoData: SEOData = {
-        title: blogConfig.title,
-        description: blogConfig.description,
-        keywords: blogConfig.keywords,
-        ogTitle: blogConfig.title,
-        ogDescription: blogConfig.description,
-        ogImage: SEO_CONFIG.openGraph?.images?.default || 'https://redcreativa.pro/og-image.jpg',
-        canonical: `${SEO_CONFIG.siteUrl}/blog`,
-      };
-      useSEO(seoData);
-    }
-  }, [post]);
-};
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': `${SEO_CONFIG.siteUrl}/blog/${post.title.toLowerCase().replace(/\s+/g, '-')}`,
+        },
+        keywords: post.tags.join(', '),
+      },
+    };
+  } else {
+    // SEO para la página principal del blog
+    const blogConfig = generateMetaTags('blog');
+    seoData = {
+      title: blogConfig.title,
+      description: blogConfig.description,
+      keywords: blogConfig.keywords,
+      ogTitle: blogConfig.title,
+      ogDescription: blogConfig.description,
+      ogImage: SEO_CONFIG.openGraph?.images?.default || 'https://redcreativa.pro/og-image.jpg',
+      canonical: `${SEO_CONFIG.siteUrl}/blog`,
+    };
+  }
+  
+  useSEO(seoData);
+}
 
 // Hook para páginas de recursos
 export function useResourceSEO() {

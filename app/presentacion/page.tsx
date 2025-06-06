@@ -1,9 +1,13 @@
+'use client';
+import { useRouter } from 'next/navigation';
 import LandingPresentation from '../ui/LandingPresentation';
 
 export default function PresentacionPage() {
+  const router = useRouter();
+  
   const handleComplete = () => {
-    // Función para manejar la finalización de la presentación
-    console.log('Presentación completada');
+    // Redirigir al dashboard principal
+    router.push('/');
   };
 
   return <LandingPresentation onComplete={handleComplete} />;

@@ -92,136 +92,136 @@ Stay ahead of the curve with these essential social media marketing strategies f
   },
   {
     id: '3',
-    title: 'CÃ³mo Organizar tus Recursos Creativos de Forma Eficiente',
-    content: `# CÃ³mo Organizar tus Recursos Creativos de Forma Eficiente
+    title: 'Cómo Organizar tus Recursos Creativos de Forma Eficiente',
+    content: `# Cómo Organizar tus Recursos Creativos de Forma Eficiente
 
-La gestiÃ³n efectiva de recursos creativos es fundamental para mantener la productividad y la calidad en tus proyectos.
+La gestión efectiva de recursos creativos es fundamental para mantener la productividad y la calidad en tus proyectos.
 
-## Sistema de CategorizaciÃ³n
+## Sistema de Categorización
 
 ### Por Tipo de Contenido
-- **ImÃ¡genes**: FotografÃ­as, ilustraciones, iconos
+- **Imágenes**: Fotografías, ilustraciones, iconos
 - **Videos**: Clips, animaciones, plantillas
-- **Audio**: MÃºsica, efectos de sonido, voces
-- **Documentos**: Plantillas, guÃ­as, referencias
+- **Audio**: Música, efectos de sonido, voces
+- **Documentos**: Plantillas, guías, referencias
 
 ### Por Proyecto
-Organiza los recursos segÃºn el proyecto especÃ­fico:
-- CampaÃ±a de marketing
+Organiza los recursos según el proyecto específico:
+- Campaña de marketing
 - Contenido para redes sociales
 - Material educativo
 - Branding corporativo
 
-## Herramientas de GestiÃ³n
+## Herramientas de Gestión
 
 ### Etiquetado Inteligente
 Usa etiquetas descriptivas:
 - Colores dominantes
 - Estilo visual
 - Emociones transmitidas
-- PÃºblico objetivo
+- Público objetivo
 
-### Metadatos Ãštiles
-- Fecha de creaciÃ³n
+### Metadatos Útiles
+- Fecha de creación
 - Autor o fuente
 - Licencia de uso
-- ResoluciÃ³n o calidad
+- Resolución o calidad
 
-## Mejores PrÃ¡cticas
+## Mejores Prácticas
 
 1. **Nomenclatura Consistente**: Usa un sistema de nombres claro
-2. **Backup Regular**: MantÃ©n copias de seguridad
-3. **RevisiÃ³n PeriÃ³dica**: Elimina recursos obsoletos
-4. **Acceso Compartido**: Facilita la colaboraciÃ³n en equipo
+2. **Backup Regular**: Mantén copias de seguridad
+3. **Revisión Periódica**: Elimina recursos obsoletos
+4. **Acceso Compartido**: Facilita la colaboración en equipo
 
-## Beneficios de una Buena OrganizaciÃ³n
+## Beneficios de una Buena Organización
 
-- Ahorro de tiempo en bÃºsquedas
-- Mejor colaboraciÃ³n en equipo
-- ReutilizaciÃ³n eficiente de recursos
-- Mantenimiento de estÃ¡ndares de calidad`,
+- Ahorro de tiempo en búsquedas
+- Mejor colaboración en equipo
+- Reutilización eficiente de recursos
+- Mantenimiento de estándares de calidad`,
     excerpt: 'Aprende a organizar y gestionar tus recursos creativos para maximizar tu productividad.',
     author: {
       id: '3',
-      name: 'MarÃ­a GonzÃ¡lez',
+      name: 'María González',
       avatarUrl: 'https://avatars.githubusercontent.com/u/124599?v=4',
     },
     createdAt: '2025-03-13T09:15:00Z',
     updatedAt: '2025-03-13T09:15:00Z',
-    tags: ['organizaciÃ³n', 'recursos', 'productividad', 'gestiÃ³n'],
+    tags: ['organización', 'recursos', 'productividad', 'gestión'],
     imageUrl: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
-    id: '4',
-    title: 'Prompts de IA: GuÃ­a Completa para Crear Contenido Efectivo',
-    content: `# Prompts de IA: GuÃ­a Completa para Crear Contenido Efectivo
+    id: '4a',
+    title: 'Prompts de IA: Guía Completa para Crear Contenido Efectivo',
+    content: `# Prompts de IA: Guía Completa para Crear Contenido Efectivo
 
 Los prompts bien estructurados son la clave para obtener resultados excepcionales con herramientas de inteligencia artificial.
 
-## AnatomÃ­a de un Prompt Efectivo
+## Anatomía de un Prompt Efectivo
 
 ### Componentes Esenciales
 1. **Contexto**: Establece el escenario
-2. **Tarea**: Define quÃ© quieres lograr
-3. **Formato**: Especifica cÃ³mo quieres el resultado
-4. **Tono**: Indica el estilo de comunicaciÃ³n
-5. **Restricciones**: Establece lÃ­mites y requisitos
+2. **Tarea**: Define qué quieres lograr
+3. **Formato**: Especifica cómo quieres el resultado
+4. **Tono**: Indica el estilo de comunicación
+5. **Restricciones**: Establece límites y requisitos
 
 ### Ejemplo de Estructura
 \`\`\`
 Contexto: Eres un experto en marketing digital
 Tarea: Crear un plan de contenido para redes sociales
-Formato: Lista con 10 ideas especÃ­ficas
+Formato: Lista con 10 ideas específicas
 Tono: Profesional pero accesible
-Restricciones: Para una empresa de tecnologÃ­a, audiencia joven
+Restricciones: Para una empresa de tecnología, audiencia joven
 \`\`\`
 
-## Tipos de Prompts por CategorÃ­a
+## Tipos de Prompts por Categoría
 
 ### Para Escritura
-- ArtÃ­culos de blog
+- Artículos de blog
 - Copys publicitarios
 - Guiones para videos
 - Descripciones de productos
 
 ### Para Creatividad Visual
-- Descripciones para generaciÃ³n de imÃ¡genes
-- Conceptos de diseÃ±o
+- Descripciones para generación de imágenes
+- Conceptos de diseño
 - Paletas de colores
 - Composiciones visuales
 
-### Para AnÃ¡lisis
-- InvestigaciÃ³n de mercado
-- AnÃ¡lisis de competencia
-- EvaluaciÃ³n de tendencias
-- OptimizaciÃ³n de contenido
+### Para Análisis
+- Investigación de mercado
+- Análisis de competencia
+- Evaluación de tendencias
+- Optimización de contenido
 
-## TÃ©cnicas Avanzadas
+## Técnicas Avanzadas
 
 ### Chain of Thought
-GuÃ­a a la IA paso a paso:
+Guía a la IA paso a paso:
 1. Analiza el problema
 2. Considera las opciones
-3. EvalÃºa pros y contras
-4. Proporciona la soluciÃ³n
+3. Evalúa pros y contras
+4. Proporciona la solución
 
 ### Few-Shot Learning
-Proporciona ejemplos especÃ­ficos:
-- Ejemplo 1: [input] â†’ [output deseado]
-- Ejemplo 2: [input] â†’ [output deseado]
+Proporciona ejemplos específicos:
+- Ejemplo 1: [input] → [output deseado]
+- Ejemplo 2: [input] → [output deseado]
 - Ahora hazlo con: [nuevo input]
 
 ## Errores Comunes a Evitar
 
 - Prompts demasiado vagos
-- Falta de contexto especÃ­fico
+- Falta de contexto específico
 - No especificar el formato deseado
 - Ignorar las limitaciones de la IA
 - No iterar y mejorar los prompts
 
-## Biblioteca de Prompts Ãštiles
+## Biblioteca de Prompts Útiles
 
-MantÃ©n una colecciÃ³n organizada de prompts que funcionen bien para diferentes situaciones y Ãºsalos como base para crear nuevos.`,
+Mantén una colección organizada de prompts que funcionen bien para diferentes situaciones y úsalos como base para crear nuevos.`,
     excerpt: 'Domina el arte de crear prompts efectivos para herramientas de IA y mejora la calidad de tus resultados.',
     author: {
       id: '4',
@@ -235,37 +235,37 @@ MantÃ©n una colecciÃ³n organizada de prompts que funcionen bien para diferen
   },
   {
     id: '5',
-    title: 'PlanificaciÃ³n Editorial: CÃ³mo Crear un Calendario de Contenido Exitoso',
-    content: `# PlanificaciÃ³n Editorial: CÃ³mo Crear un Calendario de Contenido Exitoso
+    title: 'Planificación Editorial: Cómo Crear un Calendario de Contenido Exitoso',
+    content: `# Planificación Editorial: Cómo Crear un Calendario de Contenido Exitoso
 
 Un calendario editorial bien estructurado es la columna vertebral de cualquier estrategia de contenido exitosa.
 
-## Beneficios de la PlanificaciÃ³n Editorial
+## Beneficios de la Planificación Editorial
 
 ### Consistencia
 - Publicaciones regulares
 - Mantenimiento de la audiencia
-- ConstrucciÃ³n de autoridad
+- Construcción de autoridad
 - Mejor posicionamiento SEO
 
 ### Eficiencia
-- ProducciÃ³n en lotes
+- Producción en lotes
 - Mejor uso del tiempo
-- ReducciÃ³n del estrÃ©s
-- OptimizaciÃ³n de recursos
+- Reducción del estrés
+- Optimización de recursos
 
 ## Elementos Clave del Calendario
 
-### InformaciÃ³n BÃ¡sica
-- **Fecha de publicaciÃ³n**
+### Información Básica
+- **Fecha de publicación**
 - **Plataforma de destino**
 - **Tipo de contenido**
 - **Tema principal**
 - **Palabras clave objetivo**
 
-### Detalles de ProducciÃ³n
-- **Responsable de creaciÃ³n**
-- **Fecha lÃ­mite de entrega**
+### Detalles de Producción
+- **Responsable de creación**
+- **Fecha límite de entrega**
 - **Estado del contenido**
 - **Recursos necesarios**
 - **Aprobaciones requeridas**
@@ -277,7 +277,7 @@ Un calendario editorial bien estructurado es la columna vertebral de cualquier e
 - 20% contenido promocional
 
 ### Variedad de Formatos
-- ArtÃ­culos informativos
+- Artículos informativos
 - Tutoriales paso a paso
 - Casos de estudio
 - Contenido visual
@@ -295,7 +295,7 @@ Un calendario editorial bien estructurado es la columna vertebral de cualquier e
 - Google Calendar
 - Trello
 - Notion
-- Airtable (plan bÃ¡sico)
+- Airtable (plan básico)
 
 ### De Pago
 - CoSchedule
@@ -303,40 +303,40 @@ Un calendario editorial bien estructurado es la columna vertebral de cualquier e
 - Buffer
 - Sprout Social
 
-## Proceso de ImplementaciÃ³n
+## Proceso de Implementación
 
-1. **AuditorÃ­a de contenido actual**
-2. **DefiniciÃ³n de objetivos**
-3. **InvestigaciÃ³n de audiencia**
-4. **CreaciÃ³n del calendario base**
-5. **AsignaciÃ³n de responsabilidades**
+1. **Auditoría de contenido actual**
+2. **Definición de objetivos**
+3. **Investigación de audiencia**
+4. **Creación del calendario base**
+5. **Asignación de responsabilidades**
 6. **Establecimiento de flujos de trabajo**
 7. **Monitoreo y ajustes**
 
-## MÃ©tricas de Seguimiento
+## Métricas de Seguimiento
 
 - Engagement por tipo de contenido
 - Alcance y impresiones
-- TrÃ¡fico generado
+- Tráfico generado
 - Conversiones
 - Tiempo de permanencia
 
-## Consejos para el Ã‰xito
+## Consejos para el Éxito
 
-- MantÃ©n flexibilidad para contenido oportuno
+- Mantén flexibilidad para contenido oportuno
 - Revisa y ajusta regularmente
 - Involucra a todo el equipo
 - Documenta lo que funciona
-- Planifica con al menos un mes de anticipaciÃ³n`,
-    excerpt: 'Descubre cÃ³mo crear y mantener un calendario editorial que impulse tu estrategia de contenido.',
+- Planifica con al menos un mes de anticipación`,
+    excerpt: 'Descubre cómo crear y mantener un calendario editorial que impulse tu estrategia de contenido.',
     author: {
       id: '5',
-      name: 'Ana MartÃ­nez',
+      name: 'Ana Martínez',
       avatarUrl: 'https://avatars.githubusercontent.com/u/124599?v=4',
     },
     createdAt: '2025-03-11T11:45:00Z',
     updatedAt: '2025-03-11T11:45:00Z',
-    tags: ['planificaciÃ³n', 'calendario editorial', 'estrategia', 'contenido'],
+    tags: ['planificación', 'calendario editorial', 'estrategia', 'contenido'],
     imageUrl: 'https://images.pexels.com/photos/6802049/pexels-photo-6802049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   }
 ];

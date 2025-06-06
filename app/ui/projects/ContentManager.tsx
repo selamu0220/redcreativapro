@@ -71,11 +71,20 @@ export function ContentManager({ project, onUpdate }: ContentManagerProps) {
   };
 
   const updateFile = (updatedFile: ContentFile) => {
+    const updatedContent = { ...project.content };
+    
+    // Buscar y actualizar el archivo en todas las categorías
+    Object.keys(updatedContent).forEach(category => {
+      if (Array.isArray(updatedContent[category as keyof typeof updatedContent])) {
+        updatedContent[category as keyof typeof updatedContent] = 
+          (updatedContent[category as keyof typeof updatedContent] as ContentFile[])
+            .map(file => file.id === updatedFile.id ? updatedFile : file);
+      }
+    });
+    
     const updatedProject = {
       ...project,
-      content: project.content.map(file => 
-        file.id === updatedFile.id ? updatedFile : file
-      )
+      content: updatedContent
     };
     
     onUpdate(updatedProject);
@@ -83,9 +92,20 @@ export function ContentManager({ project, onUpdate }: ContentManagerProps) {
   };
 
   const deleteFile = (fileId: string) => {
+    const updatedContent = { ...project.content };
+    
+    // Buscar y eliminar el archivo de todas las categorías
+    Object.keys(updatedContent).forEach(category => {
+      if (Array.isArray(updatedContent[category as keyof typeof updatedContent])) {
+        updatedContent[category as keyof typeof updatedContent] = 
+          (updatedContent[category as keyof typeof updatedContent] as ContentFile[])
+            .filter(file => file.id !== fileId);
+      }
+    });
+    
     const updatedProject = {
       ...project,
-      content: project.content.filter(file => file.id !== fileId)
+      content: updatedContent
     };
     
     onUpdate(updatedProject);
@@ -171,8 +191,19 @@ export function ContentManager({ project, onUpdate }: ContentManagerProps) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
-  const filteredFiles = project.content.filter(file => {
-    const matchesCategory = activeCategory === 'all' || file.category === activeCategory;
+  // Obtener todos los archivos de todas las categorías
+  const allFiles: ContentFile[] = [];
+  Object.values(project.content).forEach(categoryFiles => {
+    if (Array.isArray(categoryFiles)) {
+      allFiles.push(...categoryFiles);
+    }
+  });
+  
+  const filteredFiles = allFiles.filter(file => {
+    const matchesCategory = activeCategory === 'all' || 
+      Object.entries(project.content).some(([category, files]) => 
+        category === activeCategory && Array.isArray(files) && files.some(f => f.id === file.id)
+      );
     const matchesSearch = file.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          file.description?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;

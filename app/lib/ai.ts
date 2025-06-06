@@ -27,17 +27,17 @@ export async function generateScriptWithAI(
   }
 
   if (!provider) {
-    throw new Error('Se requiere seleccionar un proveedor de IA. Por favor configura tus ajustes de IA en el menÃº de usuario.');
+    throw new Error('Se requiere seleccionar un proveedor de IA. Por favor configura tus ajustes de IA en el menú de usuario.');
   }
 
   if (!apiKey) {
-    throw new Error('Se requiere una API key. Por favor configura tus ajustes de IA en el menÃº de usuario.');
+    throw new Error('Se requiere una API key. Por favor configura tus ajustes de IA en el menú de usuario.');
   }
 
   // Validate API key format before making request
   if (typeof apiKey !== 'string' || !apiKey.trim()) {
     localStorage.removeItem('aiSettings'); // Clear invalid settings
-    throw new Error('API key invÃ¡lida. Por favor verifica que hayas ingresado una API key vÃ¡lida en los ajustes de usuario.');
+    throw new Error('API key inválida. Por favor verifica que hayas ingresado una API key válida en los ajustes de usuario.');
   }
 
   // Trim the API key to prevent whitespace issues
@@ -75,14 +75,14 @@ export async function generateScriptWithAI(
           const error = await response.json().catch(() => ({ error: { message: 'Error desconocido' } }));
           if (response.status === 401) {
             localStorage.removeItem('aiSettings'); // Clear invalid settings
-            throw new Error(`La API key de Google AI Studio no es vÃ¡lida para el modelo ${selectedModel}. Por favor, verifica que la API key tenga los permisos necesarios.`);
+            throw new Error(`La API key de Google AI Studio no es válida para el modelo ${selectedModel}. Por favor, verifica que la API key tenga los permisos necesarios.`);
           }
           throw new Error(`Error de Gemini: ${error.error?.message || 'No se pudo generar el contenido'}`);
         }
         
         const data = await response.json();
         if (!data.candidates?.[0]?.content?.parts?.[0]?.text) {
-          throw new Error('No se recibiÃ³ una respuesta vÃ¡lida del servicio de IA');
+          throw new Error('No se recibió una respuesta válida del servicio de IA');
         }
         return data.candidates[0].content.parts[0].text;
       }
@@ -107,7 +107,7 @@ export async function generateScriptWithAI(
           const error = await openaiResponse.json().catch(() => ({ error: { message: 'Error desconocido' } }));
           if (openaiResponse.status === 401) {
             localStorage.removeItem('aiSettings');
-            throw new Error('API key invÃ¡lida. Por favor verifica tu API key de OpenAI en los ajustes de usuario.');
+            throw new Error('API key inválida. Por favor verifica tu API key de OpenAI en los ajustes de usuario.');
           }
           throw new Error(`Error de OpenAI: ${error.error?.message || 'No se pudo generar el contenido'}`);
         }
@@ -137,7 +137,7 @@ export async function generateScriptWithAI(
           const error = await anthropicResponse.json().catch(() => ({ error: { message: 'Error desconocido' } }));
           if (anthropicResponse.status === 401) {
             localStorage.removeItem('aiSettings');
-            throw new Error('API key invÃ¡lida. Por favor verifica tu API key de Anthropic en los ajustes de usuario.');
+            throw new Error('API key inválida. Por favor verifica tu API key de Anthropic en los ajustes de usuario.');
           }
           throw new Error(`Error de Anthropic: ${error.error?.message || 'No se pudo generar el contenido'}`);
         }
@@ -168,7 +168,7 @@ export async function generateScriptWithAI(
           const error = await cohereResponse.json().catch(() => ({ message: 'Error desconocido' }));
           if (cohereResponse.status === 401) {
             localStorage.removeItem('aiSettings');
-            throw new Error('API key invÃ¡lida. Por favor verifica tu API key de Cohere en los ajustes de usuario.');
+            throw new Error('API key inválida. Por favor verifica tu API key de Cohere en los ajustes de usuario.');
           }
           throw new Error(`Error de Cohere: ${error.message || 'No se pudo generar el contenido'}`);
         }
@@ -199,7 +199,7 @@ export async function generateScriptWithAI(
           const error = await mistralResponse.json().catch(() => ({ error: { message: 'Error desconocido' } }));
           if (mistralResponse.status === 401) {
             localStorage.removeItem('aiSettings');
-            throw new Error('API key invÃ¡lida. Por favor verifica tu API key de Mistral en los ajustes de usuario.');
+            throw new Error('API key inválida. Por favor verifica tu API key de Mistral en los ajustes de usuario.');
           }
           throw new Error(`Error de Mistral: ${error.error?.message || 'No se pudo generar el contenido'}`);
         }
@@ -216,7 +216,7 @@ export async function generateScriptWithAI(
     if (error.message.includes('API key')) {
       throw error;
     }
-    throw new Error(`Error al conectar con el servicio de IA: ${error.message}. Por favor verifica tu API key e intÃ©ntalo de nuevo.`);
+    throw new Error(`Error al conectar con el servicio de IA: ${error.message}. Por favor verifica tu API key e inténtalo de nuevo.`);
   }
 }
 
@@ -224,22 +224,22 @@ export async function enhanceSearchWithAI(query: string): Promise<string[]> {
   try {
     const storedSettings = localStorage.getItem('aiSettings');
     if (!storedSettings) {
-      throw new Error('Para obtener sugerencias de IA, configura tus ajustes en el menÃº de usuario (Ã­cono de perfil â†’ Ajustes)');
+      throw new Error('Para obtener sugerencias de IA, configura tus ajustes en el menú de usuario (ícono de perfil → Ajustes)');
     }
 
     const settings = JSON.parse(storedSettings);
     const { provider, apiKey, model } = settings;
 
     if (!provider || !apiKey) {
-      throw new Error('Para obtener sugerencias de IA, configura el proveedor y API key en el menÃº de usuario (Ã­cono de perfil â†’ Ajustes)');
+      throw new Error('Para obtener sugerencias de IA, configura el proveedor y API key en el menú de usuario (ícono de perfil → Ajustes)');
     }
 
     const prompt = `Analiza esta bÃºsqueda: "${query}"
-    1. Extrae conceptos clave y tÃ©rminos relacionados
-    2. Identifica sinÃ³nimos y temas relacionados
-    3. Devuelve una lista de tÃ©rminos relevantes para la bÃºsqueda
-    Formato: lista de tÃ©rminos separados por comas, mÃ¡ximo 5 tÃ©rminos.
-    Respuesta en espaÃ±ol.`;
+    1. Extrae conceptos clave y términos relacionados
+  2. Identifica sinónimos y temas relacionados
+  3. Devuelve una lista de términos relevantes para la búsqueda
+  Formato: lista de términos separados por comas, máximo 5 términos.
+  Respuesta en español.`;
 
     const response = await generateScriptWithAI(prompt, provider, apiKey, model);
     const terms = response.split(',')
@@ -248,7 +248,7 @@ export async function enhanceSearchWithAI(query: string): Promise<string[]> {
       .slice(0, 5);
 
     if (terms.length === 0) {
-      throw new Error('No se pudieron generar sugerencias para esta bÃºsqueda');
+      throw new Error('No se pudieron generar sugerencias para esta búsqueda');
     }
 
     return terms;

@@ -12,7 +12,8 @@ import {
   Video, 
   Image,
   BookOpen,
-  CheckSquare
+  CheckSquare,
+  Film
 } from 'lucide-react';
 
 const HomePage = () => {
@@ -81,6 +82,13 @@ const HomePage = () => {
       icon: BookOpen,
       path: '/recursos',
       color: 'text-indigo-600'
+    },
+    {
+      title: 'Editor de Video',
+      description: 'Editor profesional de video con timeline y efectos',
+      icon: Film,
+      path: '/editor-video',
+      color: 'text-emerald-600'
     }
   ];
 
@@ -167,6 +175,14 @@ const HomePage = () => {
           >
             <Calendar className="h-4 w-4" />
             <span>Ver Calendario</span>
+          </Button>
+          <Button 
+            variant="outline" 
+            onClick={() => router.push('/editor-video')} 
+            className="flex items-center space-x-2"
+          >
+            <Film className="h-4 w-4" />
+            <span>Editor de Video</span>
           </Button>
         </div>
       </div>

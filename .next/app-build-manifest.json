@@ -9,27 +9,55 @@
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/page.css",
       "static/chunks/app/page.js"
+    ],
+    "/editor-video/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/editor-video/page.css",
+      "static/chunks/app/editor-video/page.js"
+    ],
+    "/scripts/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/scripts/page.css",
+      "static/chunks/app/scripts/page.js"
+    ],
+    "/presentacion/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/presentacion/page.css",
+      "static/chunks/app/presentacion/page.js"
     ],
     "/recursos/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/recursos/page.css",
       "static/chunks/app/recursos/page.js"
     ],
     "/calendario/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/calendario/page.css",
       "static/chunks/app/calendario/page.js"
     ],
     "/prompts/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/prompts/page.css",
       "static/chunks/app/prompts/page.js"
     ],
     "/blog/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+      "static/css/app/blog/page.css",
       "static/chunks/app/blog/page.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }
