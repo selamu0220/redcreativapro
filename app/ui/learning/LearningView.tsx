@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Learning, Video, Review, Task } from '../../types/learning';
+import { Learning, Video } from '../../types/learning';
 import { Button } from '../../ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../../ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui/accordion';
@@ -216,7 +216,7 @@ const LearningView: React.FC = () => {
               </CardHeader>
               <CardContent className="p-0">
                 <Accordion type="multiple" defaultValue={selectedLearning.sections.map(s => s.id)} className="w-full">
-              {selectedLearning.sections.map((section, sectionIndex) => (
+              {selectedLearning.sections.map((section, _sectionIndex) => (
                 <AccordionItem value={section.id} key={section.id} className="px-4">
                   <AccordionTrigger className="hover:no-underline">
                     <div className="flex flex-col text-left">

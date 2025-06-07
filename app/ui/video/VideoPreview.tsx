@@ -428,7 +428,7 @@ export function VideoPreview({ project, currentTime, isPlaying, onTimeUpdate }: 
           if (Math.abs(mediaElement.currentTime - targetTime) > 0.05) {
             try {
               mediaElement.currentTime = targetTime;
-            } catch (e) {
+            } catch (_e) {
               // Ignorar errores de seek silenciosamente
             }
           }
@@ -457,7 +457,7 @@ export function VideoPreview({ project, currentTime, isPlaying, onTimeUpdate }: 
         // Renderizar media de forma segura
         try {
           ctx.drawImage(mediaElement, x, y, width, height);
-        } catch (error) {
+        } catch (_error) {
           // Fallback simple
           ctx.fillStyle = '#2a2a2a';
           ctx.fillRect(x, y, width, height);
@@ -533,8 +533,8 @@ export function VideoPreview({ project, currentTime, isPlaying, onTimeUpdate }: 
     if (!canvasRef.current) return;
     
     const rect = canvasRef.current.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+    const _x = event.clientX - rect.left;
+    const _y = event.clientY - rect.top;
     
     // Aquí se podría implementar la lógica para posicionar elementos
   };

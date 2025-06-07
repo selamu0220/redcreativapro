@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Learning, LearningSection, Video } from '../../types/learning';
+import { Learning, LearningSection } from '../../types/learning';
 import { Button } from '../../ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
 import { Input } from '../../ui/input';
@@ -8,7 +8,7 @@ import { Textarea } from '../../ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
 import { Badge } from '../../ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../ui/accordion';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../../ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../ui/dialog';
 import { Plus, Trash2, Save, Video as VideoIcon, Youtube, HardDrive, X } from 'lucide-react';
 import { toast } from '../../hooks/use-toast';
 

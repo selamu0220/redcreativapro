@@ -1,4 +1,4 @@
-import { DivideIcon as LucideIcon, FileText, Calendar, CheckSquare, Palette } from 'lucide-react';
+import { FileText, Calendar, CheckSquare, Palette, LucideIcon } from 'lucide-react';
 import { Button } from '../../ui/button';
 
 interface EmptyStateProps {

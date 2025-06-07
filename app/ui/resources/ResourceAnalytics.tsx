@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
 import { Badge } from '@/app/ui/badge';
 import { Progress } from '@/app/ui/progress';
-import { Resource } from '@/app/lib/types/resources';
+import { Resource } from '@/app/types/resources';
 import { BarChart3, TrendingUp, Users, Clock } from 'lucide-react';
 
 interface ResourceAnalyticsProps {

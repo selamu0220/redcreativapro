@@ -1,8 +1,22 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
+  "/aprendizaje/page": "app/aprendizaje/page.js",
+  "/auth/page": "app/auth/page.js",
+  "/blog/[slug]/page": "app/blog/[slug]/page.js",
   "/calendario/page": "app/calendario/page.js",
-  "/recursos/page": "app/recursos/page.js",
+  "/chat/page": "app/chat/page.js",
+  "/blog/page": "app/blog/page.js",
+  "/miniaturas/page": "app/miniaturas/page.js",
   "/presentacion/page": "app/presentacion/page.js",
+  "/prompts/page": "app/prompts/page.js",
+  "/proyectos/page": "app/proyectos/page.js",
+  "/recursos/page": "app/recursos/page.js",
+  "/page": "app/page.js",
+  "/svg-viewer/page": "app/svg-viewer/page.js",
   "/scripts/page": "app/scripts/page.js",
-  "/prompts/page": "app/prompts/page.js"
+  "/temas/page": "app/temas/page.js",
+  "/tareas/page": "app/tareas/page.js",
+  "/sobre-red-creativa/page": "app/sobre-red-creativa/page.js",
+  "/sobre-el-creador/page": "app/sobre-el-creador/page.js",
+  "/editor-video/page": "app/editor-video/page.js"
 }

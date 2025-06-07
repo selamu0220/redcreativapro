@@ -26,7 +26,7 @@ export function ResourceFilters({ resources, onFilter }: ResourceFiltersProps) {
       const matchesSearch =
         searchTerm === '' ||
         resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        resource.description.toLowerCase().includes(searchTerm.toLowerCase());
+        (resource.description && resource.description.toLowerCase().includes(searchTerm.toLowerCase()));
 
       // Type filter
       const matchesType =

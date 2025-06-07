@@ -8,7 +8,7 @@ import { Badge } from '@/app/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/app/ui/dialog';
 import { Label } from '@/app/ui/label';
 import { Textarea } from '@/app/ui/textarea';
-import { Resource } from '@/app/lib/types/resources';
+import { Resource } from '@/app/types/resources';
 import { Plus, Folder, MoreHorizontal, Edit, Trash2, Share2 } from 'lucide-react';
 import {
   DropdownMenu,

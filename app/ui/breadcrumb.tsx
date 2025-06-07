@@ -5,7 +5,7 @@ import { cn } from '../lib/utils';
 
 // Contenedor principal del breadcrumb, con aria-label
 const Breadcrumb = React.forwardRef<HTMLElement, React.ComponentPropsWithoutRef<'nav'> & { separator?: React.ReactNode }>(
-  ({ separator, ...props }, ref) => (
+  ({ separator: _separator, ...props }, ref) => (
     <nav ref={ref} aria-label="breadcrumb" {...props} />
   )
 );

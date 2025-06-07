@@ -521,7 +521,7 @@ function TaskForm({
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label>Estado</Label>
-          <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value })}>
+          <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value as ProjectTask['status'] })}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -536,7 +536,7 @@ function TaskForm({
         
         <div className="space-y-2">
           <Label>Prioridad</Label>
-          <Select value={formData.priority} onValueChange={(value) => setFormData({ ...formData, priority: value })}>
+          <Select value={formData.priority} onValueChange={(value) => setFormData({ ...formData, priority: value as ProjectTask['priority'] })}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -553,7 +553,7 @@ function TaskForm({
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label>Categoría</Label>
-          <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
+          <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value as ProjectTask['category'] })}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -659,7 +659,7 @@ function TimelineEventForm({
         
         <div className="space-y-2">
           <Label>Tipo</Label>
-          <Select value={formData.type} onValueChange={(value) => setFormData({ ...formData, type: value })}>
+          <Select value={formData.type} onValueChange={(value) => setFormData({ ...formData, type: value as TimelineEvent['type'] })}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>

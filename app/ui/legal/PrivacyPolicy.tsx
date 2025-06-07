@@ -1,10 +1,14 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
 import { Separator } from '../../ui/separator';
-import { usePrivacySEO } from '../../hooks/useSEO';
+import { useSEO } from '../../hooks/useSEO';
 
 const PrivacyPolicy: React.FC = () => {
-  usePrivacySEO();
+  useSEO({
+    title: 'Política de Privacidad - Red Creativa Pro',
+    description: 'Política de privacidad de Red Creativa Pro. Conoce cómo protegemos y manejamos tu información personal.',
+    keywords: ['política de privacidad', 'protección de datos', 'Red Creativa Pro']
+  });
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">

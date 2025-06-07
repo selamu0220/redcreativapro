@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { format, addHours, parseISO } from 'date-fns';
-import { CalendarIcon, Trash2, Plus, X, Sparkles } from 'lucide-react';
+import { CalendarIcon, Trash2, Sparkles } from 'lucide-react';
 import { EventType } from '../../types/calendar';
 import { AIProvider } from '../../types/ai';
 import { Button } from '../../ui/button';

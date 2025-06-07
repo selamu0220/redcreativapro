@@ -7,21 +7,17 @@ import { Label } from '../label';
 import { Input } from '../input';
 import { Slider } from '../slider';
 import { Badge } from '../badge';
-import { Separator } from '../separator';
+
 import { 
   Play, 
   Pause, 
   SkipBack, 
-  SkipForward, 
   Plus, 
-  Minus, 
-  RotateCcw, 
   Move, 
   RotateCw, 
   ZoomIn, 
   ZoomOut,
   Eye,
-  EyeOff,
   Trash2,
   Copy,
   Settings,

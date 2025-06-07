@@ -30,7 +30,6 @@ export function ResourceDetail({ resource, onAddComment }: ResourceDetailProps) 
       resourceId: resource.id,
       userId: user.id,
       userName: user.name,
-      userAvatar: user.avatarUrl,
       content: newComment.trim(),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

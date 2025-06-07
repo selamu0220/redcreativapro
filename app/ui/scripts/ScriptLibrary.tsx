@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
-import { Script, ScriptStatus } from '../../types/scripts';
+import { Script } from '../../types/scripts';
 import { mockScripts } from '../../data/mockScripts';
 import { ScriptList } from './ScriptList';
 import { ScriptDetail } from './ScriptDetail';

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ThumbnailCreator } from './ThumbnailCreator';
 import { InfographicCreator } from './InfographicCreator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';

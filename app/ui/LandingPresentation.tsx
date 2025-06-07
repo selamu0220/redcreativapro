@@ -79,7 +79,7 @@ const FeatureHighlight = ({ icon: Icon, title, delay }: { icon: any, title: stri
 
 export default function LandingPresentation({ onComplete }: LandingPresentationProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [_isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
 
   const features = [

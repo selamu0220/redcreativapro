@@ -29,7 +29,7 @@ export function MainNav({ currentView }: MainNavProps) {
         window.location.reload();
       }, 50);
     }
-  }, [currentView, navigate]);
+  }, [currentView, router]);
   
   return (
     <div className={styles.navContainer}>

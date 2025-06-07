@@ -560,10 +560,10 @@ export function ChatInterface() {
                               className="h-8 text-xs"
                               onClick={() => {
                                 // Navegar a miniaturas
-                                navigate('/thumbnails');
+                                router.push('/miniaturas');
                                 toast({
                                   title: "Navegando a Miniaturas",
-                                  description: "Ve a la secciÃ³n de miniaturas para crear tu diseÃ±o"
+                                  description: "Ve a la sección de miniaturas para crear tu diseño"
                                 });
                               }}
                             >
@@ -577,11 +577,11 @@ export function ChatInterface() {
                               size="sm"
                               className="h-8 text-xs"
                               onClick={() => {
-                                // Navegar a infografÃ­as
-                                navigate('/infografias');
+                                // Navegar a infografías
+                                router.push('/infografias');
                                 toast({
-                                  title: "Navegando a InfografÃ­as",
-                                  description: "Ve a la secciÃ³n de infografÃ­as para crear tu diseÃ±o"
+                                  title: "Navegando a Infografías",
+                                  description: "Ve a la sección de infografías para crear tu diseño"
                                 });
                               }}
                             >

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Resource } from '../../types/resources';
+import { Resource } from '@/app/types/resources';
 import { Card, CardContent, CardFooter, CardHeader } from '../../ui/card';
 import { Badge } from '../../ui/badge';
 import { Button } from '../../ui/button';
@@ -291,7 +291,10 @@ export function ResourceCard({
             <DialogHeader>
               <DialogTitle>{resource.title}</DialogTitle>
             </DialogHeader>
-            <ResourceDetail resource={resource} />
+            <ResourceDetail resource={resource} onAddComment={(resourceId, comment) => {
+              // TODO: Implement actual comment adding logic
+              console.log('Add comment:', resourceId, comment);
+            }} />
           </DialogContent>
         </Dialog>
       )}

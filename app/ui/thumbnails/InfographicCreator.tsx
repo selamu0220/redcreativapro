@@ -246,7 +246,7 @@ export function InfographicCreator() {
         title: 'Infografía generada',
         description: 'Tu infografía ha sido creada exitosamente'
       });
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'Hubo un problema al generar la infografía',
@@ -439,7 +439,7 @@ Responde SOLO con el JSON, sin texto adicional.`;
       
       img.src = url;
       
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'No se pudo descargar la imagen',
@@ -939,7 +939,7 @@ Responde SOLO con el JSON, sin texto adicional.`;
       
       img.src = url;
       
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Error',
         description: 'No se pudo generar el video. Tu navegador podría no soportar esta función.',

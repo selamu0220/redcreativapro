@@ -18,8 +18,7 @@ import {
   Clock, 
   FileVideo, 
   Zap, 
-  CheckCircle, 
-  AlertCircle,
+  CheckCircle,
   Play
 } from 'lucide-react';
 import { VideoProject, ExportSettings, VIDEO_RESOLUTIONS, FRAME_RATES } from '../../types/video';
@@ -56,7 +55,7 @@ export function ExportDialog({ project, onClose, onExport }: ExportDialogProps) 
     filename: project.name || 'video_export'
   });
   
-  const [isExporting, setIsExporting] = useState(false);
+  const [_isExporting, setIsExporting] = useState(false);
   const [exportProgress, setExportProgress] = useState(0);
   const [exportStatus, setExportStatus] = useState<'idle' | 'exporting' | 'completed' | 'error'>('idle');
   const [estimatedTime, setEstimatedTime] = useState<number | null>(null);

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import styles from './HomePage.module.css';
 import { 
   Calendar, 
@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 
 const HomePage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const features = [
     {
@@ -86,7 +86,7 @@ const HomePage = () => {
   ];
 
   const handleFeatureClick = (path: string) => {
-    navigate(path);
+    router.push(path);
   };
 
   return (
@@ -139,7 +139,7 @@ const HomePage = () => {
         </h2>
         <div className="flex flex-wrap gap-3">
           <Button 
-            onClick={() => navigate('/proyectos')} 
+            onClick={() => router.push('/proyectos')} 
             className="flex items-center space-x-2"
           >
             <FolderOpen className="h-4 w-4" />
@@ -147,7 +147,7 @@ const HomePage = () => {
           </Button>
           <Button 
             variant="outline" 
-            onClick={() => navigate('/blog')} 
+            onClick={() => router.push('/blog')} 
             className="flex items-center space-x-2"
           >
             <FileText className="h-4 w-4" />
@@ -155,7 +155,7 @@ const HomePage = () => {
           </Button>
           <Button 
             variant="outline" 
-            onClick={() => navigate('/chat')} 
+            onClick={() => router.push('/chat')} 
             className="flex items-center space-x-2"
           >
             <MessageSquare className="h-4 w-4" />
@@ -163,7 +163,7 @@ const HomePage = () => {
           </Button>
           <Button 
             variant="outline" 
-            onClick={() => navigate('/calendario')} 
+            onClick={() => router.push('/calendario')} 
             className="flex items-center space-x-2"
           >
             <Calendar className="h-4 w-4" />

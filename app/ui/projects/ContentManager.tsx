@@ -20,12 +20,10 @@ import {
   ExternalLink, 
   Trash2, 
   Edit, 
-  Plus, 
   FolderOpen, 
   Cloud, 
   Search,
   Filter,
-  Eye,
   Copy
 } from 'lucide-react';
 import { VideoProject, ContentFile } from '../../types/projects';
@@ -54,6 +52,23 @@ export function ContentManager({ project, onUpdate }: ContentManagerProps) {
     { id: 'other', name: 'Otros', icon: File }
   ];
 
+  const getFileCategory = (type: ContentFile['type']): keyof typeof project.content => {
+    switch (type) {
+      case 'video':
+        return 'recorded';
+      case 'audio':
+        return 'recorded';
+      case 'image':
+        return 'resources';
+      case 'overlay':
+        return 'overlays';
+      case 'document':
+        return 'documents';
+      default:
+        return 'other';
+    }
+  };
+
   const addFile = (file: Omit<ContentFile, 'id' | 'uploadedAt'>) => {
     const newFile: ContentFile = {
       ...file,
@@ -61,9 +76,13 @@ export function ContentManager({ project, onUpdate }: ContentManagerProps) {
       uploadedAt: new Date().toISOString()
     };
     
+    const category = getFileCategory(newFile.type);
     const updatedProject = {
       ...project,
-      content: [...project.content, newFile]
+      content: {
+        ...project.content,
+        [category]: [...project.content[category], newFile]
+      }
     };
     
     onUpdate(updatedProject);
@@ -131,17 +150,20 @@ export function ContentManager({ project, onUpdate }: ContentManagerProps) {
               id: fileId,
               name: file.name,
               type: getFileType(file.type),
-              category: 'other',
               url: URL.createObjectURL(file), // In real app, this would be the uploaded URL
-              driveId: '', // Would be set after Google Drive upload
               size: file.size,
               uploadedAt: new Date().toISOString(),
-              description: ''
+              description: '',
+              tags: []
             };
             
+            const category = getFileCategory(newFile.type);
             const updatedProject = {
               ...project,
-              content: [...project.content, newFile]
+              content: {
+                ...project.content,
+                [category]: [...project.content[category], newFile]
+              }
             };
             
             onUpdate(updatedProject);
@@ -374,7 +396,7 @@ export function ContentManager({ project, onUpdate }: ContentManagerProps) {
                 {/* Badges */}
                 <div className="flex items-center justify-between">
                   <Badge variant="outline">
-                    {categories.find(c => c.id === file.category)?.name || file.category}
+                    {categories.find(c => c.id === getFileCategory(file.type))?.name || file.type}
                   </Badge>
                   
                   <Badge variant="secondary">
@@ -383,7 +405,7 @@ export function ContentManager({ project, onUpdate }: ContentManagerProps) {
                 </div>
                 
                 {/* Google Drive Info */}
-                {file.driveId && (
+                {file.googleDriveId && (
                   <div className="flex items-center justify-between text-xs text-gray-500">
                     <div className="flex items-center">
                       <Cloud className="h-3 w-3 mr-1" />
@@ -392,7 +414,7 @@ export function ContentManager({ project, onUpdate }: ContentManagerProps) {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => copyToClipboard(file.driveId!)}
+                      onClick={() => copyToClipboard(file.googleDriveId!)}
                     >
                       <Copy className="h-3 w-3" />
                     </Button>
@@ -478,10 +500,26 @@ function FileForm({
     name: file?.name || '',
     description: file?.description || '',
     url: file?.url || '',
-    driveId: file?.driveId || '',
-    category: file?.category || 'other',
+    googleDriveId: file?.googleDriveId || '',
     type: file?.type || 'other'
   });
+
+  const getFileCategory = (type: ContentFile['type']): string => {
+    switch (type) {
+      case 'video':
+        return 'recorded';
+      case 'audio':
+        return 'recorded';
+      case 'image':
+        return 'resources';
+      case 'overlay':
+        return 'overlays';
+      case 'document':
+        return 'documents';
+      default:
+        return 'other';
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -520,8 +558,8 @@ function FileForm({
       <div className="space-y-2">
         <Label>ID de Google Drive</Label>
         <Input
-          value={formData.driveId}
-          onChange={(e) => setFormData({ ...formData, driveId: e.target.value })}
+          value={formData.googleDriveId}
+          onChange={(e) => setFormData({ ...formData, googleDriveId: e.target.value })}
           placeholder="ID del archivo en Google Drive"
         />
       </div>
@@ -539,7 +577,17 @@ function FileForm({
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label>Categoría</Label>
-          <Select value={formData.category} onValueChange={(value) => setFormData({ ...formData, category: value })}>
+          <Select value={getFileCategory(formData.type)} onValueChange={(value) => {
+            // Convert category back to type - this is a simplified mapping
+            const typeMap: Record<string, ContentFile['type']> = {
+              'recorded': 'video',
+              'resources': 'image', 
+              'overlays': 'overlay',
+              'documents': 'document',
+              'other': 'other'
+            };
+            setFormData({ ...formData, type: typeMap[value] || 'other' });
+          }}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -557,7 +605,7 @@ function FileForm({
         
         <div className="space-y-2">
           <Label>Tipo</Label>
-          <Select value={formData.type} onValueChange={(value) => setFormData({ ...formData, type: value })}>
+          <Select value={formData.type} onValueChange={(value) => setFormData({ ...formData, type: value as ContentFile['type'] })}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>

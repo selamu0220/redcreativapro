@@ -1,16 +1,15 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '../button';
 import { ScrollArea } from '../scroll-area';
-import { Separator } from '../separator';
+
 import { 
   Eye, 
   EyeOff, 
   Lock, 
   Unlock, 
   Volume2, 
-  VolumeX, 
   Plus, 
   Trash2, 
   Copy, 
@@ -44,7 +43,7 @@ export function Timeline({ project, timeline, onTimelineChange, onProjectChange 
   const PIXELS_PER_SECOND = 50 * timeline.zoom;
   const TRACK_HEIGHT = 60;
   const RULER_HEIGHT = 30;
-  const SNAP_THRESHOLD = 10;
+  const _SNAP_THRESHOLD = 10;
 
   // Calcular duración total del proyecto
   const clipDurations = project.tracks.flatMap(track => 

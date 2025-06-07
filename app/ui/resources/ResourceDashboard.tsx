@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/app/ui/card';
 import { Badge } from '@/app/ui/badge';
 import { Button } from '@/app/ui/button';
 import { Progress } from '@/app/ui/progress';
-import { Resource } from '@/app/lib/types/resources';
+import { Resource } from '@/app/types/resources';
 import { 
   FileText, 
   Image, 

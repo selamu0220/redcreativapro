@@ -16,20 +16,28 @@ import {
   FileText, 
   Video, 
   Camera, 
-  Mic, 
   Eye, 
   Download, 
-  Upload, 
   Save, 
   Copy, 
   Play, 
   Pause, 
   RotateCcw,
-  Timer,
-  Users,
-  MessageSquare
+  Timer
 } from 'lucide-react';
 import { VideoProject, ScriptScene } from '../../types/projects';
+
+// Define a more specific type for the form data
+interface ScriptSceneFormData {
+  id?: string; // Add id as optional
+  title: string;
+  type: 'intro' | 'main' | 'transition' | 'outro' | 'other';
+  content: string;
+  duration: number;
+  order: number;
+  actions: string[];
+  notes: string;
+}
 
 interface ScriptEditorProps {
   project: VideoProject;
@@ -44,9 +52,20 @@ export function ScriptEditor({ project, onUpdate }: ScriptEditorProps) {
   const [timer, setTimer] = useState({ isRunning: false, seconds: 0 });
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const addScene = (scene: Omit<ScriptScene, 'id'>) => {
+  const addScene = (sceneData: ScriptSceneFormData) => { // addScene now takes ScriptSceneFormData
+    // Ensure sceneData for addScene doesn't have an id, or handle it appropriately
+    // For adding a new scene, the id is generated, so we use Omit<ScriptScene, 'id'> for the newScene object structure
+    const scenePayload: Omit<ScriptScene, 'id'> = {
+        title: sceneData.title,
+        type: sceneData.type,
+        content: sceneData.content,
+        duration: sceneData.duration,
+        order: sceneData.order,
+        actions: sceneData.actions,
+        notes: sceneData.notes,
+    };
     const newScene: ScriptScene = {
-      ...scene,
+      ...scenePayload, // Correctly use scenePayload
       id: Date.now().toString()
     };
     
@@ -62,7 +81,21 @@ export function ScriptEditor({ project, onUpdate }: ScriptEditorProps) {
     setIsAddingScene(false);
   };
 
-  const updateScene = (updatedScene: ScriptScene) => {
+  const updateScene = (sceneData: ScriptSceneFormData) => { // updateScene now takes ScriptSceneFormData
+    if (!sceneData.id) {
+      console.error("Attempted to update scene without an ID");
+      return;
+    }
+    const updatedScene: ScriptScene = {
+      id: sceneData.id, // id is now part of sceneData
+      title: sceneData.title,
+      content: sceneData.content,
+      type: sceneData.type,
+      duration: sceneData.duration,
+      order: sceneData.order,
+      actions: sceneData.actions,
+      notes: sceneData.notes,
+    };
     const updatedProject = {
       ...project,
       script: {
@@ -105,17 +138,22 @@ export function ScriptEditor({ project, onUpdate }: ScriptEditorProps) {
   };
 
   const duplicateScene = (scene: ScriptScene) => {
-    const duplicatedScene: ScriptScene = {
-      ...scene,
-      id: Date.now().toString(),
+    // Ensure duplicatedScene conforms to ScriptSceneFormData for addScene
+    const duplicatedSceneData: ScriptSceneFormData = {
       title: `${scene.title} (Copia)`,
-      order: project.script.scenes.length
+      type: scene.type || 'main', // Provide a default if scene.type is undefined
+      content: scene.content,
+      duration: scene.duration || 0, // Provide a default if scene.duration is undefined
+      order: project.script.scenes.length,
+      actions: scene.actions || [], // Provide a default if scene.actions is undefined
+      notes: scene.notes,
+      // id is not needed here as addScene will generate it
     };
     
-    addScene(duplicatedScene);
+    addScene(duplicatedSceneData);
   };
 
-  const reorderScenes = (fromIndex: number, toIndex: number) => {
+  const _reorderScenes = (fromIndex: number, toIndex: number) => {
     const scenes = [...project.script.scenes];
     const [movedScene] = scenes.splice(fromIndex, 1);
     scenes.splice(toIndex, 0, movedScene);
@@ -271,8 +309,8 @@ export function ScriptEditor({ project, onUpdate }: ScriptEditorProps) {
           <div className="mt-4 space-y-2">
             <Label>Descripción</Label>
             <Textarea
-              value={project.script.description}
-              onChange={(e) => updateScriptInfo({ description: e.target.value })}
+              value={project.script.notes}
+              onChange={(e) => updateScriptInfo({ notes: e.target.value })}
               placeholder="Descripción del video y notas generales"
               rows={3}
             />
@@ -310,7 +348,7 @@ export function ScriptEditor({ project, onUpdate }: ScriptEditorProps) {
           </div>
           
           <div className="space-y-2 max-h-96 overflow-y-auto">
-            {sortedScenes.map((scene, index) => (
+            {sortedScenes.map((scene, _index) => (
               <Card 
                 key={scene.id} 
                 className={`cursor-pointer transition-all ${
@@ -324,7 +362,7 @@ export function ScriptEditor({ project, onUpdate }: ScriptEditorProps) {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-2">
-                        {getSceneTypeIcon(scene.type)}
+                        {getSceneTypeIcon(scene.type || 'main')}
                         <span className="font-medium text-sm">{scene.title}</span>
                       </div>
                       
@@ -449,7 +487,7 @@ function SceneEditor({
   previewMode 
 }: { 
   scene: ScriptScene; 
-  onUpdate: (scene: ScriptScene) => void; 
+  onUpdate: (scene: ScriptSceneFormData) => void; // Changed to expect ScriptSceneFormData
   previewMode: boolean; 
 }) {
   const [localScene, setLocalScene] = useState(scene);
@@ -461,8 +499,19 @@ function SceneEditor({
     setHasChanges(true);
   };
 
-  const saveChanges = () => {
-    onUpdate(localScene);
+  const handleSave = () => {
+    // Ensure localScene conforms to ScriptSceneFormData before calling onUpdate
+    const sceneDataToUpdate: ScriptSceneFormData = {
+      id: localScene.id, // id is present in localScene (it's a ScriptScene)
+      title: localScene.title,
+      type: localScene.type || 'main', // Default if undefined
+      content: localScene.content,
+      duration: localScene.duration || 0, // Default if undefined
+      order: localScene.order,
+      actions: localScene.actions || [], // Default if undefined
+      notes: localScene.notes,
+    };
+    onUpdate(sceneDataToUpdate);
     setHasChanges(false);
   };
 
@@ -481,9 +530,9 @@ function SceneEditor({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            {getSceneTypeIcon(scene.type)}
+            {getSceneTypeIcon(scene.type || 'main')}
             <span>{scene.title}</span>
-            <Badge>{scene.type}</Badge>
+            <Badge>{scene.type || 'main'}</Badge>
           </CardTitle>
           {scene.duration && (
             <CardDescription>
@@ -493,11 +542,11 @@ function SceneEditor({
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {scene.dialogue && (
+            {scene.content && (
               <div>
-                <h4 className="font-medium mb-2">Diálogo</h4>
+                <h4 className="font-medium mb-2">Contenido</h4>
                 <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="whitespace-pre-wrap">{scene.dialogue}</p>
+                  <p className="whitespace-pre-wrap">{scene.content}</p>
                 </div>
               </div>
             )}
@@ -541,7 +590,7 @@ function SceneEditor({
                 <RotateCcw className="h-4 w-4 mr-2" />
                 Descartar
               </Button>
-              <Button size="sm" onClick={saveChanges}>
+              <Button size="sm" onClick={handleSave}> // Changed saveChanges to handleSave
                 <Save className="h-4 w-4 mr-2" />
                 Guardar
               </Button>
@@ -580,11 +629,11 @@ function SceneEditor({
             </div>
             
             <div className="space-y-2">
-              <Label>Diálogo / Texto</Label>
+              <Label>Contenido / Texto</Label>
               <Textarea
-                value={localScene.dialogue}
-                onChange={(e) => handleChange('dialogue', e.target.value)}
-                placeholder="Escribe aquí el diálogo o texto que se dirá en esta escena..."
+                value={localScene.content}
+                onChange={(e) => handleChange('content', e.target.value)}
+                placeholder="Escribe aquí el contenido o texto que se dirá en esta escena..."
                 rows={8}
               />
             </div>
@@ -658,25 +707,31 @@ function SceneForm({
   sceneCount
 }: { 
   scene?: ScriptScene; 
-  onSubmit: (scene: any) => void; 
+  onSubmit: (scene: ScriptSceneFormData) => void; // onSubmit now expects ScriptSceneFormData (which can include id)
   onCancel: () => void;
   sceneCount: number;
 }) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ScriptSceneFormData>({ // Use the new specific type
     title: scene?.title || '',
-    type: scene?.type || 'main',
-    dialogue: scene?.dialogue || '',
+    type: scene?.type || 'main', // Ensure 'main' is a valid initial type according to ScriptSceneFormData
+    content: scene?.content || '', // Changed from dialogue to content
     duration: scene?.duration || 30,
     order: scene?.order ?? sceneCount,
     actions: scene?.actions || [],
     notes: scene?.notes || ''
-  });
+  } as ScriptSceneFormData); // Add type assertion for initial state if needed, or ensure all fields match
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.title.trim()) return;
+
+    // If editing, include the original scene's id
+    const dataToSubmit: ScriptSceneFormData = {
+      ...formData,
+      id: scene?.id, // Include id if scene exists (i.e., editing)
+    };
     
-    onSubmit(formData);
+    onSubmit(dataToSubmit);
   };
 
   return (
@@ -694,7 +749,14 @@ function SceneForm({
         
         <div className="space-y-2">
           <Label>Tipo</Label>
-          <Select value={formData.type} onValueChange={(value) => setFormData({ ...formData, type: value })}>
+          <Select value={formData.type} onValueChange={(newValue: string) => {
+            // The newValue from Select is a string, ensure it's a valid type for ScriptSceneFormData.type
+            const newSceneType = newValue as ScriptSceneFormData['type']; 
+            setFormData(prevFormData => ({
+              ...prevFormData,
+              type: newSceneType
+            }));
+          }}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -719,13 +781,13 @@ function SceneForm({
       </div>
       
       <div className="space-y-2">
-        <Label>Diálogo / Texto</Label>
-        <Textarea
-          value={formData.dialogue}
-          onChange={(e) => setFormData({ ...formData, dialogue: e.target.value })}
-          placeholder="Texto que se dirá en esta escena..."
-          rows={4}
-        />
+        <Label>Contenido / Diálogo</Label>
+          <Textarea
+            value={formData.content} // Changed from dialogue to content
+            onChange={(e) => setFormData({ ...formData, content: e.target.value })} // Changed from dialogue to content
+            placeholder="Contenido o diálogo de la escena..."
+            rows={4}
+          />
       </div>
       
       <div className="flex justify-end space-x-2">

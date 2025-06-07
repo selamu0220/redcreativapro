@@ -46,9 +46,11 @@ export interface ScriptScene {
   id: string;
   title: string;
   content: string;
+  type?: 'intro' | 'main' | 'transition' | 'outro' | 'other';
   duration?: number;
   notes: string;
   order: number;
+  actions?: string[];
 }
 
 export interface ContentFile {

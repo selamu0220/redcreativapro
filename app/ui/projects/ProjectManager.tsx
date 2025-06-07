@@ -70,7 +70,8 @@ export function ProjectManager() {
       tags: [],
       script: {
         title: 'Nuevo Proyecto',
-        description: '',
+        content: '',
+        notes: '',
         scenes: []
       },
       content: {
@@ -165,7 +166,7 @@ export function ProjectManager() {
           title: 'Proyecto importado',
           description: 'El proyecto ha sido importado exitosamente'
         });
-      } catch (error) {
+      } catch (_error) {
         toast({
           title: 'Error de importación',
           description: 'El archivo JSON no es válido',

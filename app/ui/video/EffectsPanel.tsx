@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '../button';
-import { Card, CardContent, CardHeader, CardTitle } from '../card';
+import { Card, CardContent } from '../card';
 import { ScrollArea } from '../scroll-area';
 import { Badge } from '../badge';
 import { Input } from '../input';
@@ -18,25 +18,20 @@ import {
   Contrast, 
   Droplets, 
   Wind, 
-  Flame, 
-  Snowflake, 
   Eye, 
   Volume2, 
   Music, 
   Mic,
   Search,
-  Star,
-  Heart,
   Smile,
   Camera,
   Film,
   Scissors,
   RotateCcw,
   Move,
-  ZoomIn,
-  Crop
+  ZoomIn
 } from 'lucide-react';
-import { VideoEffect, COMMON_EFFECTS, COMMON_TRANSITIONS } from '../../types/video';
+import { VideoEffect } from '../../types/video';
 
 interface EffectsPanelProps {
   selectedClips: string[];
