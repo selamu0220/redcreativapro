@@ -524,7 +524,7 @@ export function ChatInterface() {
                               className="h-8 text-xs"
                               onClick={() => {
                                 // Navegar al calendario
-                                navigate('/calendario');
+                                window.location.href = '/calendario';
                                 toast({
                                   title: "Navegando al Calendario",
                                   description: "Ve al calendario para crear tu evento"

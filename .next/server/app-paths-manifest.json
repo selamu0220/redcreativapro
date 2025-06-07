@@ -1,7 +1,7 @@
 {
   "/scripts/page": "app/scripts/page.js",
-  "/recursos/page": "app/recursos/page.js",
   "/presentacion/page": "app/presentacion/page.js",
-  "/calendario/page": "app/calendario/page.js",
-  "/prompts/page": "app/prompts/page.js"
+  "/recursos/page": "app/recursos/page.js",
+  "/prompts/page": "app/prompts/page.js",
+  "/calendario/page": "app/calendario/page.js"
 }
