@@ -542,7 +542,7 @@ export function ChatInterface() {
                               className="h-8 text-xs"
                               onClick={() => {
                                 // Navegar a recursos
-                                navigate('/recursos');
+                                window.location.href = '/recursos';
                                 toast({
                                   title: "Navegando a Recursos",
                                   description: "Ve a la secciÃ³n de recursos para explorar mÃ¡s"

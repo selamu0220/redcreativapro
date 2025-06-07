@@ -1,7 +1,8 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/blog/page": "app/blog/page.js",
+  "/calendario/page": "app/calendario/page.js",
   "/recursos/page": "app/recursos/page.js",
-  "/editor-video/page": "app/editor-video/page.js",
-  "/proyectos/page": "app/proyectos/page.js"
+  "/presentacion/page": "app/presentacion/page.js",
+  "/scripts/page": "app/scripts/page.js",
+  "/prompts/page": "app/prompts/page.js"
 }

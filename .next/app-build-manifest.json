@@ -6,17 +6,41 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
+    ],
+    "/editor-video/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/editor-video/page.css",
+      "static/chunks/app/editor-video/page.js"
+    ],
+    "/scripts/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/scripts/page.css",
+      "static/chunks/app/scripts/page.js"
+    ],
+    "/presentacion/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/presentacion/page.css",
+      "static/chunks/app/presentacion/page.js"
+    ],
     "/recursos/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/recursos/page.css",
       "static/chunks/app/recursos/page.js"
     ],
-    "/tareas/page": [
+    "/calendario/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/tareas/page.css",
-      "static/chunks/app/tareas/page.js"
+      "static/css/app/calendario/page.css",
+      "static/chunks/app/calendario/page.js"
     ],
     "/prompts/page": [
       "static/chunks/webpack.js",
@@ -29,18 +53,6 @@
       "static/chunks/main-app.js",
       "static/css/app/blog/page.css",
       "static/chunks/app/blog/page.js"
-    ],
-    "/proyectos/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/proyectos/page.css",
-      "static/chunks/app/proyectos/page.js"
-    ],
-    "/editor-video/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/editor-video/page.css",
-      "static/chunks/app/editor-video/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
