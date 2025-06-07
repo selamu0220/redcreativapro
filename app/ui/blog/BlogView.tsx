@@ -81,7 +81,7 @@ export function BlogView() {
   const postForSEO = selectedPost ? {
     ...selectedPost,
     slug: slugify(selectedPost.title)
-  } : null;
+  } : undefined;
   
   useBlogSEO(postForSEO);
 

@@ -1,5 +1,6 @@
 {
   "name": "red-creativa-pro-beta",
+  "type": "module",
   "private": true,
   "version": "0.0.0",
   "scripts": {
