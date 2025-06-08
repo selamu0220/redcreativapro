@@ -24,7 +24,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { ScrollArea } from '../../ui/scroll-area';
 import { Badge } from '../../ui/badge';
-import { v4 } from '../../lib/utils';
+import { v4 as uuidv4 } from '../../lib/utils';
 import { Upload, Link as LinkIcon, FolderUp, X, Plus } from 'lucide-react';
 
 const formSchema = z.object({
@@ -99,7 +99,7 @@ export function ResourceUploader({ onAddResource }: ResourceUploaderProps) {
     // Procesar archivos
     selectedFiles.forEach(file => {
       const resource: Resource = {
-        id: v4(),
+        id: uuidv4(),
         title: file.name,
         description: values.description,
         type: file.type.startsWith('image/') ? 'image' : 'document',
@@ -108,6 +108,8 @@ export function ResourceUploader({ onAddResource }: ResourceUploaderProps) {
         rating: 0,
         size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
         thumbnailUrl: file.type.startsWith('image/') ? URL.createObjectURL(file) : undefined,
+        visibility: 'private', // O el valor que corresponda
+        ownerId: '', // O el ID del usuario actual
       };
       onAddResource(resource);
     });
@@ -115,7 +117,7 @@ export function ResourceUploader({ onAddResource }: ResourceUploaderProps) {
     // Procesar enlaces
     links.forEach(link => {
       const resource: Resource = {
-        id: v4(),
+        id: uuidv4(),
         title: values.title || link,
         description: values.description,
         type: values.type,
@@ -123,6 +125,8 @@ export function ResourceUploader({ onAddResource }: ResourceUploaderProps) {
         createdAt: new Date().toISOString(),
         rating: 0,
         url: link,
+        visibility: 'private', // O el valor que corresponda
+        ownerId: '', // O el ID del usuario actual
       };
       onAddResource(resource);
     });
