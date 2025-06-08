@@ -1,4 +1,7 @@
 [build]
+  environment = {
+    NODE_VERSION = "22.16.0"
+  }
   command = "npm run build"
   publish = ".next"
 
