@@ -1,4 +1,4 @@
-export type EventVisibility = 'private' | 'public' | 'shared';
+export type EventVisibility = 'private';
 
 export interface EventType {
   id: string;
@@ -9,6 +9,5 @@ export interface EventType {
   color?: string;
   script?: string;
   visibility: EventVisibility;
-  sharedWith?: string[];
   ownerId: string;
 }

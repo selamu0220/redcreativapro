@@ -8,19 +8,17 @@ import { PromptDetail } from './PromptDetail';
 import { PromptEditor } from './PromptEditor';
 import { Button } from '../../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../ui/dialog';
-import { Tabs, TabsList, TabsTrigger } from '../../ui/tabs';
-import { Plus, Library, Globe } from 'lucide-react';
+import { Plus, Library } from 'lucide-react';
 import { useToast } from '../../hooks/use-toast';
-import { useAuth } from '../../contexts/AuthContext';
+import { usePromptsStorage } from '../../hooks/useLocalStorage';
+import { CSVManager } from '../common/CSVManager';
 
 export function PromptLibrary() {
-  const [prompts, setPrompts] = useState<Prompt[]>(mockPrompts);
+  const { data: prompts, setData: setPrompts, importFromCSV, exportToCSV, hasChanges } = usePromptsStorage(mockPrompts);
   const [selectedPrompt, setSelectedPrompt] = useState<Prompt | null>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingPrompt, setEditingPrompt] = useState<Prompt | null>(null);
-  const [view, setView] = useState<'personal' | 'feed'>('personal');
   const { toast } = useToast();
-  const { user } = useAuth();
 
   const handleSavePrompt = (prompt: Prompt) => {
     if (editingPrompt) {
@@ -70,21 +68,16 @@ export function PromptLibrary() {
     });
   };
 
-  const handleShare = (promptId: string) => {
-    // Implementar lógica de compartir
-    toast({
-      title: 'Compartir prompt',
-      description: 'Próximamente podrás compartir tus prompts con otros usuarios.',
-    });
+  const handleImportCSV = async (file: File) => {
+    await importFromCSV(file);
   };
 
-  const filteredPrompts = prompts.filter(prompt => {
-    if (view === 'personal') {
-      return true; // Mostrar todos los prompts personales
-    } else {
-      return prompt.isFavorite; // En el feed mostrar solo los favoritos por ahora
-    }
-  });
+  const handleExportCSV = () => {
+    exportToCSV();
+  };
+
+  // Todos los prompts son locales ahora
+  const filteredPrompts = prompts;
 
   return (
     <div className="space-y-6">
@@ -92,27 +85,28 @@ export function PromptLibrary() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Biblioteca de Prompts</h1>
           <p className="text-muted-foreground">
-            Gestiona y organiza tus prompts de IA
+            Gestiona y organiza tus prompts de IA localmente
           </p>
         </div>
-        <Button onClick={handleNewPrompt}>
-          <Plus className="mr-2 h-4 w-4" />
-          Nuevo Prompt
-        </Button>
+        <div className="flex items-center gap-2">
+          <CSVManager
+            onImport={handleImportCSV}
+            onExport={handleExportCSV}
+            hasChanges={hasChanges}
+            dataType="prompts"
+            itemCount={prompts.length}
+          />
+          <Button onClick={handleNewPrompt}>
+            <Plus className="mr-2 h-4 w-4" />
+            Nuevo Prompt
+          </Button>
+        </div>
       </div>
 
-      <Tabs value={view} onValueChange={(v) => setView(v as 'personal' | 'feed')} className="w-full">
-        <TabsList className="grid w-[400px] grid-cols-2">
-          <TabsTrigger value="personal" className="flex items-center gap-2">
-            <Library className="h-4 w-4" />
-            Mi Biblioteca
-          </TabsTrigger>
-          <TabsTrigger value="feed" className="flex items-center gap-2">
-            <Globe className="h-4 w-4" />
-            Feed Público
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Library className="h-4 w-4" />
+        <span>{prompts.length} prompts en tu biblioteca local</span>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="col-span-1">
@@ -121,7 +115,6 @@ export function PromptLibrary() {
             onPromptSelect={handlePromptSelect}
             selectedPrompt={selectedPrompt}
             onToggleFavorite={handleToggleFavorite}
-            view={view}
           />
         </div>
         <div className="col-span-1 lg:col-span-2">
@@ -130,15 +123,10 @@ export function PromptLibrary() {
               prompt={selectedPrompt}
               onEdit={handleEditPrompt}
               onDelete={handleDeletePrompt}
-              onShare={handleShare}
-              view={view}
             />
           ) : (
             <div className="border rounded-lg p-8 text-center text-muted-foreground">
-              {view === 'personal' ? 
-                'Selecciona un prompt para ver los detalles' :
-                'Explora y guarda prompts de otros creadores'
-              }
+              Selecciona un prompt para ver los detalles
             </div>
           )}
         </div>

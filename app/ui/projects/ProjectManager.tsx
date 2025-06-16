@@ -34,28 +34,58 @@ import { VideoProject, ContentFile, ProjectTask, TimelineEvent } from '../../typ
 import { ProjectBoard } from './ProjectBoard';
 import { ScriptEditor } from './ScriptEditor';
 import { ContentManager } from './ContentManager';
+import { useProjectsStorage } from '../../hooks/useLocalStorage';
+import { CSVManager } from '../common/CSVManager';
 
 export function ProjectManager() {
-  const [projects, setProjects] = useState<VideoProject[]>([]);
+  const { data: projects, setData: setProjects, importFromCSV, exportToCSV } = useProjectsStorage();
   const [selectedProject, setSelectedProject] = useState<VideoProject | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCategory, setFilterCategory] = useState<string>('all');
+  const [hasChanges, setHasChanges] = useState(false);
   const { toast } = useToast();
 
-  // Load projects from localStorage
   useEffect(() => {
-    const savedProjects = localStorage.getItem('videoProjects');
-    if (savedProjects) {
-      setProjects(JSON.parse(savedProjects));
+    setHasChanges(true);
+  }, [projects]);
+
+  const handleImportCSV = async (file: File) => {
+    try {
+      await importFromCSV(file);
+      toast({
+        title: "Importación exitosa",
+        description: "Los proyectos se han importado correctamente."
+      });
+    } catch (error) {
+      toast({
+        title: "Error en la importación",
+        description: "No se pudieron importar los proyectos. Verifica el formato del archivo.",
+        variant: "destructive"
+      });
     }
-  }, []);
+  };
+
+  const handleExportCSV = () => {
+    try {
+      exportToCSV();
+      toast({
+        title: "Exportación exitosa",
+        description: "Los proyectos se han exportado correctamente."
+      });
+    } catch (error) {
+      toast({
+        title: "Error en la exportación",
+        description: "No se pudieron exportar los proyectos.",
+        variant: "destructive"
+      });
+    }
+  };
 
   // Save projects to localStorage
   const saveProjects = (updatedProjects: VideoProject[]) => {
     setProjects(updatedProjects);
-    localStorage.setItem('videoProjects', JSON.stringify(updatedProjects));
   };
 
   const createNewProject = () => {
@@ -276,6 +306,13 @@ export function ProjectManager() {
           <p className="text-muted-foreground text-sm leading-relaxed">Organiza tus proyectos de video con Google Drive</p>
         </div>
         <div className="flex items-center space-x-2">
+          <CSVManager
+            onImport={handleImportCSV}
+            onExport={handleExportCSV}
+            hasChanges={hasChanges}
+            dataType="projects"
+            itemCount={projects.length}
+          />
           <input
             type="file"
             accept=".json"

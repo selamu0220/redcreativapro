@@ -11,8 +11,8 @@ export const mockResources: Resource[] = [
     rating: 4.5,
     size: '2.3 MB',
     thumbnailUrl: 'https://images.pexels.com/photos/4101555/pexels-photo-4101555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    visibility: 'public',
-    ownerId: '1',
+    visibility: 'private',
+    ownerId: 'local-user',
     comments: [
       {
         id: '1',
@@ -49,8 +49,8 @@ export const mockResources: Resource[] = [
     rating: 4.2,
     size: '1.1 MB',
     thumbnailUrl: 'https://images.pexels.com/photos/669615/pexels-photo-669615.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    visibility: 'public',
-    ownerId: '1'
+    visibility: 'private',
+    ownerId: 'local-user'
   },
   {
     id: '4',
@@ -62,8 +62,8 @@ export const mockResources: Resource[] = [
     rating: 4.9,
     url: 'https://openai.com/dall-e-3',
     thumbnailUrl: 'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    visibility: 'public',
-    ownerId: '1'
+    visibility: 'private',
+    ownerId: 'local-user'
   },
   {
     id: '5',
@@ -75,8 +75,8 @@ export const mockResources: Resource[] = [
     rating: 4.4,
     size: '3.2 MB',
     thumbnailUrl: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    visibility: 'public',
-    ownerId: '1'
+    visibility: 'private',
+    ownerId: 'local-user'
   },
   {
     id: '6',
@@ -88,8 +88,8 @@ export const mockResources: Resource[] = [
     rating: 4.6,
     url: 'https://www.canva.com/pro/',
     thumbnailUrl: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    visibility: 'public',
-    ownerId: '1'
+    visibility: 'private',
+    ownerId: 'local-user'
   },
   {
     id: '7',
@@ -101,8 +101,8 @@ export const mockResources: Resource[] = [
     rating: 4.1,
     size: '5.7 MB',
     thumbnailUrl: 'https://images.pexels.com/photos/7688460/pexels-photo-7688460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    visibility: 'public',
-    ownerId: '1'
+    visibility: 'private',
+    ownerId: 'local-user'
   },
   {
     id: '8',
@@ -114,7 +114,7 @@ export const mockResources: Resource[] = [
     rating: 4.7,
     url: 'https://chat.openai.com/',
     thumbnailUrl: 'https://images.pexels.com/photos/8438923/pexels-photo-8438923.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    visibility: 'public',
-    ownerId: '1'
+    visibility: 'private',
+    ownerId: 'local-user'
   }
 ];

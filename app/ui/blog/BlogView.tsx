@@ -129,20 +129,18 @@ export function BlogView() {
 
   return (
     <div className="space-y-6">
-
-      
-      <div className="flex items-center justify-between">
+      <header className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Blog</h1>
-          <p className="text-muted-foreground">
-            Read and publish articles about content creation and digital marketing.
-          </p>
+          <h1 className="text-3xl font-bold tracking-tight">Blog de Marketing Digital y Creatividad</h1>
+          <h2 className="text-muted-foreground text-lg">
+            Artículos especializados sobre creación de contenido y marketing digital para creativos profesionales.
+          </h2>
         </div>
         <Button onClick={handleNewPost}>
           <Plus className="mr-2 h-4 w-4" />
           New Post
         </Button>
-      </div>
+      </header>
 
       {selectedPost ? (
         <BlogPost

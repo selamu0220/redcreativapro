@@ -12,4 +12,16 @@ export interface Post {
   updatedAt: string;
   tags: string[];
   imageUrl?: string;
+  // SEO fields
+  metaDescription?: string;
+  keywords?: string[];
+  slug?: string;
+  // Content organization
+  category?: string;
+  readingTime?: number; // in minutes
+  featured?: boolean;
+  // Social sharing
+  socialImage?: string;
+  // Content quality
+  status?: 'draft' | 'published' | 'archived';
 }

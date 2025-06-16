@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Prompt, PromptCategory, PromptVisibility } from '../../types/prompts';
+import { Prompt, PromptCategory } from '../../types/prompts';
 import { Button } from '../../ui/button';
 import { Input } from '../../ui/input';
 import { Textarea } from '../../ui/textarea';
@@ -24,7 +24,6 @@ import {
 import { Badge } from '../../ui/badge';
 import { Plus, X } from 'lucide-react';
 import { v4 } from '../../lib/utils';
-import { useAuth } from '../../contexts/AuthContext';
 
 const formSchema = z.object({
   title: z.string().min(1, 'El título es requerido'),
@@ -46,7 +45,6 @@ const formSchema = z.object({
     'educational',
     'copywriting'
   ]),
-  visibility: z.enum(['private', 'public', 'shared']),
   tags: z.string(),
 });
 
@@ -58,7 +56,6 @@ interface PromptEditorProps {
 export function PromptEditor({ onSave, prompt }: PromptEditorProps) {
   const [newTag, setNewTag] = useState('');
   const [tags, setTags] = useState<string[]>(prompt?.tags || []);
-  const { user } = useAuth();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -66,7 +63,6 @@ export function PromptEditor({ onSave, prompt }: PromptEditorProps) {
       title: prompt?.title || '',
       content: prompt?.content || '',
       category: prompt?.category || 'blog',
-      visibility: prompt?.visibility || 'private',
       tags: prompt?.tags?.join(', ') || '',
     },
   });
@@ -88,14 +84,13 @@ export function PromptEditor({ onSave, prompt }: PromptEditorProps) {
       title: values.title,
       content: values.content,
       category: values.category as PromptCategory,
-      visibility: values.visibility as PromptVisibility,
+      visibility: 'private', // Todos los prompts son privados en el sistema local
       tags: tags,
       createdAt: prompt?.createdAt || new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       isFavorite: prompt?.isFavorite || false,
       usageCount: prompt?.usageCount || 0,
-      ownerId: user?.id || '',
-      sharedWith: prompt?.sharedWith || [],
+      ownerId: 'local-user',
     };
 
     onSave(newPrompt);
@@ -128,71 +123,43 @@ export function PromptEditor({ onSave, prompt }: PromptEditorProps) {
             )}
           />
 
-          <div className="grid grid-cols-2 gap-4">
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Categoría</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleccionar categoría" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="blog">Blog</SelectItem>
-                      <SelectItem value="social">Redes Sociales</SelectItem>
-                      <SelectItem value="marketing">Marketing</SelectItem>
-                      <SelectItem value="seo">SEO</SelectItem>
-                      <SelectItem value="creative">Creativo</SelectItem>
-                      <SelectItem value="video">Video</SelectItem>
-                      <SelectItem value="podcast">Podcast</SelectItem>
-                      <SelectItem value="email">Email</SelectItem>
-                      <SelectItem value="ads">Publicidad</SelectItem>
-                      <SelectItem value="product">Producto</SelectItem>
-                      <SelectItem value="technical">Técnico</SelectItem>
-                      <SelectItem value="research">Investigación</SelectItem>
-                      <SelectItem value="storytelling">Storytelling</SelectItem>
-                      <SelectItem value="educational">Educativo</SelectItem>
-                      <SelectItem value="copywriting">Copywriting</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="visibility"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Visibilidad</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Seleccionar visibilidad" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="private">Privado</SelectItem>
-                      <SelectItem value="public">Público</SelectItem>
-                      <SelectItem value="shared">Compartido</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Categoría</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar categoría" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="blog">Blog</SelectItem>
+                    <SelectItem value="social">Redes Sociales</SelectItem>
+                    <SelectItem value="marketing">Marketing</SelectItem>
+                    <SelectItem value="seo">SEO</SelectItem>
+                    <SelectItem value="creative">Creativo</SelectItem>
+                    <SelectItem value="video">Video</SelectItem>
+                    <SelectItem value="podcast">Podcast</SelectItem>
+                    <SelectItem value="email">Email</SelectItem>
+                    <SelectItem value="ads">Publicidad</SelectItem>
+                    <SelectItem value="product">Producto</SelectItem>
+                    <SelectItem value="technical">Técnico</SelectItem>
+                    <SelectItem value="research">Investigación</SelectItem>
+                    <SelectItem value="storytelling">Storytelling</SelectItem>
+                    <SelectItem value="educational">Educativo</SelectItem>
+                    <SelectItem value="copywriting">Copywriting</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <FormField
             control={form.control}

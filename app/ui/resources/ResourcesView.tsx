@@ -17,7 +17,8 @@ import { Badge } from '../../ui/badge';
 import { Input } from '../../ui/input';
 import { useToast } from '../../hooks/use-toast';
 import { useQuickRefresh } from '../../hooks/useQuickRefresh';
-import { mockResources } from '../../data/mockResources';
+import { useResourcesStorage } from '../../hooks/useLocalStorage';
+import { CSVManager } from '../common/CSVManager';
 import { Resource, ResourceComment } from '../../types/resources';
 import { useResourceSEO } from '../../hooks/useSEO';
 import { 
@@ -39,8 +40,38 @@ import {
 } from 'lucide-react';
 
 export function ResourcesView() {
-  const [resources, setResources] = useState<Resource[]>(mockResources);
-  const [filteredResources, setFilteredResources] = useState<Resource[]>(mockResources);
+  const { data: resources, setData: setResources, importFromCSV, exportToCSV, hasChanges } = useResourcesStorage();
+  const [filteredResources, setFilteredResources] = useState<Resource[]>(resources);
+
+  // Inicializar con datos mock si no hay recursos
+  useEffect(() => {
+    if (resources.length === 0) {
+      const { mockResources } = require('../../data/mockResources');
+      setResources(mockResources);
+    }
+  }, []);
+
+  // Sincronizar filteredResources cuando cambien los resources
+  useEffect(() => {
+    setFilteredResources(resources);
+  }, [resources]);
+
+  // Detectar cambios para el estado hasChanges
+  useEffect(() => {
+    // Este efecto se ejecuta cuando resources cambia
+  }, [resources]);
+
+  const addResource = (resource: Resource) => {
+    setResources([...resources, resource]);
+  };
+
+  const updateResource = (updatedResource: Resource) => {
+    setResources(resources.map(r => r.id === updatedResource.id ? updatedResource : r));
+  };
+
+  const deleteResource = (id: string) => {
+    setResources(resources.filter(r => r.id !== id));
+  };
   const [selectedResource, setSelectedResource] = useState<Resource | null>(null);
   const [isUploaderOpen, setIsUploaderOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('resources');
@@ -59,8 +90,7 @@ export function ResourcesView() {
   const { isRefreshing } = useQuickRefresh({
     onRefresh: async () => {
       // Actualizar recursos sin cambiar referencias innecesariamente
-      setResources([...mockResources]);
-      setFilteredResources([...mockResources]);
+      setFilteredResources([...resources]);
       
       toast({
         title: '✅ Recursos actualizados',
@@ -166,8 +196,7 @@ export function ResourcesView() {
   }, [resources, favorites, collections]);
   
   const handleAddResource = (resource: Resource) => {
-    setResources([...resources, resource]);
-    setFilteredResources([...resources, resource]);
+    addResource(resource);
     setIsUploaderOpen(false);
     toast({
       title: 'Recurso añadido',
@@ -175,27 +204,50 @@ export function ResourcesView() {
     });
   };
 
+  const handleImportCSV = async (file: File) => {
+    try {
+      await importFromCSV(file);
+      toast({
+        title: 'Éxito',
+        description: 'Recursos importados correctamente desde CSV',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Error al importar recursos desde CSV',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleExportCSV = () => {
+    try {
+      exportToCSV();
+      toast({
+        title: 'Éxito',
+        description: 'Recursos exportados correctamente a CSV',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Error al exportar recursos a CSV',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const handleFilter = useCallback((filtered: Resource[]) => {
     setFilteredResources(filtered);
   }, []);
 
   const handleAddComment = (resourceId: string, comment: ResourceComment) => {
-    const updatedResources = resources.map(resource => {
-      if (resource.id === resourceId) {
-        return {
-          ...resource,
-          comments: [...(resource.comments || []), comment]
-        };
-      }
-      return resource;
-    });
-
-    setResources(updatedResources);
-    setFilteredResources(updatedResources);
-    
-    // Update the selected resource to show the new comment immediately
-    const updatedResource = updatedResources.find(r => r.id === resourceId);
-    if (updatedResource) {
+    const resource = resources.find(r => r.id === resourceId);
+    if (resource) {
+      const updatedResource = {
+        ...resource,
+        comments: [...(resource.comments || []), comment]
+      };
+      updateResource(updatedResource);
       setSelectedResource(updatedResource);
     }
 
@@ -243,6 +295,13 @@ export function ResourcesView() {
             <FolderPlus className="h-4 w-4" />
             Subir Recurso
           </Button>
+          <CSVManager
+            onImport={handleImportCSV}
+            onExport={handleExportCSV}
+            hasChanges={hasChanges}
+            dataType="recursos"
+            itemCount={resources.length}
+          />
         </div>
       </div>
 

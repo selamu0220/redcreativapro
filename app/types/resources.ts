@@ -1,5 +1,5 @@
 export type ResourceType = 'document' | 'image' | 'link' | 'ai-tool';
-export type ResourceVisibility = 'private' | 'public' | 'shared';
+export type ResourceVisibility = 'private';
 
 export interface ResourceComment {
   id: string;
@@ -14,17 +14,26 @@ export interface ResourceComment {
 
 export interface Resource {
   id: string;
-  title: string;
-  description?: string;
-  type: ResourceType;
-  tags: string[];
-  createdAt: string;
-  rating: number;
-  size?: string;
+  titulo: string;
+  descripcion?: string;
+  tipo: ResourceType;
   url?: string;
+  etiquetas: string[];
+  favorito: boolean;
+  fecha_creacion: string;
+  fecha_actualizacion: string;
+  autor: string;
+  rating: number;
+  
+  // Campos adicionales para compatibilidad
+  title?: string;
+  description?: string;
+  type?: ResourceType;
+  tags?: string[];
+  createdAt?: string;
+  size?: string;
   thumbnailUrl?: string;
-  visibility: ResourceVisibility;
-  sharedWith?: string[];
-  ownerId: string;
+  visibility?: ResourceVisibility;
+  ownerId?: string;
   comments?: ResourceComment[];
 }

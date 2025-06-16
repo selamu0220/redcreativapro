@@ -7,8 +7,8 @@ import { WeekView } from './WeekView';
 import { DayView } from './DayView';
 import { CalendarEventDialog } from './CalendarEventDialog';
 import { EventType } from '../../types/calendar';
-import { mockEvents } from '../../data/mockEvents';
-import { useAuth } from '../../contexts/AuthContext';
+import { useEventsStorage } from '../../hooks/useLocalStorage';
+import { CSVManager } from '../common/CSVManager';
 import { useToast } from '../../hooks/use-toast';
 import { useCalendarSEO } from '../../hooks/useSEO';
 
@@ -17,30 +17,61 @@ type CalendarViewType = 'month' | 'week' | 'day';
 export function CalendarView() {
   const [viewType, setViewType] = useState<CalendarViewType>('month');
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
-  const [events, setEvents] = useState<EventType[]>(mockEvents);
+  const { events, addEvent, updateEvent, deleteEvent, importFromCSV, exportToCSV, hasUnsavedChanges } = useEventsStorage();
   const [isEventDialogOpen, setIsEventDialogOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
-  const { isAuthenticated } = useAuth();
   const { toast } = useToast();
 
   // Aplicar SEO específico para la página del calendario
   useCalendarSEO();
 
   const handleAddEvent = (event: EventType) => {
-    setEvents([...events, event]);
+    addEvent(event);
     setIsEventDialogOpen(false);
   };
 
   const handleEditEvent = (updatedEvent: EventType) => {
-    setEvents(events.map(e => e.id === updatedEvent.id ? updatedEvent : e));
+    updateEvent(updatedEvent.id, updatedEvent);
     setIsEventDialogOpen(false);
     setSelectedEvent(null);
   };
 
   const handleDeleteEvent = (eventId: string) => {
-    setEvents(events.filter(e => e.id !== eventId));
+    deleteEvent(eventId);
     setIsEventDialogOpen(false);
     setSelectedEvent(null);
+  };
+
+  const handleImportCSV = async (file: File) => {
+    try {
+      await importFromCSV(file);
+      toast({
+        title: 'Éxito',
+        description: 'Eventos importados correctamente desde CSV',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Error al importar eventos desde CSV',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleExportCSV = () => {
+    try {
+      exportToCSV();
+      toast({
+        title: 'Éxito',
+        description: 'Eventos exportados correctamente a CSV',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Error al exportar eventos a CSV',
+        variant: 'destructive',
+      });
+    }
   };
 
   const openNewEventDialog = (date?: Date) => {
@@ -89,13 +120,21 @@ export function CalendarView() {
 
   return (
     <div className="space-y-6">
-      <CalendarHeader
-        viewType={viewType}
-        currentDate={currentDate}
-        onViewChange={setViewType}
-        onDateChange={setCurrentDate}
-        onAddEvent={openNewEventDialog}
-      />
+      <div className="flex justify-between items-center">
+        <CalendarHeader
+          viewType={viewType}
+          currentDate={currentDate}
+          onViewChange={setViewType}
+          onDateChange={setCurrentDate}
+          onAddEvent={openNewEventDialog}
+        />
+        <CSVManager
+          onImport={handleImportCSV}
+          onExport={handleExportCSV}
+          hasUnsavedChanges={hasUnsavedChanges}
+          dataType="eventos"
+        />
+      </div>
       
       <div className="border rounded-lg overflow-hidden">
         {renderCalendarView()}

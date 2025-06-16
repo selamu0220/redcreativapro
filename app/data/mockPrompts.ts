@@ -11,8 +11,8 @@ export const mockPrompts: Prompt[] = [
     updatedAt: '2025-03-15T10:00:00Z',
     isFavorite: true,
     usageCount: 15,
-    visibility: 'public',
-    ownerId: '1',
+    visibility: 'private',
+    ownerId: 'local-user',
   },
   {
     id: '2',
@@ -25,7 +25,7 @@ export const mockPrompts: Prompt[] = [
     isFavorite: false,
     usageCount: 8,
     visibility: 'private',
-    ownerId: '1',
+    ownerId: 'local-user',
   },
   {
     id: '3',
@@ -37,8 +37,7 @@ export const mockPrompts: Prompt[] = [
     updatedAt: '2025-03-13T09:45:00Z',
     isFavorite: true,
     usageCount: 12,
-    visibility: 'shared',
-    ownerId: '2',
-    sharedWith: ['1'],
+    visibility: 'private',
+    ownerId: 'local-user',
   },
 ];

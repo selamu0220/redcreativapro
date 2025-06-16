@@ -40,8 +40,7 @@ export interface Thumbnail {
   createdAt: string;
   updatedAt: string;
   ownerId: string;
-  visibility: 'private' | 'public' | 'shared';
-  sharedWith?: string[];
+  visibility: 'private';
 }
 
 export interface ThumbnailTemplate {

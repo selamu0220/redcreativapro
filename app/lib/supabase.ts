@@ -4,79 +4,82 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 // Check if environment variables are defined
-if (!supabaseUrl || !supabaseAnonKey) {
-  // Throw an error if Supabase environment variables are missing
-  throw new Error('Supabase environment variables NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are missing. Please check your .env file or environment configuration.');
-}
+const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
 
-// Create the Supabase client
-export const supabase = createClient(
-  supabaseUrl,
-  supabaseAnonKey
-);
+// Create the Supabase client only if configured
+export const supabase = isSupabaseConfigured 
+  ? createClient(supabaseUrl!, supabaseAnonKey!)
+  : null;
+
+// Helper to check if Supabase is available
+export const isSupabaseAvailable = () => isSupabaseConfigured && supabase !== null;
+
+// Fallback function for when Supabase is not available
+const createFallbackResponse = (error: string = 'Supabase not configured') => 
+  Promise.reject(new Error(error));
 
 // Database table helpers
 export const db = {
   // Projects
   projects: {
-    getAll: () => supabase.from('projects').select('*'),
-    getById: (id: string) => supabase.from('projects').select('*').eq('id', id).single(),
-    create: (project: any) => supabase.from('projects').insert(project).select().single(),
-    update: (id: string, updates: any) => supabase.from('projects').update(updates).eq('id', id).select().single(),
-    delete: (id: string) => supabase.from('projects').delete().eq('id', id)
+    getAll: () => supabase ? supabase.from('projects').select('*') : createFallbackResponse(),
+    getById: (id: string) => supabase ? supabase.from('projects').select('*').eq('id', id).single() : createFallbackResponse(),
+    create: (project: any) => supabase ? supabase.from('projects').insert(project).select().single() : createFallbackResponse(),
+    update: (id: string, updates: any) => supabase ? supabase.from('projects').update(updates).eq('id', id).select().single() : createFallbackResponse(),
+    delete: (id: string) => supabase ? supabase.from('projects').delete().eq('id', id) : createFallbackResponse()
   },
   
   // Tasks
   tasks: {
-    getAll: () => supabase.from('tasks').select('*'),
-    getById: (id: string) => supabase.from('tasks').select('*').eq('id', id).single(),
-    create: (task: any) => supabase.from('tasks').insert(task).select().single(),
-    update: (id: string, updates: any) => supabase.from('tasks').update(updates).eq('id', id).select().single(),
-    delete: (id: string) => supabase.from('tasks').delete().eq('id', id)
+    getAll: () => supabase ? supabase.from('tasks').select('*') : createFallbackResponse(),
+    getById: (id: string) => supabase ? supabase.from('tasks').select('*').eq('id', id).single() : createFallbackResponse(),
+    create: (task: any) => supabase ? supabase.from('tasks').insert(task).select().single() : createFallbackResponse(),
+    update: (id: string, updates: any) => supabase ? supabase.from('tasks').update(updates).eq('id', id).select().single() : createFallbackResponse(),
+    delete: (id: string) => supabase ? supabase.from('tasks').delete().eq('id', id) : createFallbackResponse()
   },
   
   // Calendar Events
   events: {
-    getAll: () => supabase.from('calendar_events').select('*'),
-    getById: (id: string) => supabase.from('calendar_events').select('*').eq('id', id).single(),
-    create: (event: any) => supabase.from('calendar_events').insert(event).select().single(),
-    update: (id: string, updates: any) => supabase.from('calendar_events').update(updates).eq('id', id).select().single(),
-    delete: (id: string) => supabase.from('calendar_events').delete().eq('id', id)
+    getAll: () => supabase ? supabase.from('calendar_events').select('*') : createFallbackResponse(),
+    getById: (id: string) => supabase ? supabase.from('calendar_events').select('*').eq('id', id).single() : createFallbackResponse(),
+    create: (event: any) => supabase ? supabase.from('calendar_events').insert(event).select().single() : createFallbackResponse(),
+    update: (id: string, updates: any) => supabase ? supabase.from('calendar_events').update(updates).eq('id', id).select().single() : createFallbackResponse(),
+    delete: (id: string) => supabase ? supabase.from('calendar_events').delete().eq('id', id) : createFallbackResponse()
   },
   
   // Blog Posts
   posts: {
-    getAll: () => supabase.from('blog_posts').select('*'),
-    getById: (id: string) => supabase.from('blog_posts').select('*').eq('id', id).single(),
-    create: (post: any) => supabase.from('blog_posts').insert(post).select().single(),
-    update: (id: string, updates: any) => supabase.from('blog_posts').update(updates).eq('id', id).select().single(),
-    delete: (id: string) => supabase.from('blog_posts').delete().eq('id', id)
+    getAll: () => supabase ? supabase.from('blog_posts').select('*') : createFallbackResponse(),
+    getById: (id: string) => supabase ? supabase.from('blog_posts').select('*').eq('id', id).single() : createFallbackResponse(),
+    create: (post: any) => supabase ? supabase.from('blog_posts').insert(post).select().single() : createFallbackResponse(),
+    update: (id: string, updates: any) => supabase ? supabase.from('blog_posts').update(updates).eq('id', id).select().single() : createFallbackResponse(),
+    delete: (id: string) => supabase ? supabase.from('blog_posts').delete().eq('id', id) : createFallbackResponse()
   },
   
   // Prompts
   prompts: {
-    getAll: () => supabase.from('prompts').select('*'),
-    getById: (id: string) => supabase.from('prompts').select('*').eq('id', id).single(),
-    create: (prompt: any) => supabase.from('prompts').insert(prompt).select().single(),
-    update: (id: string, updates: any) => supabase.from('prompts').update(updates).eq('id', id).select().single(),
-    delete: (id: string) => supabase.from('prompts').delete().eq('id', id)
+    getAll: () => supabase ? supabase.from('prompts').select('*') : createFallbackResponse(),
+    getById: (id: string) => supabase ? supabase.from('prompts').select('*').eq('id', id).single() : createFallbackResponse(),
+    create: (prompt: any) => supabase ? supabase.from('prompts').insert(prompt).select().single() : createFallbackResponse(),
+    update: (id: string, updates: any) => supabase ? supabase.from('prompts').update(updates).eq('id', id).select().single() : createFallbackResponse(),
+    delete: (id: string) => supabase ? supabase.from('prompts').delete().eq('id', id) : createFallbackResponse()
   },
   
   // Resources
   resources: {
-    getAll: () => supabase.from('resources').select('*'),
-    getById: (id: string) => supabase.from('resources').select('*').eq('id', id).single(),
-    create: (resource: any) => supabase.from('resources').insert(resource).select().single(),
-    update: (id: string, updates: any) => supabase.from('resources').update(updates).eq('id', id).select().single(),
-    delete: (id: string) => supabase.from('resources').delete().eq('id', id)
+    getAll: () => supabase ? supabase.from('resources').select('*') : createFallbackResponse(),
+    getById: (id: string) => supabase ? supabase.from('resources').select('*').eq('id', id).single() : createFallbackResponse(),
+    create: (resource: any) => supabase ? supabase.from('resources').insert(resource).select().single() : createFallbackResponse(),
+    update: (id: string, updates: any) => supabase ? supabase.from('resources').update(updates).eq('id', id).select().single() : createFallbackResponse(),
+    delete: (id: string) => supabase ? supabase.from('resources').delete().eq('id', id) : createFallbackResponse()
   },
   
   // Scripts
   scripts: {
-    getAll: () => supabase.from('scripts').select('*'),
-    getById: (id: string) => supabase.from('scripts').select('*').eq('id', id).single(),
-    create: (script: any) => supabase.from('scripts').insert(script).select().single(),
-    update: (id: string, updates: any) => supabase.from('scripts').update(updates).eq('id', id).select().single(),
-    delete: (id: string) => supabase.from('scripts').delete().eq('id', id)
+    getAll: () => supabase ? supabase.from('scripts').select('*') : createFallbackResponse(),
+    getById: (id: string) => supabase ? supabase.from('scripts').select('*').eq('id', id).single() : createFallbackResponse(),
+    create: (script: any) => supabase ? supabase.from('scripts').insert(script).select().single() : createFallbackResponse(),
+    update: (id: string, updates: any) => supabase ? supabase.from('scripts').update(updates).eq('id', id).select().single() : createFallbackResponse(),
+    delete: (id: string) => supabase ? supabase.from('scripts').delete().eq('id', id) : createFallbackResponse()
   }
 };

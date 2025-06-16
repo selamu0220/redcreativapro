@@ -139,8 +139,131 @@ export default function BlogPost({ post, onBack, onEdit }: BlogPostProps) {
             </div>
 
             {/* Content */}
-            <div className="prose prose-lg prose-slate dark:prose-invert max-w-none">
-              {post.content}
+            <div className="max-w-none">
+              {post.content.split('\n\n').map((block, index) => {
+                const trimmedBlock = block.trim();
+                
+                // Skip empty blocks
+                if (!trimmedBlock) return null;
+                
+                // Handle main headings (# Title)
+                if (trimmedBlock.startsWith('# ')) {
+                  const title = trimmedBlock.substring(2);
+                  return (
+                    <h1 key={index} className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100 mt-8 mb-4 leading-tight border-b-2 border-blue-500 pb-3">
+                      {title}
+                    </h1>
+                  );
+                }
+                
+                // Handle section headings (## Section)
+                if (trimmedBlock.startsWith('## ')) {
+                  const title = trimmedBlock.substring(3);
+                  return (
+                    <h2 key={index} className="text-xl md:text-2xl font-bold text-slate-800 dark:text-slate-200 mt-6 mb-3 leading-tight">
+                      <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        {title}
+                      </span>
+                    </h2>
+                  );
+                }
+                
+                // Handle subsection headings (### Subsection)
+                if (trimmedBlock.startsWith('### ')) {
+                  const title = trimmedBlock.substring(4);
+                  return (
+                    <h3 key={index} className="text-lg md:text-xl font-semibold text-slate-700 dark:text-slate-300 mt-5 mb-3 leading-tight">
+                      <span className="border-l-4 border-blue-500 pl-4">
+                        {title}
+                      </span>
+                    </h3>
+                  );
+                }
+                
+                // Handle sub-subsection headings (#### Sub-subsection)
+                if (trimmedBlock.startsWith('#### ')) {
+                  const title = trimmedBlock.substring(5);
+                  return (
+                    <h4 key={index} className="text-base md:text-lg font-semibold text-slate-600 dark:text-slate-400 mt-4 mb-2 leading-tight">
+                      {title}
+                    </h4>
+                  );
+                }
+                
+                // Handle unordered lists
+                if (trimmedBlock.includes('\n- ') || trimmedBlock.startsWith('- ')) {
+                  const listItems = trimmedBlock.split('\n').filter(line => line.trim().startsWith('- '));
+                  return (
+                    <ul key={index} className="list-none space-y-3 my-6 pl-0">
+                      {listItems.map((item, itemIndex) => {
+                        const content = item.substring(2).trim();
+                        const processedContent = content
+                          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-slate-100">$1</strong>')
+                          .replace(/\*(.*?)\*/g, '<em class="italic text-slate-700 dark:text-slate-300">$1</em>');
+                        return (
+                          <li key={itemIndex} className="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-lg border-l-4 border-blue-500">
+                            <span className="flex-shrink-0 w-2 h-2 bg-blue-500 rounded-full mt-2"></span>
+                            <span 
+                              className="text-slate-700 dark:text-slate-300 leading-relaxed"
+                              dangerouslySetInnerHTML={{ __html: processedContent }}
+                            />
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  );
+                }
+                
+                // Handle numbered lists
+                if (/^\d+\. /.test(trimmedBlock) || trimmedBlock.includes('\n1. ')) {
+                  const listItems = trimmedBlock.split('\n').filter(line => /^\d+\. /.test(line.trim()));
+                  return (
+                    <ol key={index} className="list-none space-y-3 my-6 pl-0">
+                      {listItems.map((item, itemIndex) => {
+                        const content = item.replace(/^\d+\. /, '').trim();
+                        const processedContent = content
+                          .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-slate-100">$1</strong>')
+                          .replace(/\*(.*?)\*/g, '<em class="italic text-slate-700 dark:text-slate-300">$1</em>');
+                        return (
+                          <li key={itemIndex} className="flex items-start gap-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-slate-800/50 dark:to-slate-700/50 rounded-lg border-l-4 border-gradient-to-b from-blue-500 to-purple-500">
+                            <span className="flex-shrink-0 w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm font-bold rounded-full flex items-center justify-center mt-0.5">
+                              {itemIndex + 1}
+                            </span>
+                            <span 
+                              className="text-slate-700 dark:text-slate-300 leading-relaxed"
+                              dangerouslySetInnerHTML={{ __html: processedContent }}
+                            />
+                          </li>
+                        );
+                      })}
+                    </ol>
+                  );
+                }
+                
+                // Handle regular paragraphs
+                if (trimmedBlock) {
+                  // Split by single line breaks and join with spaces to create proper paragraphs
+                  const cleanText = trimmedBlock
+                    .split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line.length > 0)
+                    .join(' ');
+                  
+                  const processedContent = cleanText
+                    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-slate-100 bg-yellow-100 dark:bg-yellow-900/30 px-1 rounded">$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em class="italic text-slate-700 dark:text-slate-300">$1</em>');
+                  
+                  return (
+                    <p 
+                      key={index} 
+                      className="text-slate-800 dark:text-slate-200 leading-7 mb-6 text-lg font-normal"
+                      dangerouslySetInnerHTML={{ __html: processedContent }}
+                    />
+                  );
+                }
+                
+                return null;
+              })}
             </div>
 
             {/* Article Footer */}

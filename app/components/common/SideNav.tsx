@@ -51,16 +51,28 @@ export function SideNav({ currentView, onShowLanding }: SideNavProps) {
 
   const navItems: NavItem[] = [
     {
-      title: 'Blog',
+      title: 'Inicio',
       icon: <BookOpen className="h-5 w-5" />,
+      view: '',
+      variant: currentView === '' ? 'default' : 'ghost',
+    },
+    {
+      title: 'Servicios',
+      icon: <Palette className="h-5 w-5" />,
+      view: 'recursos',
+      variant: currentView === 'recursos' ? 'default' : 'ghost',
+    },
+    {
+      title: 'Blog',
+      icon: <FileText className="h-5 w-5" />,
       view: 'blog',
       variant: currentView === 'blog' ? 'default' : 'ghost',
     },
     {
-      title: 'Recursos',
-      icon: <Palette className="h-5 w-5" />,
-      view: 'recursos',
-      variant: currentView === 'recursos' ? 'default' : 'ghost',
+      title: 'Contacto',
+      icon: <MessageSquare className="h-5 w-5" />,
+      view: 'chat',
+      variant: currentView === 'chat' ? 'default' : 'ghost',
     },
     {
       title: 'Calendario',

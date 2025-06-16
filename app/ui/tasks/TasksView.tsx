@@ -5,37 +5,71 @@ import { TasksHeader } from './TasksHeader';
 import { TaskBoard } from './TaskBoard';
 import { TaskDialog } from './TaskDialog';
 import { TaskType, TaskStatus } from '../../types/tasks';
-import { mockTasks } from '../../data/mockTasks';
+import { useTasksStorage } from '../../hooks/useLocalStorage';
+import { CSVManager } from '../common/CSVManager';
+import { useToast } from '../../hooks/use-toast';
 
 export function TasksView() {
-  const [tasks, setTasks] = useState<TaskType[]>(mockTasks);
+  const { tasks, addTask, updateTask, deleteTask, importFromCSV, exportToCSV, hasUnsavedChanges } = useTasksStorage();
   const [isTaskDialogOpen, setIsTaskDialogOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<TaskType | null>(null);
   const [viewMode, setViewMode] = useState<'board' | 'list'>('board');
+  const { toast } = useToast();
 
   const handleAddTask = (task: TaskType) => {
-    setTasks([...tasks, task]);
+    addTask(task);
     setIsTaskDialogOpen(false);
   };
 
   const handleEditTask = (updatedTask: TaskType) => {
-    setTasks(tasks.map(t => t.id === updatedTask.id ? updatedTask : t));
+    updateTask(updatedTask.id, updatedTask);
     setIsTaskDialogOpen(false);
     setSelectedTask(null);
   };
 
   const handleDeleteTask = (taskId: string) => {
-    setTasks(tasks.filter(t => t.id !== taskId));
+    deleteTask(taskId);
     setIsTaskDialogOpen(false);
     setSelectedTask(null);
   };
 
   const handleDragEnd = (taskId: string, newStatus: TaskStatus) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, status: newStatus } : task
-      )
-    );
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+      updateTask(taskId, { ...task, status: newStatus });
+    }
+  };
+
+  const handleImportCSV = async (file: File) => {
+    try {
+      await importFromCSV(file);
+      toast({
+        title: 'Éxito',
+        description: 'Tareas importadas correctamente desde CSV',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Error al importar tareas desde CSV',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleExportCSV = () => {
+    try {
+      exportToCSV();
+      toast({
+        title: 'Éxito',
+        description: 'Tareas exportadas correctamente a CSV',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Error al exportar tareas a CSV',
+        variant: 'destructive',
+      });
+    }
   };
 
   const openNewTaskDialog = () => {
@@ -50,11 +84,19 @@ export function TasksView() {
 
   return (
     <div className="space-y-6">
-      <TasksHeader
-        onAddTask={openNewTaskDialog}
-        viewMode={viewMode}
-        onViewModeChange={setViewMode}
-      />
+      <div className="flex justify-between items-center">
+        <TasksHeader
+          onAddTask={openNewTaskDialog}
+          viewMode={viewMode}
+          onViewModeChange={setViewMode}
+        />
+        <CSVManager
+          onImport={handleImportCSV}
+          onExport={handleExportCSV}
+          hasUnsavedChanges={hasUnsavedChanges}
+          dataType="tareas"
+        />
+      </div>
       
       <TaskBoard
         tasks={tasks}

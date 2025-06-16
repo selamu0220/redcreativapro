@@ -15,7 +15,7 @@ export type PromptCategory =
   | 'educational' 
   | 'copywriting';
 
-export type PromptVisibility = 'private' | 'public' | 'shared';
+export type PromptVisibility = 'private';
 
 export interface Prompt {
   id: string;
@@ -28,6 +28,5 @@ export interface Prompt {
   isFavorite: boolean;
   usageCount: number;
   visibility: PromptVisibility;
-  sharedWith?: string[];
   ownerId: string;
 }

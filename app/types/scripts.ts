@@ -1,5 +1,5 @@
 export type ScriptStatus = 'draft' | 'review' | 'final';
-export type ScriptVisibility = 'private' | 'public' | 'shared';
+export type ScriptVisibility = 'private';
 
 export interface ScriptVersion {
   id: string;
@@ -32,6 +32,6 @@ export interface Script {
     avatarUrl?: string;
   }[];
   visibility: ScriptVisibility;
-  sharedWith?: string[];
+
   ownerId: string;
 }

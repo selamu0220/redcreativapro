@@ -94,16 +94,19 @@ const HomePage = () => {
       {/* Hero Section */}
       <div className={styles.header}>
         <h1 className={styles.title}>
-          Bienvenido a Red Creativa Pro
+          Red Creativa Pro - Plataforma Integral para Creativos
         </h1>
-        <p className={styles.subtitle}>
-          Tu plataforma integral para la gestión de proyectos creativos,
+        <h2 className={styles.subtitle}>
+          Tu solución completa para la gestión de proyectos creativos,
         contenido digital y colaboración profesional.
         </p>
       </div>
 
       {/* Features Grid */}
-      <div className={styles.featuresGrid}>
+      <section className={styles.featuresGrid}>
+        <h2 className="text-3xl font-bold text-center mb-8 text-foreground">
+          Nuestros Servicios
+        </h2>
         {features.map((feature) => {
           const IconComponent = feature.icon;
           return (
@@ -132,8 +135,10 @@ const HomePage = () => {
         })}
       </div>
 
+      </section>
+
       {/* Quick Actions */}
-      <div className="bg-muted/50 rounded-lg p-6 space-y-4">
+      <section className="bg-muted/50 rounded-lg p-6 space-y-4">
         <h2 className="text-2xl font-semibold text-foreground">
           Acciones Rápidas
         </h2>
@@ -170,10 +175,13 @@ const HomePage = () => {
             <span>Ver Calendario</span>
           </Button>
         </div>
-      </div>
+      </section>
 
-      {/* Stats or Recent Activity could go here */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Stats Section */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <h2 className="col-span-full text-2xl font-semibold text-foreground mb-4">
+          Estadísticas de tu Cuenta
+        </h2>
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -215,7 +223,7 @@ const HomePage = () => {
             </p>
           </CardContent>
         </Card>
-      </div>
+      </section>
     </div>
   );
 };

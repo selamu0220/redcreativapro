@@ -10,6 +10,8 @@ import { Badge } from '../../ui/badge';
 import { Star, PlayCircle, ListChecks, ArrowLeft, Plus } from 'lucide-react';
 import LearningCreator from './LearningCreator';
 import { toast } from '../../hooks/use-toast';
+import { useLearningStorage } from '../../hooks/useLocalStorage';
+import { CSVManager } from '../common/CSVManager';
 
 // Datos de ejemplo mejorados
 const initialMockLearning: Learning[] = [
@@ -147,11 +149,54 @@ const VideoPlayer: React.FC<{ video: Video | null }> = ({ video }) => {
 };
 
 const LearningView: React.FC = () => {
-  const [learningItems, setLearningItems] = useState<Learning[]>(initialMockLearning);
+  const { data: learningItems, setData: setLearningItems, importFromCSV, exportToCSV } = useLearningStorage();
+  const [hasChanges, setHasChanges] = useState(false);
   const [selectedLearning, setSelectedLearning] = useState<Learning | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [completedTasks, setCompletedTasks] = useState<Record<string, Record<string, boolean>>>({});
   const [isCreating, setIsCreating] = useState(false);
+
+  useEffect(() => {
+    if (learningItems.length === 0) {
+      setLearningItems(initialMockLearning);
+    }
+  }, [learningItems, setLearningItems]);
+
+  useEffect(() => {
+    setHasChanges(true);
+  }, [learningItems]);
+
+  const handleImportCSV = async (file: File) => {
+    try {
+      await importFromCSV(file);
+      toast({
+        title: "Importación exitosa",
+        description: "Los datos de aprendizaje se han importado correctamente."
+      });
+    } catch (error) {
+      toast({
+        title: "Error en la importación",
+        description: "No se pudieron importar los datos. Verifica el formato del archivo.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleExportCSV = () => {
+    try {
+      exportToCSV();
+      toast({
+        title: "Exportación exitosa",
+        description: "Los datos de aprendizaje se han exportado correctamente."
+      });
+    } catch (error) {
+      toast({
+        title: "Error en la exportación",
+        description: "No se pudieron exportar los datos.",
+        variant: "destructive"
+      });
+    }
+  };
 
   useEffect(() => {
     if (selectedLearning) {
@@ -329,10 +374,19 @@ const LearningView: React.FC = () => {
           <h1 className="text-3xl font-bold mb-2">Aprendizaje</h1>
           <p className="text-muted-foreground">Descubre nuestros contenidos de aprendizaje</p>
         </div>
-        <Button onClick={() => setIsCreating(true)} className="flex items-center gap-2">
-          <Plus className="h-4 w-4" />
-          Crear Aprendizaje
-        </Button>
+        <div className="flex items-center gap-4">
+          <CSVManager
+            onImport={handleImportCSV}
+            onExport={handleExportCSV}
+            hasChanges={hasChanges}
+            dataType="learning"
+            itemCount={learningItems.length}
+          />
+          <Button onClick={() => setIsCreating(true)} className="flex items-center gap-2">
+            <Plus className="h-4 w-4" />
+            Crear Aprendizaje
+          </Button>
+        </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {learningItems.map(learning => (

@@ -1,8 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { supabase } from '../lib/supabase';
-import { User as SupabaseUser } from '@supabase/supabase-js';
+import { supabase, isSupabaseAvailable } from '../lib/supabase';
 
 interface User {
   id: string;
@@ -51,202 +50,133 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   
   console.log('AuthProvider: Rendering with loading:', loading, 'user:', user ? 'exists' : 'null');
 
-  // Load user profile from Supabase or create if doesn't exist
-  const loadUserProfile = useCallback(async (supabaseUser: SupabaseUser) => {
+  // Create a local user profile
+  const createLocalUser = useCallback((email: string, name: string, id?: string): User => {
+    const userId = id || `local-${Date.now()}`;
+    return {
+      id: userId,
+      email,
+      name,
+      subscriptionType: 'free',
+      subscriptionEndDate: null,
+      dailyUsage: {
+        date: new Date().toISOString().split('T')[0],
+        aiRequests: 0,
+        promptsUsed: 0,
+        scriptsGenerated: 0
+      },
+      dailyLimits: {
+        aiRequests: 100,
+        promptsUsed: 20,
+        scriptsGenerated: 5
+      }
+    };
+  }, []);
+
+  // Load user from localStorage
+  const loadLocalUser = useCallback(() => {
     try {
-      setLoading(true); // Asegurar que estamos en loading al cargar perfil
-      console.log('Loading profile for user:', supabaseUser.id);
-      
-      // Check if Supabase is properly configured
-      if (!supabase) {
-        console.error('Supabase client not initialized');
-        return;
-      }
-      
-      // Usar un timeout más corto para la consulta de perfil
-      const profilePromise = supabase
-        .from('users')
-        .select('*')
-        .eq('id', supabaseUser.id)
-        .single();
-      
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Profile query timeout')), 5000)
-      );
-      
-      const { data: profile, error } = await Promise.race([profilePromise, timeoutPromise]) as any;
-        
-      console.log('Profile query result:', { profile, error });
-
-      // Handle different types of errors
-      if (error) {
-        if (error.code === 'PGRST116') {
-          // No rows returned - this is expected for new users
-          console.log('No existing profile found for user, will create new one');
-        } else if (error.code === '42P01') {
-          // Table does not exist
-          console.error('Users table does not exist in Supabase database. Please run the database migrations.');
-          // En lugar de lanzar error, crear un perfil temporal
-          console.log('Creating temporary profile due to missing table');
-          const tempProfile = {
-            id: supabaseUser.id,
-            email: supabaseUser.email || '',
-            full_name: supabaseUser.user_metadata?.full_name || supabaseUser.email?.split('@')[0] || 'Usuario',
-            subscription_tier: 'free',
-            subscription_end_date: null
+      const storedUser = localStorage.getItem('local_user');
+      if (storedUser) {
+        const userData = JSON.parse(storedUser);
+        // Check if we need to reset daily usage (new day)
+        const today = new Date().toISOString().split('T')[0];
+        if (userData.dailyUsage.date !== today) {
+          userData.dailyUsage = {
+            date: today,
+            aiRequests: 0,
+            promptsUsed: 0,
+            scriptsGenerated: 0
           };
-          
-          const userData: User = {
-            id: tempProfile.id,
-            email: tempProfile.email,
-            name: tempProfile.full_name,
-            subscriptionType: tempProfile.subscription_tier as 'free' | 'monthly' | 'annual',
-            subscriptionEndDate: tempProfile.subscription_end_date ? new Date(tempProfile.subscription_end_date) : null,
-            dailyUsage: {
-              date: new Date().toISOString().split('T')[0],
-              aiRequests: 0,
-              promptsUsed: 0,
-              scriptsGenerated: 0
-            },
-            dailyLimits: {
-              aiRequests: 100,
-              promptsUsed: 20,
-              scriptsGenerated: 5
-            }
-          };
-          
-          setUser(userData);
-          return;
-        } else if (error.code === '42501') {
-          // Insufficient privileges
-          console.error('Insufficient privileges to access users table. Please check RLS policies.');
-          return;
-        } else if (error.message === 'Profile query timeout') {
-          console.error('Profile query timed out - database may be slow or unavailable');
-          // Crear perfil temporal en caso de timeout
-          const tempProfile = {
-            id: supabaseUser.id,
-            email: supabaseUser.email || '',
-            full_name: supabaseUser.user_metadata?.full_name || supabaseUser.email?.split('@')[0] || 'Usuario',
-            subscription_tier: 'free',
-            subscription_end_date: null
-          };
-          
-          const userData: User = {
-            id: tempProfile.id,
-            email: tempProfile.email,
-            name: tempProfile.full_name,
-            subscriptionType: tempProfile.subscription_tier as 'free' | 'monthly' | 'annual',
-            subscriptionEndDate: tempProfile.subscription_end_date ? new Date(tempProfile.subscription_end_date) : null,
-            dailyUsage: {
-              date: new Date().toISOString().split('T')[0],
-              aiRequests: 0,
-              promptsUsed: 0,
-              scriptsGenerated: 0
-            },
-            dailyLimits: {
-              aiRequests: 100,
-              promptsUsed: 20,
-              scriptsGenerated: 5
-            }
-          };
-          
-          setUser(userData);
-          return;
-        } else {
-          // Other errors
-          console.error('Error loading profile:', {
-            message: error.message,
-            code: error.code,
-            details: error.details,
-            hint: error.hint,
-            fullError: error
-          });
-          return;
+          localStorage.setItem('local_user', JSON.stringify(userData));
         }
+        setUser(userData);
+        return userData;
       }
+    } catch (error) {
+      console.error('Error loading local user:', error);
+      localStorage.removeItem('local_user');
+    }
+    return null;
+  }, []);
 
-      let userProfile;
-      if (!profile) {
-        // Create new profile
-        const newProfile = {
-          id: supabaseUser.id,
-          email: supabaseUser.email!,
-          full_name: supabaseUser.user_metadata?.full_name || supabaseUser.email!.split('@')[0],
-          subscription_tier: 'free' as const,
-          subscription_status: 'free' as const,
-          subscription_end_date: null,
-        };
-
-        const { data: createdProfile, error: createError } = await supabase
-          .from('users')
-          .insert(newProfile)
-          .select()
-          .single();
-
-        if (createError) {
-          console.error('Error creating profile:', {
-            message: createError.message,
-            code: createError.code,
-            details: createError.details,
-            hint: createError.hint,
-            fullError: createError
-          });
-          return;
-        }
-        userProfile = createdProfile;
-      } else {
-        userProfile = profile;
-      }
-
-      const userData: User = {
-        id: userProfile.id,
-        email: userProfile.email,
-        name: userProfile.full_name,
-        subscriptionType: userProfile.subscription_tier,
-        subscriptionEndDate: userProfile.subscription_end_date ? new Date(userProfile.subscription_end_date) : null,
-        dailyUsage: {
-          date: new Date().toISOString().split('T')[0],
-          aiRequests: 0,
-          promptsUsed: 0,
-          scriptsGenerated: 0
-        },
-        dailyLimits: {
-          aiRequests: 100,
-          promptsUsed: 20,
-          scriptsGenerated: 5
-        }
-      };
-
+  // Save user to localStorage
+  const saveLocalUser = useCallback((userData: User) => {
+    try {
+      localStorage.setItem('local_user', JSON.stringify(userData));
       setUser(userData);
     } catch (error) {
-      console.error('Error in loadUserProfile:', {
-        message: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : undefined,
-        fullError: error
-      });
-      setUser(null); // Limpiar usuario en caso de error
-    } finally {
-      setLoading(false); // Asegurar que loading se desactiva
+      console.error('Error saving local user:', error);
     }
   }, []);
+
+  // Load user profile (works with both Supabase and local)
+  const loadUserProfile = useCallback(async (supabaseUser?: any) => {
+    try {
+      setLoading(true);
+      
+      // If Supabase is available and we have a Supabase user, try to load from Supabase
+      if (isSupabaseAvailable() && supabase && supabaseUser) {
+        console.log('Loading profile from Supabase for user:', supabaseUser.id);
+        
+        const { data: profile, error } = await supabase
+          .from('users')
+          .select('*')
+          .eq('id', supabaseUser.id)
+          .single();
+
+        if (!error && profile) {
+          const userData: User = {
+            id: profile.id,
+            email: profile.email,
+            name: profile.full_name,
+            subscriptionType: profile.subscription_tier,
+            subscriptionEndDate: profile.subscription_end_date ? new Date(profile.subscription_end_date) : null,
+            dailyUsage: {
+              date: new Date().toISOString().split('T')[0],
+              aiRequests: 0,
+              promptsUsed: 0,
+              scriptsGenerated: 0
+            },
+            dailyLimits: {
+              aiRequests: 100,
+              promptsUsed: 20,
+              scriptsGenerated: 5
+            }
+          };
+          setUser(userData);
+          return;
+        }
+      }
+      
+      // Fallback to local storage
+      loadLocalUser();
+    } catch (error) {
+      console.error('Error in loadUserProfile:', error);
+      // Fallback to local storage on any error
+      loadLocalUser();
+    } finally {
+      setLoading(false);
+    }
+  }, [loadLocalUser]);
+
 
   // Auth state listener
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        // Verificar si estamos en modo demo
+        setLoading(true);
+        
+        // Check for demo mode first
         const demoAuth = localStorage.getItem('demo_auth');
         const demoUser = localStorage.getItem('demo_user');
         
-        // Descomentado: Lógica para modo demo
         if (demoAuth === 'true' && demoUser) {
           try {
             const parsedUser = JSON.parse(demoUser);
             setUser(parsedUser);
-            setLoading(false); // Asegurar setLoading false en modo demo
             console.log('AuthProvider: Demo mode initialized with user:', parsedUser);
-            return; // Salir temprano para modo demo
+            return;
           } catch (error) {
             console.error('Error parsing demo user:', error);
             localStorage.removeItem('demo_auth');
@@ -254,17 +184,24 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           }
         }
         
-        // Get initial session
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
+        // Try Supabase if available
+        if (isSupabaseAvailable() && supabase) {
           try {
-            await loadUserProfile(session.user);
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session?.user) {
+              await loadUserProfile(session.user);
+              return;
+            }
           } catch (error) {
-            console.error('Error loading user profile on session check:', error);
+            console.error('Error with Supabase session:', error);
           }
         }
+        
+        // Fallback to local authentication
+        loadLocalUser();
       } catch (error) {
         console.error('Error initializing auth:', error);
+        loadLocalUser();
       } finally {
         setLoading(false);
       }
@@ -272,26 +209,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     
     initializeAuth();
 
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' && session?.user) {
-        try {
-          await loadUserProfile(session.user);
-          // Limpiar estado de verificación cuando el usuario se loguea exitosamente
+    // Listen for auth changes only if Supabase is available
+    let subscription: any = null;
+    if (isSupabaseAvailable() && supabase) {
+      const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+        if (event === 'SIGNED_IN' && session?.user) {
+          try {
+            await loadUserProfile(session.user);
+            setNeedsEmailVerification(false);
+            setPendingVerificationEmail(null);
+          } catch (error) {
+            console.error('Error loading user profile on auth change:', error);
+          }
+        } else if (event === 'SIGNED_OUT') {
+          setUser(null);
           setNeedsEmailVerification(false);
           setPendingVerificationEmail(null);
-        } catch (error) {
-          console.error('Error loading user profile on auth change:', error);
         }
-      } else if (event === 'SIGNED_OUT') {
-        setUser(null);
-        setNeedsEmailVerification(false);
-        setPendingVerificationEmail(null);
-      }
-    });
+      });
+      subscription = data.subscription;
+    }
 
-    return () => subscription.unsubscribe();
-  }, [loadUserProfile]);
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe();
+      }
+    };
+  }, [loadUserProfile, loadLocalUser]);
 
   const hasActiveSubscription = useCallback(() => {
     if (!user) return false;
@@ -313,41 +257,56 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const login = useCallback(
     async (email: string, password: string) => {
       try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password
-        });
+        // Try Supabase login if available
+        if (isSupabaseAvailable() && supabase) {
+          const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password
+          });
 
-        if (error) {
-          // Proporcionar errores más específicos
-          if (error.message.includes('Email not confirmed')) {
-            setNeedsEmailVerification(true);
-            setPendingVerificationEmail(email);
-            throw new Error('Email not confirmed');
+          if (error) {
+            if (error.message.includes('Email not confirmed')) {
+              setNeedsEmailVerification(true);
+              setPendingVerificationEmail(email);
+              throw new Error('Email not confirmed');
+            }
+            if (error.message.includes('Invalid login credentials')) {
+              throw new Error('Invalid login credentials');
+            }
+            throw error;
           }
-          if (error.message.includes('Invalid login credentials')) {
-            throw new Error('Invalid login credentials');
+          
+          if (data.user) {
+            setNeedsEmailVerification(false);
+            setPendingVerificationEmail(null);
+            await loadUserProfile(data.user);
+            return;
           }
-          throw error;
         }
         
-        if (data.user) {
-          // Limpiar estados de verificación al hacer login exitoso
+        // Local authentication fallback
+        const storedUsers = localStorage.getItem('local_users') || '{}';
+        const users = JSON.parse(storedUsers);
+        
+        if (users[email] && users[email].password === password) {
+          const userData = createLocalUser(email, users[email].name, users[email].id);
+          saveLocalUser(userData);
           setNeedsEmailVerification(false);
           setPendingVerificationEmail(null);
-          await loadUserProfile(data.user);
+        } else {
+          throw new Error('Invalid login credentials');
         }
       } catch (error: any) {
         console.error('Login error:', error);
         throw new Error(error.message || 'Error al iniciar sesión');
       }
     },
-    [loadUserProfile]
+    [loadUserProfile, createLocalUser, saveLocalUser]
   );
 
   const logout = useCallback(async () => {
     try {
-      // Verificar si estamos en modo demo
+      // Check for demo mode
       const demoAuth = localStorage.getItem('demo_auth');
       
       if (demoAuth === 'true') {
@@ -357,9 +316,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return;
       }
       
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      // Try Supabase logout if available
+      if (isSupabaseAvailable() && supabase) {
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
+      }
+      
+      // Clear local user data
+      localStorage.removeItem('local_user');
       setUser(null);
+      setNeedsEmailVerification(false);
+      setPendingVerificationEmail(null);
     } catch (error: any) {
       console.error('Logout error:', error);
       throw new Error(error.message || 'Error al cerrar sesión');
@@ -369,38 +336,62 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signup = useCallback(
     async (email: string, password: string, name: string) => {
       try {
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              full_name: name
+        // Try Supabase signup if available
+        if (isSupabaseAvailable() && supabase) {
+          const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              data: {
+                full_name: name
+              }
             }
-          }
-        });
+          });
 
-        if (error) throw error;
-        
-        // No cargar el perfil inmediatamente después del signup
-        // El usuario necesita verificar su email primero
-        console.log('Signup successful, verification email sent to:', email);
-        
-        // Establecer estado de verificación pendiente
-        setNeedsEmailVerification(true);
-        setPendingVerificationEmail(email);
-        
-        // Solo cargar el perfil si el usuario ya está confirmado (caso raro)
-        if (data.user && data.user.email_confirmed_at) {
-          await loadUserProfile(data.user);
-          setNeedsEmailVerification(false);
-          setPendingVerificationEmail(null);
+          if (error) throw error;
+          
+          console.log('Signup successful, verification email sent to:', email);
+          setNeedsEmailVerification(true);
+          setPendingVerificationEmail(email);
+          
+          if (data.user && data.user.email_confirmed_at) {
+            await loadUserProfile(data.user);
+            setNeedsEmailVerification(false);
+            setPendingVerificationEmail(null);
+          }
+          return;
         }
+        
+        // Local authentication fallback
+        const storedUsers = localStorage.getItem('local_users') || '{}';
+        const users = JSON.parse(storedUsers);
+        
+        // Check if user already exists
+        if (users[email]) {
+          throw new Error('User already exists');
+        }
+        
+        // Create new local user
+        const userId = `local-${Date.now()}`;
+        users[email] = {
+          id: userId,
+          password,
+          name
+        };
+        
+        localStorage.setItem('local_users', JSON.stringify(users));
+        
+        // Create and save user profile
+        const userData = createLocalUser(email, name, userId);
+        saveLocalUser(userData);
+        
+        console.log('Local signup successful for:', email);
       } catch (error: any) {
         console.error('Signup error:', error);
         throw new Error(error.message || 'Error al crear la cuenta');
       }
     },
-    [loadUserProfile]
+    [loadUserProfile, createLocalUser, saveLocalUser]
   );
 
   const updateSubscriptionStatus = useCallback((subscriptionType: 'free' | 'monthly' | 'annual', endDate?: Date) => {
@@ -415,17 +406,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         subscriptionEndDate: endDate || null
       };
       
-      // Update user profile in Supabase
-      supabase
-        .from('users')
-        .update({
-          subscription_tier: subscriptionType,
-          subscription_status: subscriptionType === 'free' ? 'free' : 'active'
-        })
-        .eq('id', prevUser.id)
-        .then(({ error }) => {
-          if (error) console.error('Error updating subscription:', error);
-        });
+      // Update user profile in Supabase if available
+      if (isSupabaseAvailable() && supabase) {
+        supabase
+          .from('users')
+          .update({
+            subscription_tier: subscriptionType,
+            subscription_status: subscriptionType === 'free' ? 'free' : 'active'
+          })
+          .eq('id', prevUser.id)
+          .then(({ error }) => {
+            if (error) console.error('Error updating subscription:', error);
+          });
+      }
+      
+      // Update local storage
+      try {
+        localStorage.setItem('local_user', JSON.stringify(updatedUser));
+      } catch (error) {
+        console.error('Error updating local user:', error);
+      }
       
       return updatedUser;
     });
@@ -439,83 +439,125 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const clearEmailVerification = useCallback(() => {
     setNeedsEmailVerification(false);
     setPendingVerificationEmail(null);
+    
+    // Clear from local storage as well
+    try {
+      localStorage.removeItem('pending_verification_email');
+    } catch (error) {
+      console.error('Error clearing verification state:', error);
+    }
+  }, []);
+
+  // Helper function to get usage limits based on subscription type
+  const getUsageLimits = useCallback((subscriptionType: 'free' | 'monthly' | 'annual') => {
+    switch (subscriptionType) {
+      case 'free':
+        return { prompts: 20, scripts: 5, resources: 10 };
+      case 'monthly':
+      case 'annual':
+        return { prompts: 1000, scripts: 500, resources: 1000 };
+      default:
+        return { prompts: 20, scripts: 5, resources: 10 };
+    }
   }, []);
 
   // Usage tracking functions
-  const getRemainingUsage = useCallback((feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => {
-    if (!user) return 0;
+  const getRemainingUsage = useCallback(async () => {
+    if (!user) return { prompts: 0, scripts: 0, resources: 0 };
     
-    // Check if we need to reset daily usage (new day)
-    const today = new Date().toISOString().split('T')[0];
-    if (user.dailyUsage.date !== today) {
-      // Reset usage for new day
-      setUser(prevUser => {
-        if (!prevUser) return null;
-        return {
-          ...prevUser,
-          dailyUsage: {
-            date: today,
-            aiRequests: 0,
-            promptsUsed: 0,
-            scriptsGenerated: 0
-          }
-        };
-      });
-      return user.dailyLimits[feature]; // Return full limit for new day
-    }
-    
-    // Return remaining usage
-    return Math.max(0, user.dailyLimits[feature] - user.dailyUsage[feature]);
-  }, [user]);
-
-  const incrementUsage = useCallback((feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => {
-    if (!user) return;
-    
-    // Check if we need to reset daily usage (new day)
-    const today = new Date().toISOString().split('T')[0];
-    
-    setUser(prevUser => {
-      if (!prevUser) return null;
+    try {
+      let usage = { prompts_used: 0, scripts_used: 0, resources_used: 0 };
       
-      // If it's a new day, reset usage
-      if (prevUser.dailyUsage.date !== today) {
-        return {
-          ...prevUser,
-          dailyUsage: {
-            date: today,
-            aiRequests: feature === 'aiRequests' ? 1 : 0,
-            promptsUsed: feature === 'promptsUsed' ? 1 : 0,
-            scriptsGenerated: feature === 'scriptsGenerated' ? 1 : 0
-          }
-        };
+      // Try to get usage from Supabase if available
+      if (isSupabaseAvailable() && supabase) {
+        const { data, error } = await supabase
+          .from('user_usage')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (error && error.code !== 'PGRST116') {
+          console.error('Error fetching usage:', error);
+        } else if (data) {
+          usage = data;
+        }
+      } else {
+        // Get usage from local storage
+        const localUsage = localStorage.getItem(`usage_${user.id}`);
+        if (localUsage) {
+          usage = JSON.parse(localUsage);
+        }
       }
       
-      // Otherwise increment the specific feature
+      const limits = getUsageLimits(user.subscriptionType);
+      
       return {
-        ...prevUser,
-        dailyUsage: {
-          ...prevUser.dailyUsage,
-          [feature]: prevUser.dailyUsage[feature] + 1
-        }
+        prompts: Math.max(0, limits.prompts - usage.prompts_used),
+        scripts: Math.max(0, limits.scripts - usage.scripts_used),
+        resources: Math.max(0, limits.resources - usage.resources_used)
       };
-    });
+    } catch (error) {
+      console.error('Error getting remaining usage:', error);
+      return { prompts: 0, scripts: 0, resources: 0 };
+    }
+  }, [user, getUsageLimits]);
+
+  const incrementUsage = useCallback(async (feature: 'prompts' | 'scripts' | 'resources') => {
+    if (!user) return;
+    
+    try {
+      let currentUsage = { prompts_used: 0, scripts_used: 0, resources_used: 0 };
+      
+      // Get current usage
+      if (isSupabaseAvailable() && supabase) {
+        const { data } = await supabase
+          .from('user_usage')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (data) currentUsage = data;
+      } else {
+        const localUsage = localStorage.getItem(`usage_${user.id}`);
+        if (localUsage) {
+          currentUsage = JSON.parse(localUsage);
+        }
+      }
+      
+      // Increment the specific feature
+      const featureKey = `${feature}_used` as keyof typeof currentUsage;
+      currentUsage[featureKey] = (currentUsage[featureKey] || 0) + 1;
+      
+      // Save updated usage
+      if (isSupabaseAvailable() && supabase) {
+        await supabase
+          .from('user_usage')
+          .upsert({
+            user_id: user.id,
+            ...currentUsage
+          });
+      } else {
+        localStorage.setItem(`usage_${user.id}`, JSON.stringify(currentUsage));
+      }
+    } catch (error) {
+      console.error('Error incrementing usage:', error);
+    }
   }, [user]);
 
-  const canUseFeature = useCallback((feature: 'aiRequests' | 'promptsUsed' | 'scriptsGenerated') => {
+  const canUseFeature = useCallback(async (feature: 'prompts' | 'scripts' | 'resources') => {
     if (!user) return false;
     
     // Pro users have unlimited usage
     if (user.subscriptionType !== 'free') return true;
     
-    // Check if we need to reset daily usage (new day)
-    const today = new Date().toISOString().split('T')[0];
-    if (user.dailyUsage.date !== today) {
-      return true; // New day, can use feature
+    try {
+      const remainingUsage = await getRemainingUsage();
+      return remainingUsage[feature] > 0;
+    } catch (error) {
+      console.error('Error checking feature availability:', error);
+      return false;
     }
-    
-    // Check if user has reached their limit
-    return user.dailyUsage[feature] < user.dailyLimits[feature];
-  }, [user]);
+  }, [user, getRemainingUsage]);
 
   const value = {
     user,

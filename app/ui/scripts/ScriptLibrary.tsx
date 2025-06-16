@@ -12,16 +12,55 @@ import { Dialog, DialogContent } from '../../ui/dialog';
 import { ScriptEditor } from './ScriptEditor';
 import { useToast } from '../../hooks/use-toast';
 import { useScriptsSEO } from '../../hooks/useSEO';
+import { useScriptsStorage } from '../../hooks/useLocalStorage';
+import { CSVManager } from '../common/CSVManager';
 
 export function ScriptLibrary() {
-  const [scripts, setScripts] = useState<Script[]>(mockScripts);
-  const [filteredScripts, setFilteredScripts] = useState<Script[]>(mockScripts);
+  const { data: scripts, setData: setScripts, importFromCSV, exportToCSV, hasChanges } = useScriptsStorage(mockScripts);
+  const [filteredScripts, setFilteredScripts] = useState<Script[]>(scripts);
   const [selectedScript, setSelectedScript] = useState<Script | null>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const { toast } = useToast();
 
   // Aplicar SEO específico para la página de guiones
   useScriptsSEO();
+
+  // Sincronizar filteredScripts cuando cambien los scripts
+  React.useEffect(() => {
+    setFilteredScripts(scripts);
+  }, [scripts]);
+
+  const handleImportCSV = async (file: File) => {
+    try {
+      await importFromCSV(file);
+      toast({
+        title: 'Éxito',
+        description: 'Guiones importados correctamente desde CSV',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Error al importar guiones desde CSV',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleExportCSV = () => {
+    try {
+      exportToCSV();
+      toast({
+        title: 'Éxito',
+        description: 'Guiones exportados correctamente a CSV',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Error al exportar guiones a CSV',
+        variant: 'destructive',
+      });
+    }
+  };
 
   const handleFilter = useCallback((filtered: Script[]) => {
     setFilteredScripts(filtered);
@@ -66,10 +105,19 @@ export function ScriptLibrary() {
             Gestiona y organiza tus guiones de video y contenido.
           </p>
         </div>
-        <Button onClick={handleNewScript} className="gap-2">
-          <PlusCircle className="h-4 w-4" />
-          <span>Nuevo Guion</span>
-        </Button>
+        <div className="flex items-center gap-2">
+          <CSVManager
+            onImport={handleImportCSV}
+            onExport={handleExportCSV}
+            hasChanges={hasChanges}
+            dataType="guiones"
+            itemCount={scripts.length}
+          />
+          <Button onClick={handleNewScript} className="gap-2">
+            <PlusCircle className="h-4 w-4" />
+            <span>Nuevo Guion</span>
+          </Button>
+        </div>
       </div>
 
       <ScriptFilters scripts={scripts} onFilter={handleFilter} />

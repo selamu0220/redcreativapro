@@ -14,7 +14,7 @@ export const mockEvents: EventType[] = [
     color: 'bg-blue-500 text-white',
     script: '1. Welcome and introduction (5 mins)\n2. Review previous ideas (10 mins)\n3. Brainstorming session (30 mins)\n4. Vote on top ideas (10 mins)\n5. Assign next steps (5 mins)',
     visibility: 'private',
-    ownerId: 'user1',
+    ownerId: 'local-user',
   },
   {
     id: '2',
@@ -24,6 +24,6 @@ export const mockEvents: EventType[] = [
     end: addDays(setHours(today, 12), 2).toISOString(),
     color: 'bg-green-500 text-white',
     visibility: 'private',
-    ownerId: 'user1',
+    ownerId: 'local-user',
   }
 ];

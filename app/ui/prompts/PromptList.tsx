@@ -11,7 +11,6 @@ interface PromptListProps {
   onPromptSelect: (prompt: Prompt) => void;
   selectedPrompt: Prompt | null;
   onToggleFavorite: (promptId: string) => void;
-  view: 'personal' | 'feed';
 }
 
 export function PromptList({
@@ -19,7 +18,6 @@ export function PromptList({
   onPromptSelect,
   selectedPrompt,
   onToggleFavorite,
-  view,
 }: PromptListProps) {
   return (
     <ScrollArea className="h-[calc(100vh-300px)]">
